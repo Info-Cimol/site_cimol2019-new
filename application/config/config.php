@@ -18,10 +18,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
 */
 //alterado
-$config['base_url'] = 'http://localhost/site_cimol2018/';
-$config['base_dir'] = 'C:/xampp/htdocs/site_cimol2018/';
+$config['base_url'] = 'http://localhost/site_cimol2019-new/';
+$config['base_dir'] = 'C:/xampp/htdocs/site_cimol2019-new/';
 $config['tema']['coordenacao'] = 'coordena';
-$config['tema']['admin'] = 'default';
+$config['tema']['admin'] = 'admin';
 $config['tema']['site'] = 'cimol';
 $config['tema']['professor'] = 'default';
 $config['tema_dir']=$config['base_dir']."public/temas/";

@@ -4,7 +4,7 @@
 
     require_once($this->config->item("base_dir").'public/temas/admin/nav.php');
 
-                    
+    require_once($this->config->item("base_dir").'public/temas/admin/content.php');                
     require_once($this->config->item("base_dir").'public/temas/admin/footer.php');
 
                    

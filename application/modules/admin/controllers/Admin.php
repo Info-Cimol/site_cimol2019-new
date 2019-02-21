@@ -19,7 +19,7 @@ class Admin extends MX_Controller {
 	public function index()
 	{
 		$this->data['title']="Cimol - Área do Administrador";
-		$this->data['template']="teste";
+		$this->data['content']="teste";
 		$this->view->show_view($this->data);
 	}
 	public function buscar_agenda($id){

@@ -32,12 +32,13 @@ class Usuario extends MX_Controller{
 		//echo $usuario."<br/>".$senha."<br/>";
 		$query=$this->usuario_model->autenticar($usuario,$senha);
 		$resultado=$query->row();
-		//print_r($resultado);
+
+		
 		if($resultado->pessoa > 0){
 			$_SESSION['user_data']['id']=$resultado->id;
 			$_SESSION['user_data']['nome']=$resultado->nome;
-			$_SESSION['user_data']['rg']=$resultado->rg;
-			$_SESSION['user_data']['cpf']=$resultado->cpf;
+			//$_SESSION['user_data']['rg']=$resultado->rg;
+			//$_SESSION['user_data']['cpf']=$resultado->cpf;
 			if($resultado->admin>0){
 				$_SESSION['user_data']['permissoes'][]="admin";
 				$_SESSION['user_data']['permissoes']['permissoes_admin']=$this->usuario_model->buscarPermissaoAdmin($resultado->id);
@@ -51,7 +52,7 @@ class Usuario extends MX_Controller{
 			if($resultado->biblioteca>0){
 				$_SESSION['user_data']['permissoes'][]="biblioteca";
 			}
-			if($resultado->faintec>0){
+			if($resultado->feintec>0){
 				$_SESSION['user_data']['permissoes'][]="feintec";
 			}
 			if($resultado->coordenador_curso>0){

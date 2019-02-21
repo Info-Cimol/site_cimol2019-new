@@ -1,9 +1,10 @@
+
 <div class="span3">
     <div class="sidebar">
         <ul class="widget widget-menu unstyled">
             <li class="active"><a href="index.html"><i class="menu-icon icon-dashboard"></i>Dashboard
             </a></li>
-            <li><a href="activity.html"><i class="menu-icon icon-bullhorn"></i>Notícias </a>
+            <li><a href="<?php echo base_url();  ?>admin/noticia"><i class="menu-icon icon-bullhorn"></i>Notícias </a>
             </li>
             <li><a href="message.html"><i class="menu-icon icon-inbox"></i>Inbox <b class="label green pull-right">
                 11</b> </a></li>
@@ -37,3 +38,22 @@
     <!--/.sidebar-->
 </div>
 <!--/.span3-->
+<div class="span9">
+
+<?php
+    if (isset($_SESSION['messages'])) {
+        echo "<div id='messages' class='alert alert-danger'>";
+        foreach($_SESSION['messages'] as $message){
+            echo "<div class='".$message['class']."'>";
+            echo $message['message'];
+            echo "</div>";
+        }
+        echo "</div>";
+        ?>
+            <script>
+            setTimeout(function() {
+                $('#messages').fadeOut(700);}, 5000);
+            </script>
+    }
+?>
+    <div class="content">

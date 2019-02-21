@@ -29,6 +29,8 @@ class Usuario_model extends CI_Model{
             LEFT JOIN coordenador_curso ON coordenador_curso.professor_id=professor.id
             WHERE usuario.senha = '".$senha."' AND email.email = '".$usuario."'
             GROUP BY  usuario.id, pessoa.nome,pessoa.rg, pessoa.cpf";
+
+            echo $query;
        $result = $this->db->query($query); 
        return $result;
 	}
