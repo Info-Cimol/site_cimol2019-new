@@ -39,21 +39,4 @@
 </div>
 <!--/.span3-->
 <div class="span9">
-
-<?php
-    if (isset($_SESSION['messages'])) {
-        echo "<div id='messages' class='alert alert-danger'>";
-        foreach($_SESSION['messages'] as $message){
-            echo "<div class='".$message['class']."'>";
-            echo $message['message'];
-            echo "</div>";
-        }
-        echo "</div>";
-        ?>
-            <script>
-            setTimeout(function() {
-                $('#messages').fadeOut(700);}, 5000);
-            </script>
-    }
-?>
     <div class="content">
