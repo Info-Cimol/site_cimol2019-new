@@ -34,6 +34,7 @@ class Login extends MX_Controller{
 				$permissoes= array($permissao_admin,"admin");
 				//$_SESSION['user_data']['permissoes'][]="admin";
 				$_SESSION['user_data']['permissoes'][]=$permissoes;
+				$_SESSION['user_data']['curso'][]=$resultado->curso_id;
 				
 				//$permissao_admin=$this->login_model->buscarPermissaoAdmin($resultado->id);
 			}

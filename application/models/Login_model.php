@@ -13,6 +13,8 @@ class Login_model extends CI_Model{
                                                 LEFT JOIN aluno ON aluno.pessoa_id=pessoa.id 
                                                 LEFT JOIN professor ON professor.pessoa_id=pessoa.id 
                                                 WHERE usuario.senha = '".$senha."' AND email.email = '".$usuario."'";
+
+                        
                   $result = $this->db->query($query); 
                   return $result;
 				/*$query = $this->db->get();

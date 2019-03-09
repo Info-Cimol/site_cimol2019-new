@@ -9,16 +9,13 @@
     <br />
     <div style="text-align:center;">
     	<a href="<?php echo base_url();?>">
-        	<img src="<?php echo base_url();?>public/coordenacao/uploads/logo.png"  style="max-height:100px; max-width:100px;"/>
+        	<img src="<?php echo base_url();?>public/temas/coordena/uploads/logo.png"  style="max-height:100px; max-width:100px;"/>
         </a>
     </div>
    	<br />
 	<ul>
-		<li><a href="<?php echo base_url();?>admin/imagem" class="glyphicon glyphicon-picture"> Imagens</a></li>
-		<li><a href="<?php echo base_url();?>admin/banner" class="glyphicon glyphicon-blackboard"> Bannner</a></li>
-		<li><a href="<?php echo base_url();?>admin/post" class="glyphicon glyphicon-list-alt"> Posts</a></li>
-		<li><a href="<?php echo base_url();?>admin/mensagem" class="glyphicon glyphicon-envelope"> Mensagens</a></li>
-		<li><a href="<?php echo base_url();?>admin/usuario" class="glyphicon glyphicon-user"> Usuários</a></li>
+		<li><a href="<?php echo base_url();?>coordena/armarios" class="glyphicon glyphicon-picture"> Armários</a></li>
+		<li><a href="<?php echo base_url();?>coordena/acervo" class="glyphicon glyphicon-picture">Acervo</a></li>
 	
 	
 	</ul>

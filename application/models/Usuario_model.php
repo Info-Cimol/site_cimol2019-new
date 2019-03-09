@@ -11,7 +11,7 @@ class Usuario_model extends CI_Model{
 	 * @return $result
 	 */
 	function autenticar($usuario, $senha){
-        $query="SELECT usuario.id, pessoa.nome,pessoa.rg, pessoa.cpf, 
+        $query="SELECT usuario.id, pessoa.nome,pessoa.rg, pessoa.cpf,coordenador_curso.curso_id, 
 		count(administrador.pessoa_id) as admin,
 		count(aluno.pessoa_id) as aluno,
 		count(professor.pessoa_id) as professor,
@@ -30,8 +30,10 @@ class Usuario_model extends CI_Model{
             WHERE usuario.senha = '".$senha."' AND email.email = '".$usuario."'
             GROUP BY  usuario.id, pessoa.nome,pessoa.rg, pessoa.cpf";
 
+
             echo $query;
        $result = $this->db->query($query); 
+       
        return $result;
 	}
 	

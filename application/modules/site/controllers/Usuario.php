@@ -33,6 +33,7 @@ class Usuario extends MX_Controller{
 		$query=$this->usuario_model->autenticar($usuario,$senha);
 		$resultado=$query->row();
 
+
 		
 		if($resultado->pessoa > 0){
 			$_SESSION['user_data']['id']=$resultado->id;
@@ -58,7 +59,8 @@ class Usuario extends MX_Controller{
 			if($resultado->coordenador_curso>0){
 				$_SESSION['user_data']['permissoes'][]="coordenador_curso";
 				$this->load->model('curso_model');
-				$_SESSION['user_data']['curso']=$this->curso_model->buscar_curso_por_coordenador($resultado->id);
+
+				$_SESSION['user_data']['curso']=$resultado->curso_id;
 			}
 			
 			if(isset($_SESSION['route'])){
