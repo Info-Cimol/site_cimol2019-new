@@ -18,8 +18,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
 */
 //alterado
-$config['base_url'] = 'http://localhost/site_cimol2019-new/';
-$config['base_dir'] = 'C:/xampp/htdocs/site_cimol2019-new/';
+$config['base_url'] = 'http://localhost/cimol/site_cimol2019-new/';
+$config['base_dir'] = 'C:\Program Files (x86)\VertrigoServ\www\cimol\site_cimol2019-new/';
 $config['tema']['coordenacao'] = 'coordena';
 $config['tema']['admin'] = 'admin';
 $config['tema']['site'] = 'cimol';

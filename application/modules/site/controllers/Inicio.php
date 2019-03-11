@@ -23,7 +23,7 @@ class Inicio extends MX_Controller {
 		//print_r($this->tema); 
 		//$this->view->setTema($this->tema['site']);
 		$this->load->model('noticia_model');
-		$this->load->model('evento_model');
+		//$this->load->model('evento_model');
 		$this->load->model('imagem_model');
 		$this->load->model('curso_model');
 		$this->load->model('video_model');
