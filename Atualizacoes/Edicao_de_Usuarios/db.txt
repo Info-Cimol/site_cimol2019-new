@@ -1,0 +1,13 @@
+
+/*/  Não copiar e colar!!  /*/
+
+create table if not exist servidor
+id int(50) primary key not null auto increment
+Servico varchar(50) not null
+
+create table if not exist servidor_pessoa
+id_servidor int(10) not null primary key
+id_pessoa int(100) not null primary key
+
+alter table endereco
+id int(11) not null auto increment
