@@ -49,6 +49,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
+
+$route['erro'] = 'site/erro/';
+$route['erro/erro_404'] = 'site/erro/erro_404/';
+
 $route[''] = 'site/index.php';
 $route['logout'] = 'site/login/logout';
 $route['login'] = 'site/login';
@@ -68,6 +72,7 @@ $route['logout'] = 'site/usuario/logout';
 $route['institucional'] = 'site/institucional';
 
 $route['noticia']= 'site/noticia';
+$route['noticia/feed']= 'site/noticia/feed';
 $route['curso']='site/curso';
 
 $route['curso/lista']='site/curso/lista';
@@ -77,6 +82,8 @@ $route['curso/(:num)']='site/curso/saiba_mais/$1';
 //$route['curso/(:num)']='site/curso/index/$1';
 $route['disciplina_turma/(:num)']='site/disciplina_turma/index/$1';
 $route['evento']='site/evento';
+$route['evento/(:num)'] = 'site/evento/ver/$1';
+$route['evento/edicao/(:num)']='site/evento/edicao/$1';
 $route['agenda']='site/agenda';
 //$route['biblioteca']='site/biblioteca';
 $route['evento/(:num)'] = 'site/evento/ver/$1';
