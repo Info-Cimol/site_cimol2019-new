@@ -58,7 +58,7 @@ class Usuario extends MX_Controller{
 			if($resultado->coordenador_curso>0){
 				$_SESSION['user_data']['permissoes'][]="coordenador_curso";
 				$this->load->model('curso_model');
-				$_SESSION['user_data']['curso']=$this->curso_model->buscar_curso_por_coordenador($resultado->id);
+				$_SESSION['user_data']['curso']=$this->curso_model->buscar_curso($resultado->curso_id);
 			}
 			
 			if(isset($_SESSION['route'])){
