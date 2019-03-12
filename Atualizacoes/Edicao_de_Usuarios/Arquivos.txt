@@ -1,3 +1,0 @@
-modules: admin
-controller: admin, usuario
-view: admin
