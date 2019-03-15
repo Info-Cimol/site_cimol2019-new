@@ -9,8 +9,7 @@
         <link type="text/css" href="<?php echo base_url();  ?>public/temas/admin/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
         <link type="text/css" href="<?php echo base_url();  ?>public/temas/admin/css/theme.css" rel="stylesheet">
         <link type="text/css" href="<?php echo base_url();  ?>public/temas/admin/images/icons/css/font-awesome.css" rel="stylesheet">
-        <link type="text/css" href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600'
-            rel='stylesheet'>
+        <link type="text/css" href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600' rel='stylesheet'>
     </head>
     <body>
         <div class="navbar navbar-fixed-top">

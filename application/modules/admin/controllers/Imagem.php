@@ -18,7 +18,7 @@ class Imagem extends MX_Controller {
 	public function index()
     {
         $this->data['title']="Cimol - Área do Administrador";
-        $this->data['template']="imagem/imagem";
+        $this->data['content']="imagem/imagem";
         $this->data['imagens']=$this->imagem_model->listar_todas_imagens();
         $this->view->show_view($this->data);
     }
@@ -30,9 +30,20 @@ class Imagem extends MX_Controller {
     	$imagens=$this->imagem_model->buscar_imagens_evento($id);
     	echo json_encode($imagens);
     }
-    
+
+    public function buscar_todas_imagens(){
+    	$imagens=$this->imagem_model->listar_todas_imagens();
+		$i=0;
+		foreach ($imagens as $imagem) {
+			$imagess[$i]['title'] = $imagem->nome;
+			$imagess[$i]['value'] = base_url().$imagem->url_imagem.$imagem->nome;
+			$i++;
+		}
+		echo json_encode($imagess);
+    }
+
     public function editar_imagens($id=null, $tipo=null){
-    	
+
     	$_SESSION['falha']=0;
     	$ext_images=array('jpg', 'JPG', 'jpeg', 'JPEG', 'png', 'PNG', 'gif', 'GIF', 'bmp', 'BMP');
     	$_SESSION['id']=$id;
@@ -69,7 +80,7 @@ class Imagem extends MX_Controller {
     	$this->data['template']='noticia/noticia-imagens';
     	$this->view->show_view($this->data);
     }
-    
+
     public function adicionar_imagens($id=null, $tipo=null){
     	$uploaded=0;
     	$falha=$_SESSION['falha'];
@@ -124,21 +135,21 @@ class Imagem extends MX_Controller {
                 }
     	}
     }
-    
+
     function deletar_imagem($id){
     	$imagem=$this->imagem_model->buscar_imagem_join($id);
     	if($imagem[0]->noticia > 0 || $imagem[0]->evento > 0){
     		$this->view->set_message("Imagem relacionada a noticia ou evento não pode ser deletada", "alert alert-error");
-    		redirect('admin/imagem','refresh');
+    		redirect('admin/noticia','refresh');
     	}else{
     		if($this->imagem_model->deletar($id)){
     			$this->view->set_message("Imagem excluida com sucesso", "alert alert-success");
-    			redirect('admin/imagem','refresh');
+    			redirect('admin/noticia','refresh');
     			unlink($imagem[0]->url_imagem.$imagem[0]->nome);
     		}else{
     			$this->view->set_message("Erro ao deletar imagem", "alert alert-error");
-    			redirect('admin/imagem','refresh');
+    			redirect('admin/noticia','refresh');
     		}
     	}
     }
-}				
+}

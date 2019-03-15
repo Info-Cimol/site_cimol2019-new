@@ -6,14 +6,14 @@
             </a></li>
             <li><a href="<?php echo base_url();  ?>admin/noticia"><i class="menu-icon icon-bullhorn"></i>Notícias </a>
             </li>
-            <li><a href="message.html"><i class="menu-icon icon-inbox"></i>Inbox <b class="label green pull-right">
-                11</b> </a></li>
+            <li><a href="message.html"><i class="menu-icon icon-inbox"></i>Inbox
+				<b class="label green pull-right">11</b></a></li>
             <li><a href="task.html"><i class="menu-icon icon-tasks"></i>Tasks <b class="label orange pull-right">
                 19</b> </a></li>
         </ul>
         <!--/.widget-nav-->
-        
-        
+
+
         <ul class="widget widget-menu unstyled">
             <li><a href="ui-button-icon.html"><i class="menu-icon icon-bold"></i> Buttons </a></li>
             <li><a href="ui-typography.html"><i class="menu-icon icon-book"></i>Typography </a></li>

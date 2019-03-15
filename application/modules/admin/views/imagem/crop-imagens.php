@@ -2,10 +2,10 @@
 <div class="box">
 	<div class="box-content padded">
 		<div class="tab-content">
-            <!----CREATION FORM STARTS---->
+            <!---CREATION FORM STARTS---->
             	<h3 class="editar-imagem-aviso">Clique na imagem para editar o tamanho:</h3>
                 <div class="box-content">
-                	<?php 
+                	<?php
                 	//print_r($_COOKIE);
                 	$i=0;
                 	foreach($imagens as $imagem){
@@ -22,17 +22,17 @@
 	                		<input id='x2-<?php echo $i?>' type='hidden' name='x2[<?php echo $i ?>]'>
 	                		<input id='y2-<?php echo $i?>' type='hidden' name='y2[<?php echo $i ?>]'>
 	                		<input type='hidden' name="imagem[<?php echo $i ?>]" value="<?php echo $imagem?>">
-                		<?php 
+                		<?php
                 		$i++;
                 	}
-                	?> 
+                	?>
                 			<br/>
                 			<br/>
                 			<input type='hidden' name='crop' value='1' />
                 			<input type='submit' value='Salvar' class="botao-editar-imagem btn btn-blue">
-                		</form>    
-                </div>             
-			<!----CREATION FORM ENDS--->
+                		</form>
+                </div>
+			<!---CREATION FORM ENDS--->
 		</div>
 	</div>
 </div>

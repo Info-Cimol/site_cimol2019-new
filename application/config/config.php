@@ -18,8 +18,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
 */
 //alterado
-$config['base_url'] = 'http://localhost/site_cimol2019-new/';
-$config['base_dir'] = 'C:/xampp/htdocs/site_cimol2019-new/';
+$config['base_url'] = 'http://localhost/projetos/site_cimol2019-new/';
+$config['base_dir'] = '/opt/lampp/htdocs/projetos/site_cimol2019-new/';
 $config['tema']['coordenacao'] = 'coordena';
 $config['tema']['admin'] = 'admin';
 $config['tema']['site'] = 'cimol';
@@ -511,4 +511,3 @@ $config['rewrite_short_tags'] = FALSE;
 | Array:		array('10.0.1.200', '192.168.5.0/24')
 */
 $config['proxy_ips'] = '';
-

@@ -1,10 +1,17 @@
+<?php
 
+	print_r($imagens);
+
+?>
+
+
+<div>
 	<div id="imagens-header" class="box-header">
 		<h3>Imagens</h3>
 	</div>
 	<div id="listar-imagens" class="box-content padded">
 		<div class="tab-content">
-		<?php 
+		<?php
 			foreach($imagens as $imagem){
 				?>
 				<div class="div-imagem">
@@ -17,7 +24,7 @@
 					<a data-toggle="modal" href="#modal-delete" onclick="modal_delete('<?php echo base_url();?>admin/imagem/deletar_imagem/<?php echo $imagem->id;?>')" class='btn btn-default botao-excluir'><i class="icon-trash"></i> </a>
 					<a id="ver-link-<?php echo $imagem->id?>" href=""javascript:void(0)"" class="btn btn-primary" onclick="ver_link(<?php echo $imagem->id ?>,'<?php echo base_url().$imagem->url_imagem.$imagem->nome;?>');return false;">Ver link</a>
 				</div>
-				<?php 
+				<?php
 			}
 		?>
 	<div id="botao-adicionar">
