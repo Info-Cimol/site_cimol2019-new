@@ -12,8 +12,8 @@
 
 
 <script>
-    function confirmar_exclusao(biblioteca_obra) {
-        if (!confirm("Tem certeza que deseja excluir o Patrimonio: " + biblioteca_obra + "?")) {
+    function confirmar_exclusao(Patrimonio) {
+        if (!confirm("Tem certeza que deseja excluir o Patrimonio: " + patrimonio + "?")) {
             return false;
         }
         alert("Patrimonio Excluido com sucesso!");
@@ -22,6 +22,7 @@
 </script>
 <div>      
     <h1>Lista de Patrimonios</h1>
+   
    
     <?= anchor("coordenacao/patrimonio/adicionar", "Adicionar ", array("class" => "btn btn-primary")) ?>
 
@@ -36,16 +37,18 @@
             </thead>
             <?php
             $contador = 0;
+
+
            
-            foreach ($patrimonios as $patrimonio) {
+            foreach ($serv_patrimonio as $serv_patrimonios) {
                 ?>
                 <tbody>
                     <tr>                
-                        <td><?php echo $patrimonio->id_patrimonio ?> </td>                           
-                        <td> <a href="<?php echo base_url() . "coordenacao/patrimonio/lista_item/" . $patrimonio->id_patrimonio ?>"><?php echo $patrimonio->nome?> </a></td>
+                        <td><?php echo $serv_patrimonios->id_patrimonio ?> </td>                           
+                        <td> <a href="<?php echo base_url() . "coordenacao/patrimonio/lista_patrimonio/" . $serv_patrimonios->id_patrimonio ?>"><?php echo $serv_patrimonios->nome?> </a></td>
 
-                        <td><a href="<?php echo base_url() . "coordenacao/patrimonio/excluir/" . $patrimonio->id_patrimonio ?>" onclick="return confirmar_exclusao('<?php echo $patrimonio->id_patrimonio ?>')" class="btn btn-danger">Excluir</a></td>
-                        <td><a href="<?php echo base_url() . "coordenacao/patrimonio/editar/" . $patrimonio->id_patrimonio ?>" onclick=" return ('<?php echo $patrimonio->id_patrimonio?>')" class="btn btn-primary">Editar</a></td>               
+                        <td><a href="<?php echo base_url() . "coordenacao/patrimonio/excluir/" . $serv_patrimonios->id_patrimonio ?>" onclick="return confirmar_exclusao('<?php echo $serv_patrimonios->id_patrimonio ?>')" class="btn btn-danger">Excluir</a></td>
+                        <td><a href="<?php echo base_url() . "coordenacao/patrimonio/editar/" . $serv_patrimonios->id_patrimonio ?>" onclick=" return ('<?php echo $serv_patrimonios->id_patrimonio?>')" class="btn btn-primary">Editar</a></td>               
                     </tr>             <?php $contador++;
                 } ?>
             </tbody>
