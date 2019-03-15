@@ -53,11 +53,13 @@ class Armario extends MX_Controller {
 
 		if (isset($_POST['alugar'])) {
 			$inserir = array(
+			//'armario_id' => $this->input->post('armario_id'),
 			'armario_id' => $this->input->post('armario_id'),
 			'data_fim' => $this->input->post('data_fim'),
 			'data_inicio' => $this->input->post('data_inicio'),
 			'aluno_id' => $this->input->post('aluno_id'),
-			'data_entrega' => null
+			'data_entrega' => null,
+			'curso_id' => $_SESSION['user_data']['curso']
 			);
 
 			//$this->armario_model->alugar($inserir);
@@ -77,6 +79,43 @@ class Armario extends MX_Controller {
 			$this->view->show_view($this->data);	
 		}
 			
+	}
+
+	public function cadastrar_armario(){
+		
+			$data = array(
+			//'armario_id' => $this->input->post('armario_id'),
+			'numero' => $this->input->post('numero'),
+			'curso_id' => $_SESSION['user_data']['curso']
+			);
+
+			$armario = $this->armario_model->cadastrar_armario($data);
+
+			if ($armario[0]->numero > 0) {
+				//$mensagem = "Este armario ja existe";
+				//echo json_encode($mensagem);
+				//$mensagem = "";
+				echo json_encode($armario[0]->numero);
+			}else{
+				//$mensagem = "CADASTROUUU";
+				echo json_encode($armario[0]->numero);
+			}
+			//if ($armario) {	
+				
+				//return;
+				//echo "string";
+				//exit;
+			//}else{
+				//echo "JA TEM";
+				//exit;
+			//	return $mensagem = "jácadastradooooooo";
+				//echo json_encode($mensagem);
+				//echo "Jácadastrado";
+				//$this->data['title']="Cimol - Área de coordenação";
+				//$this->data['content'] = "armario/alugar";		
+				//$this->view->show_view($this->data);
+			//}
+			//return;
 	}
 	
 	// Método que processa a devolução de armário. Após a devolução é carregada a pagina "alugar/alugado" e informa que a devolução foi feita com sucesso.

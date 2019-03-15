@@ -1,3 +1,9 @@
+<style type="text/css">
+    label{
+        font-size: 15px;
+    }
+</style>
+
 <div style="text-align: center;">
     <div>
       <h2>Devolver Armário</h2>
@@ -19,6 +25,7 @@
             <input type="date" class="form-control" id="data_entrega" name="data_entrega" >
         </div>
         <br>
+        <a class="btn btn-danger " href="<?php echo base_url() ?>coordenacao/armario ">Voltar</a>
         <button type="submit" class="btn btn-success btn-lg mr-2" name="devolver">Devolver</button>
     </form>
 </div>

@@ -6,10 +6,12 @@ require_once($this->config->item("base_dir").'public/temas/admin/header.php');
                     <div class="span3">
                         <div class="sidebar">
                             <ul class="widget widget-menu unstyled">
-                                <li class="active"><a href="<?php echo base_url() ?>coordenacao/armario"><i class="menu-icon icon-inbox"></i>Armários
-                                </a></li>
-                                <li><a href="#"><i class="menu-icon icon-book"></i>Livros</a>
-                                </li>
+                                <li class="active"><a href="<?php echo base_url() ?>coordenacao/armario"><i class="menu-icon icon-inbox"></i>Armários</a></li>
+
+                                <li><a href="#"><i class="menu-icon icon-book"></i>Livros</a></li>
+
+                                <li><a href="<?php echo base_url() ?>coordenacao/servicos"><i class="menu-icon icon-cogs"></i>Serviços</a></li>
+
                                 <li><a href="message.html"><i class="menu-icon icon-list"></i>Patrimônio<b class="label green pull-right">
                                     0</b> </a></li>
                                 <li><a href="task.html"><i class="menu-icon icon-globe"></i>Páginas<b class="label orange pull-right">

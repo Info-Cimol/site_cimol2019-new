@@ -96,17 +96,29 @@ class Armario_model extends CI_Model{
 			//$resultado[0]->data_inicio = $inserir['data_inicio'];
 			//$resultado[0]->data_fim = $inserir['data_fim'];
 			//$resultado[0]->data_entrega = $inserir['data_entrega'];
+
+			$dados = array('armario_id' => $data['armario_id'],
+				'aluno_id' => $data['aluno_id'],
+				'data_inicio' => $data['data_inicio'], 
+				'data_fim' => $data['data_fim'], 
+				'data_entrega' => $data['data_entrega']);
 			
 			// Se já houver registro com mesmo ID do aluno e armário, temos que atualizar a tabela
 			$this->db->where('aluno_id', $data['aluno_id']);
 			$this->db->where('armario_id=', $data['armario_id']);
-			$this->db->update('armario_aluno', $data);
+			$this->db->update('armario_aluno', $dados);
 
 			//echo "atualizou";
 			return true;
 		}else{
 			// Caso não há registro, é inserido os dados na tabela
-			$this->db->insert('armario_aluno', $data);
+			$dados = array('armario_id' => $data['armario_id'],
+				'aluno_id' => $data['aluno_id'],
+				'data_inicio' => $data['data_inicio'], 
+				'data_fim' => $data['data_fim'], 
+				'data_entrega' => $data['data_entrega']);
+
+			$this->db->insert('armario_aluno', $dados);
 			//$this->alugar($inserir);
 			//echo $resultado[0]->aluno_id;
 			
@@ -227,12 +239,32 @@ class Armario_model extends CI_Model{
 			//echo "string";
 			return true;
 		}
-			
 			//echo count($resultado);
-		
-
 		return $resultados[] = $resultado ;
+	}
 
+	public function cadastrar_armario($data){
+
+		$this->db->select('count(a.numero) as numero')
+		->from('armario a')
+		->where('a.curso_id=', $data['curso_id'])
+		->where('a.numero=', $data['numero']);
+		$query=$this->db->get();
+		$resultado=$query->result();
+
+		if ($resultado[0]->numero > 0) {
+			//echo "já tem";
+			//return false;
+			return $resultado;
+		}else{
+			$this->db->insert('armario', $data);
+			//return true;
+			//echo "cadastrou ";
+			//exit;
+			return $resultado;
+		}
+
+		return $resultados[] = $resultado;	
 	}
 
 	function buscaArmario($id, $armarios){
