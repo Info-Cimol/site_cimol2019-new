@@ -20,7 +20,7 @@ class Imagem_model extends CI_Model{
     	);
     	$this->db->insert('imagem_evento', $imagem_evento);
     }
-    
+
     function postar_imagem($imagem){
     	$this->db->insert('imagem', $imagem);
     	$this->db->select('id')
@@ -31,7 +31,7 @@ class Imagem_model extends CI_Model{
     	$imagem= $resultado->result();
     	return $imagem[0]->id;
     }
-    
+
     function buscar_imagem($id){
     	$this->db->select('*')
     		->from('imagem i')
@@ -39,8 +39,8 @@ class Imagem_model extends CI_Model{
     		$query = $this->db->get();
     		return $query->result();
     }
-    
-    
+
+
     function buscar_imagem_join($id){
     	$this->db->select('i.*, count(in.imagem_id) as noticia, count(ie.imagem_id) as evento ')
     	->from('imagem i')
@@ -54,7 +54,7 @@ class Imagem_model extends CI_Model{
     	$query = $this->db->get();
     	return $query->result();
     }
-    
+
     function deletar($id){
     	if($this->db->where('id='.$id)
     			->delete('imagem')){
@@ -70,7 +70,7 @@ class Imagem_model extends CI_Model{
     		->join('noticia n', 'in.noticia_id=n.id')
     		->order_by("id", "DESC")
     		->where('n.id', $id);
-    	
+
     		$query = $this->db->get();
     		return $query->result();
     }
@@ -81,7 +81,7 @@ class Imagem_model extends CI_Model{
     	->join('noticia n', 'in.noticia_id=n.id')
     	->order_by("id", "DESC")
     	->where('n.id', $id);
-    	 
+
     	$query = $this->db->get();
     	return $query->result();
     }
@@ -96,6 +96,13 @@ class Imagem_model extends CI_Model{
     function listar_todas_imagens(){
     	$this->db->select('*')
     	->from('imagem')
+    	->order_by("id", "desc");
+    	$query = $this->db->get();
+    	return $query->result();
+    }
+    function listar_url_imagens(){
+    	$this->db->select('i.nome as title, i.url_imagem as value')
+    	->from('imagem i')
     	->order_by("id", "desc");
     	$query = $this->db->get();
     	return $query->result();

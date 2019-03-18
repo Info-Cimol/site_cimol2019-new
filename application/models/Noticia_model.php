@@ -72,7 +72,7 @@ class Noticia_model extends CI_Model{
     		return false;
     	}
     }
-	
+
     function deletar_imagem_noticia($imagem_id, $noticia_id){
     	if($this->db->delete('imagem_noticia', array('imagem_id' => $imagem_id, 'noticia_id'=>$noticia_id))){
     			return true;

@@ -63,7 +63,22 @@ class Noticia extends MX_Controller {
 		$this->view->show_view($this->data);
     }
 
-    public function salvar_noticia(){
+	public function JSON_imagens()
+	{
+		$this->data['title']="Cimol - Área do Administrador";
+		$this->data['content']="noticia/JSON-images";
+		$this->view->show_view($this->data);
+	}
+
+	public function listar_imagens(){
+		$this->load->model('imagem_model');
+		$imagens=$this->imagem_model->listar_url_imagens();
+
+		echo json_encode($imagens);
+	}
+
+    public function salvar_noticia()
+	{
 
 		if($this->input->post("noticia[id]")){
 			$id = $this->input->post("noticia[id]");

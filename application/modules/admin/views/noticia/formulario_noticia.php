@@ -129,7 +129,7 @@ if(isset($noticia)){
 	 theme_advanced_statusbar_location : "bottom",
 	 theme_advanced_resizing : true,
 	 // Drop lists for link/image/media/template dialogs
-	 external_image_list_url : "<?php echo base_url()?>admin/imagem/buscar_todas_imagens",
+	 external_image_list_url : "<?php echo base_url(); ?>public/plugins/tiny_mce/lists/image_list.js",
 	 file_browser_callback : "tinyBrowser",
  });
  </script>

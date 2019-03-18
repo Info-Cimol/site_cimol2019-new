@@ -3,7 +3,7 @@
 <div class="box">
 	<div class="box-content padded">
 		<div class="tab-content">
-            <!----CREATION FORM STARTS---->
+            <!---CREATION FORM STARTS---->
             	<h3 class="editar-imagem-aviso">Clique na imagem para editar o tamanho:</h3>
                 <div class="box-content">
                 	<?php for($i=0; $i<count($imagens);$i++){?>
@@ -18,12 +18,12 @@
 	                		<input id='x2-<?php echo $i?>' type='hidden' name='x2[<?php echo $i?>]'>
 	                		<input id='y2-<?php echo $i?>' type='hidden' name='y2[<?php echo $i?>]'>
 	                		<input type='hidden' name="imagens[<?php echo $i?>]" value="<?php echo $imagens[$i] ?>">
-                		<?php }?>	
+                		<?php }?>
                 			<br/>
                 			<br/>
                 			<input type='submit' value='Salvar' class="botao-editar-imagem btn btn-blue">
-                		</form>    
-                </div>             
+                		</form>
+                </div>
 			<!----CREATION FORM ENDS--->
 		</div>
 	</div>
