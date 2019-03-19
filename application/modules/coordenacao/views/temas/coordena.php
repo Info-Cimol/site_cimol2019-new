@@ -10,7 +10,7 @@ require_once($this->config->item("base_dir").'public/temas/admin/header.php');
 
                                 <li><a href="#"><i class="menu-icon icon-book"></i>Livros</a></li>
 
-                                <li><a href="<?php echo base_url() ?>coordenacao/servicos"><i class="menu-icon icon-cogs"></i>Serviços</a></li>
+                                <li><a href="<?php echo base_url() ?>coordenacao/servico"><i class="menu-icon icon-cogs"></i>Serviços</a></li>
 
                                 <li><a href="message.html"><i class="menu-icon icon-list"></i>Patrimônio<b class="label green pull-right">
                                     0</b> </a></li>
