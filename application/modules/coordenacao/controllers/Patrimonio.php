@@ -19,6 +19,14 @@ class Patrimonio  extends MX_Controller {
   
 
 	}
+  public function lista_item() {
+   
+    //$this->load->view("template",$dados);
+     $this->data['content']="patrimonio/lista_item"; 
+       
+        $this->data["serv_patrimonio"]= $this->Patrimonio_model->lista_Item()->result();  
+        $this->view->show_view($this->data);
+}
 
 
 
@@ -29,6 +37,7 @@ class Patrimonio  extends MX_Controller {
        
         $this->data["serv_patrimonio"]= $this->Patrimonio_model->listaPatrimonio()->result();  
         $this->view->show_view($this->data);
+
 }
 
 	public function cadastro_patrimonio() {
@@ -71,9 +80,12 @@ public function salvar(){
 }
 
 public function adicionar(){
+  //echo "string";
+  //exit;
 $this->load->model("Patrimonio_model");
   $this->Patrimonio_model->adicionar();
   redirect('coordenacao/patrimonio');
+
 }
 
 }

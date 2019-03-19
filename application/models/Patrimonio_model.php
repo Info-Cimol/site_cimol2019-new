@@ -9,9 +9,9 @@ class Patrimonio_model extends CI_Model{
         
         
     }  
-    public function listaItem() {
+    public function lista_Item() {
         
-        return $this->db->get('serv_item');
+        return $this->db->get('serv_item_patrimonio');
         
         
         
@@ -60,12 +60,10 @@ class Patrimonio_model extends CI_Model{
 
     public function adicionar(){
 
-        $this->db->where("id_patrimonio",$id)-get("serv_patrimonio");
-
+        //$this->db->where("id_item",$id)-get("serv_item_patrimonio");
         $valores=array(
-            "id_patrimonio"=>$this->input->post("id_patrimonio"),
-                    "nome" =>$this->input->post("nome"),
-                    "id_item"=>$this->input->post("id_item"),
+            
+                   "serv_patrimonio_id_patrimonio"=>$this->input->post("id_patrimonio"),
                     "numero_serie" =>$this->input->post("numero_serie"),
                     "codigo"=>$this->input->post("codigo"),
                    
@@ -75,6 +73,8 @@ class Patrimonio_model extends CI_Model{
 
 
             );
+          $this->db->insert("serv_item_patrimonio",$valores);
+        
 
 
 
