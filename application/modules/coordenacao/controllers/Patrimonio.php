@@ -82,6 +82,7 @@ public function salvar(){
 public function adicionar(){
   //echo "string";
   //exit;
+
 $this->load->model("Patrimonio_model");
   $this->Patrimonio_model->adicionar();
   redirect('coordenacao/patrimonio');

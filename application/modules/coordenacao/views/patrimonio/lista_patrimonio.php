@@ -44,6 +44,10 @@ $nome = isset($serv_patrimonio->nome) ? $patrimonio->nome : "";
                 <tr>           
                     <th scope="col">id patrimonio</th>                     
                     <th scope="col">Nome Patrimonio</th>
+                    <th scope="col">Numero de Série</th>                     
+                    <th scope="col">Código</th>
+                    <th scope="col"></th>                     
+                    
 
                    
                 <tr>
@@ -57,7 +61,7 @@ $nome = isset($serv_patrimonio->nome) ? $patrimonio->nome : "";
                 ?>
                 <tbody>
                     <tr>                
-                        <td><?php echo $serv_patrimonios->id_patrimonio ?> </td>                           
+                        <td><?php echo $serv_patrimonios->id_patrimonio?> </td>                           
                         <td> <a onclick="adicionar_item_modal(<?php echo $serv_patrimonios->id_patrimonio ?>)"  data-toggle="modal" data-target="#exampleModal" ><?php echo $serv_patrimonios->nome?> </a></td>
 
                         <td><a href="<?php echo base_url() . "coordenacao/patrimonio/excluir/" . $serv_patrimonios->id_patrimonio ?>" onclick="return confirmar_exclusao('<?php echo $serv_patrimonios->id_patrimonio ?>')" class="btn btn-danger">Excluir</a></td>
@@ -94,6 +98,11 @@ $nome = isset($serv_patrimonio->nome) ? $patrimonio->nome : "";
                     <label for="exampleInputPassword1">Código</label>
                     <input type="text" class="form-control" id="codigo"  name="codigo"  placeholder="Código">
                   </div>
+
+                  <div class="form-group">
+                    <label for="numero_Serie">descrição</label>
+                    <input type="text" class="form-control" id="" aria-describedby="emailHelp" name="descricao" placeholder="local">
+
                   <input type="hidden" class="form-control" id="id_patrimonio"  name="id_patrimonio"   value="" placeholder="Código">
                 
 
