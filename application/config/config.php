@@ -19,7 +19,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 //alterado
 $config['base_url'] = 'http://localhost/projetos/site_cimol2019-new/';
-$config['base_dir'] = '/opt/lampp/htdocs/projetos/site_cimol2019-new/';
+$config['base_dir'] = 'C:/xampp/htdocs/projetos/site_cimol2019-new/';
 $config['tema']['coordenacao'] = 'coordena';
 $config['tema']['admin'] = 'admin';
 $config['tema']['site'] = 'cimol';
