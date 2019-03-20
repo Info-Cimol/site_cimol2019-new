@@ -387,18 +387,39 @@
             dataType: 'json',
             data:{codigo:codigo},
             success:function(data){
-            	//alert(data[0].num_serie); 	
-                $('#codigo').html('<h5 class="font-strong mb-4" style="margin-left: 20px;">'+ data[0].codigo +'</h5>');
+            	alert(data[0].local);
+            	if (data[0].codigo != null) {
+            		$('#codigo').html('<h5 class="font-strong mb-4" style="margin-left: 20px;">'+ data[0].codigo +'</h5>');	
+            	} 	
+                
                 $('#nome').html('<h5 class="font-strong mb-4" style="margin-left: 20px;">'+ data[0].nome +'</h5>');
 
                 var d = new Date(data[0].data_abertura);
                 data_abertura = (d.toLocaleDateString());
                 $('#data_abertura').html('<h5 class="font-strong mb-4" style="margin-left: 20px;">'+ data_abertura +'</h5>');
-                $('#data_atendimento').html('<h5 class="font-strong mb-4" style="margin-left: 20px;">'+ data[0].data_atendimento +'</h5>');
-                $('#data_solucao').html('<h5 class="font-strong mb-4" style="margin-left: 20px;">'+ data[0].data_solucao +'</h5>');
-                $('#local').html('<h5 class="font-strong mb-4" style="margin-left: 20px;">'+ data[0].local +'</h5>');
-                $('#defeito').html('<h5 class="font-strong mb-4" style="margin-left: 20px;">'+ data[0].defeito +'</h5>');
-                $('#solucao').html('<h5 class="font-strong mb-4" style="margin-left: 20px;">'+ data[0].solucao +'</h5>');
+
+                if (data[0].data_atendimento != null) {
+                	$('#data_atendimento').html('<h5 class="font-strong mb-4" style="margin-left: 20px;">'+ data[0].data_atendimento +'</h5>');	
+                }
+
+                if (data[0].data_solucao != null) {
+                	$('#data_solucao').html('<h5 class="font-strong mb-4" style="margin-left: 20px;">'+ data[0].data_solucao +'</h5>');	
+                }
+
+				if (isset(data[0].local) && (data[0].local =! null)) {
+                	$('#local').html('<h5 class="font-strong mb-4" style="margin-left: 20px;">'+ data[0].local +'</h5>');	
+                }                
+                //$('#local').html('<h5 class="font-strong mb-4" style="margin-left: 20px;">'+ data[0].local +'</h5>');
+
+                if (data[0].defeito != null) {
+                	$('#defeito').html('<h5 class="font-strong mb-4" style="margin-left: 20px;">'+ data[0].defeito +'</h5>');	
+                }
+                //$('#defeito').html('<h5 class="font-strong mb-4" style="margin-left: 20px;">'+ data[0].defeito +'</h5>');
+
+                if (data[0].solucao != null) {
+                	$('#solucao').html('<h5 class="font-strong mb-4" style="margin-left: 20px;">'+ data[0].data_solucao +'</h5>');	
+                }
+                //$('#solucao').html('<h5 class="font-strong mb-4" style="margin-left: 20px;">'+ data[0].solucao +'</h5>');
                 $('#status').html('<h5 class="font-strong mb-4" style="margin-left: 20px;">'+ data[0].status +'</h5>');
                 //$('#num_serie').html('UIUIUYGBNMK');
             }
@@ -442,9 +463,9 @@
 	            	}
 
 	            	if (data[0].local != null) {
-	            		$('#local').html('<input class="form-control" type="date" value='+local+' name="local" style="width: 250px">');
+	            		$('#local').html('<input class="form-control" type="text" value='+local+' name="local" style="width: 250px">');
 	            	}else{
-	            		$('#local').html('<input class="form-control" type="date" name="local" style="width: 250px">');
+	            		$('#local').html('<input class="form-control" type="text" name="local" style="width: 250px">');
 	            	}	         		
 
 

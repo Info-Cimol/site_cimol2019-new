@@ -3,8 +3,32 @@ class Servico_model extends CI_Model{
 	
 	public function abrir_chamado($dados){
 
+
+		$this->db->select('count(codigo_equipamento) as codigo')
+		->from('serv_chamado c')
+		//->join('serv_equipamento e','e.codigo=c.codigo_equipamento')
+		->where('c.codigo_equipamento=', $dados['codigo_equipamento']);
+		//->where('aa.data_entrega=', null);
+		$query=$this->db->get();
+		$resultado=$query->result();
+		
+		if ($resultado[0]->codigo > 0) {
+			//echo "Já tem";
+			//exit;
+			
+			return $dados['codigo_equipamento'];
+		}else{
+			//echo "Não achou";
+			//$resultado->codigo
+			//exit;
+			return $dados['codigo_equipamento'];
+		}
+
+		return $resultados[] = $resultado ;
+
 		$dados_chamado = array(
-			'equipamento_codigo' => $dados['equipamento_codigo'],
+			'codigo_equipamento' => $dados['codigo_equipamento'],
+			'id_equipamento' => $dados['id_equipamento'],
 			'status' => 'pendente',
 			'data_abertura' => date('Y-m-d'),
 			'defeito' => $dados['defeito'],
@@ -13,7 +37,7 @@ class Servico_model extends CI_Model{
 		$this->db->insert('serv_chamado', $dados_chamado);
 		
 		$dados_equipamento = array(
-			'codigo' => $dados['equipamento_codigo'],
+			'codigo' => $dados['codigo_equipamento'],
 			'num_serie' => $dados['num_serie'],
 			'nome' => $dados['nome'],
 			'descricao' => $dados['descricao'],
@@ -50,8 +74,8 @@ class Servico_model extends CI_Model{
 
 			$this->db->select('*')
 			->from('serv_chamado c')
-			->join('serv_equipamento e','e.codigo=c.equipamento_codigo')
-			->where('c.equipamento_codigo=', $dados['equipamento_codigo']);
+			->join('serv_equipamento e','e.codigo=c.codigo_equipamento')
+			->where('c.codigo_equipamento=', $dados['codigo_equipamento']);
 			//->where('aa.data_entrega=', null);
 			$query=$this->db->get();
 			$resultado=$query->result();
@@ -60,7 +84,7 @@ class Servico_model extends CI_Model{
 			
 			$this->db->select('e.*, c.*')
 			->from('serv_chamado c')
-			->join('serv_equipamento e','e.codigo=c.equipamento_codigo')
+			->join('serv_equipamento e','e.codigo=c.codigo_equipamento')
 			//->where('c.equipamento_codigo=', $dados['equipamento_codigo'])
 			->where('c.status!=', 'finalizado');
 			$this->db->order_by('c.data_abertura');
@@ -71,12 +95,12 @@ class Servico_model extends CI_Model{
 					
 	}
 
-	public function busca_detalhes($equipamento_codigo){
+	public function busca_detalhes($codigo_equipamento){
 
 		$this->db->select('e.*, c.*')
 		->from('serv_chamado c')
-		->join('serv_equipamento e','e.codigo=c.equipamento_codigo')
-		->where('c.equipamento_codigo=', $equipamento_codigo);
+		->join('serv_equipamento e','e.codigo=c.codigo_equipamento')
+		->where('c.codigo_equipamento=', $codigo_equipamento);
 		//->where('aa.data_entrega=', null);
 		$query=$this->db->get();
 		$resultado=$query->result();
@@ -100,7 +124,7 @@ class Servico_model extends CI_Model{
 				
 				$this->db->select('*')
 				->from('serv_chamado c')
-				->join('serv_equipamento e','e.codigo=c.equipamento_codigo');
+				->join('serv_equipamento e','e.codigo=c.codigo_equipamento');
 				//->where('c.equipamento_codigo=', $dados['equipamento_codigo'])
 				//->where('c.status!=', '');
 				$query=$this->db->get();
@@ -110,7 +134,7 @@ class Servico_model extends CI_Model{
 
 						$this->db->select('*')
 			->from('serv_chamado c')
-			->join('serv_equipamento e','e.codigo=c.equipamento_codigo')
+			->join('serv_equipamento e','e.codigo=c.codigo_equipamento')
 			//->where('c.equipamento_codigo=', $dados['equipamento_codigo'])
 			->where('c.status=', $status);
 			$query=$this->db->get();

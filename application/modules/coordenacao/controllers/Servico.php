@@ -50,16 +50,32 @@ class Servico extends MX_Controller {
 	public function abrir_chamado_submit(){
 		
 		$dados = array(
-			'equipamento_codigo' => $this->input->post('codigo'),
+			'codigo_equipamento' => $this->input->post('codigo'),
+			'id_equipamento' => 3,
 			'num_serie' => $this->input->post('num_serie'),
-			'nome' => $this->input->post('nome'),
-			'descricao' => $this->input->post('descricao'),
+			'nome' => $this->input->post('equipamento'),
+			//'descricao' => $this->input->post('descricao'),
 			'status' => 'pendente',
 			'data_abertura' => date('Y-m-d'),
 			'defeito' => $this->input->post('defeito'), 
 		);
 
-		$abrir = $this->servico_model->abrir_chamado($dados);
+		//echo json_encode($dados);
+
+		$chamado = $this->servico_model->abrir_chamado($dados);
+
+		echo json_encode($chamado);
+
+		/*
+		if ($this->data['chamado'] == true) {
+			$teste = "já tem";
+			echo json_encode($teste);
+			return;
+		}else{
+			$teste2 = "Nao tem";
+			echo json_encode($teste2);
+			return;
+		}
 
 		if (isset($abrir)) {
 
@@ -69,6 +85,7 @@ class Servico extends MX_Controller {
 		}else{
 			echo "string";
 		}
+		*/
 
 	}
 
