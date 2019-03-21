@@ -58,3 +58,6 @@ $route['admin/horario_turma/(:num)/(:any)'] = 'horario_turma/index/$1/$2';
 $route['default_controller'] = 'site/inicio';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
+
+
+$route['admin/usuario'] = 'usuario';

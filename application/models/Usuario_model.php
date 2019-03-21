@@ -179,6 +179,7 @@ class Usuario_model extends CI_Model{
 			return false;
 		}
 	}
+
 	
 	function buscarPermissaoAdmin($admin_id){
 		$this->db->select("p.*")
@@ -188,9 +189,151 @@ class Usuario_model extends CI_Model{
 		$query=$this->db->get();
 		return $query->result();
 	}
-	
-	function listarUsuarios(){
-		$usuarios;
+
+
+    function listarUsuarios(){
+        $this->db->select("u.id, u.pessoa_id, p.nome, u.status, p.foto")
+            ->from('usuario u')
+            ->join('pessoa p','p.id = u.pessoa_id');
+        $query = $this->db->get();
+        $usuarios = $query->result_array();
+
+        $result = array();
+
+        if(count($usuarios)>0){
+            foreach ($usuarios as $usuario){
+
+                /*/  email  /*/
+                $emails = $this->usuarioEmail($usuario['id']);
+                $emails = json_decode(json_encode($emails), True);
+                $usuario['emails'] = $emails;
+
+                /*/  permissoes  /*/
+                $permissoes = $this->usuarioPermissoes($usuario['id']);
+                $permissoes = json_decode(json_encode($permissoes), True);
+                $usuario['permissoes'] = $permissoes;
+
+                /*/  servidor  /*/
+                $servidor = $this->usuarioServidor($usuario['pessoa_id']);
+                $servidor = json_decode(json_encode($servidor), True);
+                $usuario['servidor'] = $servidor;
+
+                /*/  é aluno  /*/
+                $aluno = $this->usuarioAluno($usuario['pessoa_id']);
+                $usuario['aluno'] = $aluno;
+
+                /*/  é professor  /*/
+                $professor = $this->usuarioProfessor($usuario['pessoa_id']);
+                $usuario['professor'] = $professor;
+
+                print_r($usuario);
+                array_push($result, $usuario);
+            }
+
+        }
+        return $result;
+    }
+
+    function usuarioEmail($usuario_id){
+        $this->db->select("e.email")
+            ->from("email e")
+            ->join("pessoa p","p.id=e.pessoa_id")
+            ->where("p.id", $usuario_id);
+        $query=$this->db->get();
+        $result = $query->result();
+        $result = json_decode(json_encode($result), True);
+
+        $retorno = array();
+        foreach ($result as $array){
+            array_push($retorno, $array['email']);
+        }
+
+        return $retorno;
+
+    }
+
+    function usuarioPermissoes($usuario_id){
+        $this->db->select("perm.permissao_id")
+            ->from("permissao_admin perm")
+            ->join("administrador adm","perm.admin_id = adm.pessoa_id")
+            ->where("adm.pessoa_id", $usuario_id);
+        $query=$this->db->get();
+        $result = $query->result();
+        $result = json_decode(json_encode($result), True);
+
+        $retorno = array();
+        foreach ($result as $array){
+            array_push($retorno, $array['permissao_id']);
+        }
+
+        return $retorno;
+    }
+
+    function usuarioAluno($pessoa_id){
+        $this->db->select("a.id")
+            ->from("aluno a")
+            ->join("pessoa p","a.pessoa_id = p.id")
+            ->where("p.id", $pessoa_id);
+        $query=$this->db->get();
+        $aluno = $query->result();
+
+        if(count($aluno)){
+            return 1;
+        }
+        else{
+            return 0;
+        }
+
+    }
+
+    function usuarioServidor($pessoa_id){
+        $this->db->select("serv.id_servidor")
+            ->from("servidor_pessoa serv")
+            ->join("pessoa p","serv.id_pessoa = p.id")
+            ->where("p.id", $pessoa_id);
+        $query=$this->db->get();
+        $result = $query->result();
+        $result = json_decode(json_encode($result), True);
+
+        $servidor = array();
+        foreach ($result as $array){
+            array_push($servidor, $array['id_servidor']);
+        }
+
+        return $servidor;
+    }
+
+    function usuarioProfessor($pessoa_id){
+        $this->db->select("pr.id")
+            ->from("professor pr")
+            ->join("pessoa p","pr.pessoa_id = p.id")
+            ->where("p.id", $pessoa_id);
+        $query=$this->db->get();
+        $professor = $query->result();
+
+        $this->db->select("cc.curso_id")
+            ->from("coordenador_curso cc")
+            ->join("professor pr","cc.professor_id = pr.id")
+            ->join("pessoa p", "pr.pessoa_id = p.id")
+            ->where("p.id", $pessoa_id);
+        $query=$this->db->get();
+        $coordenador = $query->result();
+
+        if(count($professor)){
+            if(count($coordenador)){
+                return 2;
+            }
+            return 1;
+        }
+        else{
+            return 0;
+        }
+
+    }
+
+
+
+	function listarUsuarios2(){
 		$query="select u.id, u.pessoa_id, p.nome, u.status, p.foto
 			from usuario u
 			left join pessoa p on p.id=u.pessoa_id";

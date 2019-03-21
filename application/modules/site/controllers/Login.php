@@ -14,8 +14,8 @@ class Login extends MX_Controller{
 			$this->data['content']="usuario/formulario_login";
 			$this->view->show_view($this->data);
 		}else if(in_array('admin', $this->user_data['permissoes'])){
-				print_r($_SESSION['user_data']['permissoes']);
-			}
+            redirect('perfil', 'refresh');
+		}
 	}
 	function autenticar(){
 		$this->load->model('login_model');
