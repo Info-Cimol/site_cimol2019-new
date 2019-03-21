@@ -6,8 +6,8 @@
       <div class="modal-header">
         <h3 class="modal-title" id="exampleModalLabel">Editar Chamado</h3>
       </div>
-      <div class="modal-body">
-        <form>
+      <div class="modal-body" id="modal_body">
+        <form method="post" id="formulario_editar">
 
         	<table style="width: 100%">
         		
@@ -37,7 +37,7 @@
         			</td>
         		</tr>
 
-        		        		<tr style="margin-bottom: 20px;">
+        		<tr>
         			<td style="width: 30%; text-align: center;">
         				<div class="form-group" style="margin-bottom: 10px;">
 				            <div class="input-group">
@@ -55,8 +55,8 @@
         				<div class="form-group" style="margin-bottom: 10px;">
 				            <div class="input-group">
 				                <span class="input-icon input-icon-left">Solução</span>
-				                <td style="width: 70%; text-align: left;">
-				                	<textarea class="form-control" type="text" name="solucao" rows="2" style="width: 230px;"></textarea>
+				                <td style="width: 70%; text-align: left;" id="solucao">
+				                	
 						        </td>
 				            </div>
 				        </div>
@@ -100,20 +100,27 @@
         				<div class="form-group" style="margin-bottom: 10px;">
 				            <div class="input-group">
 				                <span class="input-icon input-icon-left">Local</span>
-				                <td style="width: 70%; text-align: left;">
-				                	<input class="form-control" type="text" name="local_descricao" style="width: 250px">
+				                <td style="width: 70%; text-align: left;" id="local">
+				                	
 				                </td>
 				            </div>
 				        </div>
         			</td>
         		</tr>
+
+        		<div id="id_equipamento"></div>
+        		<div id="codigo"></div>
+
+        		
+
         	</table>       
-        </form>
+        
       </div>
-      <div class="modal-footer" style="text-align: center;">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Sair</button>
-        <button type="button" class="btn btn-primary">Editar</button>
-      </div>
+		      <div class="modal-footer" style="text-align: center;">
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Sair</button>
+		        <button type="submit" class="btn btn-primary">Editar</button>
+		      </div>
+		</form>      
     </div>
   </div>
 </div>
@@ -135,7 +142,7 @@
         				<div class="form-group" style="margin-bottom: 10px;">
 				            <div class="input-group">
 				                <span class="input-icon input-icon-left">Código :</span>
-				                <td style="width: 70%; text-align: left;" id="codigo">
+				                <td style="width: 70%; text-align: left;" id="detalhes_codigo">
 				                	
 				                </td>
 				            </div>
@@ -148,7 +155,7 @@
         				<div class="form-group" style="margin-bottom: 10px;">
 				            <div class="input-group">
 				                <span class="input-icon input-icon-left">Equipamento :</span>
-				                <td style="width: 70%; text-align: left;" id="nome">
+				                <td style="width: 70%; text-align: left;" id="detalhes_nome">
 	
 						        </td>
 				            </div>
@@ -161,7 +168,7 @@
         				<div class="form-group" style="margin-bottom: 10px;">
 				            <div class="input-group">
 				                <span class="input-icon input-icon-left">Nº Série :</span>
-				                <td style="width: 70%; text-align: left;" id="num_serie">
+				                <td style="width: 70%; text-align: left;" id="detalhes_num_serie">
 
 						        </td>
 				            </div>
@@ -174,7 +181,7 @@
         				<div class="form-group" style="margin-bottom: 10px;">
 				            <div class="input-group">
 				                <span class="input-icon input-icon-left">Data de Abertura :</span>
-				                <td style="width: 70%; text-align: left;" id="data_abertura">
+				                <td style="width: 70%; text-align: left;" id="detalhes_data_abertura">
 	
 						        </td>
 				            </div>
@@ -187,7 +194,7 @@
         				<div class="form-group" style="margin-bottom: 10px;">
 				            <div class="input-group">
 				                <span class="input-icon input-icon-left">Data de Atendimento :</span>
-				                <td style="width: 70%; text-align: left;" id="data_atendimento">
+				                <td style="width: 70%; text-align: left;" id="detalhes_data_atendimento">
 
 						        </td>
 				            </div>
@@ -200,7 +207,7 @@
         				<div class="form-group" style="margin-bottom: 10px;">
 				            <div class="input-group">
 				                <span class="input-icon input-icon-left">Data de Solução :</span>
-				                <td style="width: 70%; text-align: left;" id="data_solucao">
+				                <td style="width: 70%; text-align: left;" id="detalhes_data_solucao">
 
 						        </td>
 				            </div>
@@ -213,7 +220,7 @@
         				<div class="form-group" style="margin-bottom: 10px;">
 				            <div class="input-group">
 				                <span class="input-icon input-icon-left">Local :</span>
-				                <td style="width: 70%; text-align: left;" id="local">
+				                <td style="width: 70%; text-align: left;" id="detalhes_local">
 	
 						        </td>
 				            </div>
@@ -226,7 +233,7 @@
         				<div class="form-group" style="margin-bottom: 10px;">
 				            <div class="input-group">
 				                <span class="input-icon input-icon-left">Defeito :</span>
-				                <td style="width: 70%; text-align: left;" id="defeito">
+				                <td style="width: 70%; text-align: left;" id="detalhes_defeito">
 				                	
 						        </td>
 				            </div>
@@ -239,7 +246,7 @@
         				<div class="form-group" style="margin-bottom: 10px;">
 				            <div class="input-group">
 				                <span class="input-icon input-icon-left">Solução :</span>
-				                <td style="width: 70%; text-align: left;" id="solucao">
+				                <td style="width: 70%; text-align: left;" id="detalhes_solucao">
 				                	
 						        </td>
 				            </div>
@@ -252,13 +259,14 @@
         				<div class="form-group" style="margin-bottom: 10px;">
 				            <div class="input-group">
 				                <span class="input-icon input-icon-left">Status :</span>
-				                <td style="width: 70%; text-align: left;" id="status">
+				                <td style="width: 70%; text-align: left;" id="detalhes_status">
 	
 						        </td>
 				            </div>
 				        </div>
         			</td>
         		</tr>
+
         	</table>       
         </form>
       </div>
@@ -388,39 +396,42 @@
             data:{codigo:codigo},
             success:function(data){
             	alert(data[0].local);
+
             	if (data[0].codigo != null) {
-            		$('#codigo').html('<h5 class="font-strong mb-4" style="margin-left: 20px;">'+ data[0].codigo +'</h5>');	
+            		$('#detalhes_codigo').html('<h5 class="font-strong mb-4" style="margin-left: 20px;">'+ data[0].codigo +'</h5>');	
             	} 	
                 
-                $('#nome').html('<h5 class="font-strong mb-4" style="margin-left: 20px;">'+ data[0].nome +'</h5>');
+                $('#detalhes_nome').html('<h5 class="font-strong mb-4" style="margin-left: 20px;">'+ data[0].nome +'</h5>');
+
+                $('#detalhes_num_serie').html('<h5 class="font-strong mb-4" style="margin-left: 20px;">'+ data[0].num_serie +'</h5>');
 
                 var d = new Date(data[0].data_abertura);
                 data_abertura = (d.toLocaleDateString());
-                $('#data_abertura').html('<h5 class="font-strong mb-4" style="margin-left: 20px;">'+ data_abertura +'</h5>');
+                $('#detalhes_data_abertura').html('<h5 class="font-strong mb-4" style="margin-left: 20px;">'+ data_abertura +'</h5>');
 
                 if (data[0].data_atendimento != null) {
-                	$('#data_atendimento').html('<h5 class="font-strong mb-4" style="margin-left: 20px;">'+ data[0].data_atendimento +'</h5>');	
+                	$('#detalhes_data_atendimento').html('<h5 class="font-strong mb-4" style="margin-left: 20px;">'+ data[0].data_atendimento +'</h5>');	
                 }
 
                 if (data[0].data_solucao != null) {
-                	$('#data_solucao').html('<h5 class="font-strong mb-4" style="margin-left: 20px;">'+ data[0].data_solucao +'</h5>');	
+                	$('#detalhes_data_solucao').html('<h5 class="font-strong mb-4" style="margin-left: 20px;">'+ data[0].data_solucao +'</h5>');	
                 }
 
 				if (isset(data[0].local) && (data[0].local =! null)) {
-                	$('#local').html('<h5 class="font-strong mb-4" style="margin-left: 20px;">'+ data[0].local +'</h5>');	
+                	$('#detalhes_local').html('<h5 class="font-strong mb-4" style="margin-left: 20px;">'+ data[0].local +'</h5>');	
                 }                
                 //$('#local').html('<h5 class="font-strong mb-4" style="margin-left: 20px;">'+ data[0].local +'</h5>');
 
                 if (data[0].defeito != null) {
-                	$('#defeito').html('<h5 class="font-strong mb-4" style="margin-left: 20px;">'+ data[0].defeito +'</h5>');	
+                	$('#detalhes_defeito').html('<h5 class="font-strong mb-4" style="margin-left: 20px;">'+ data[0].defeito +'</h5>');	
                 }
                 //$('#defeito').html('<h5 class="font-strong mb-4" style="margin-left: 20px;">'+ data[0].defeito +'</h5>');
 
                 if (data[0].solucao != null) {
-                	$('#solucao').html('<h5 class="font-strong mb-4" style="margin-left: 20px;">'+ data[0].data_solucao +'</h5>');	
+                	$('#detalhes_solucao').html('<h5 class="font-strong mb-4" style="margin-left: 20px;">'+ data[0].data_solucao +'</h5>');	
                 }
                 //$('#solucao').html('<h5 class="font-strong mb-4" style="margin-left: 20px;">'+ data[0].solucao +'</h5>');
-                $('#status').html('<h5 class="font-strong mb-4" style="margin-left: 20px;">'+ data[0].status +'</h5>');
+                $('#detalhes_status').html('<h5 class="font-strong mb-4" style="margin-left: 20px;">'+ data[0].status +'</h5>');
                 //$('#num_serie').html('UIUIUYGBNMK');
             }
        })
@@ -438,41 +449,86 @@
 	            data:{codigo:codigo},
 	            success:function(data){
 	            	//alert(data[0].defeito);
-	            	$('#defeito').html('<textarea class="form-control"  name="defeito" style="width: 230px" row="2" value='+data[0].defeito+'></textarea>');
+	            	console.log(data);
+	            	//$('#defeito').html('<textarea name="defeito" style="width: 230px" row="2" >'+data[0].defeito+'</textarea>');
 
-	            	if (data[0].solucao =! null) {
-	            		$('#solucao').html('<textarea class="form-control"  name="solucao" style="width: 230px" row="2" value='+data[0].defeito+'></textarea>');	
+	            	$('#defeito').html('<textarea class="form-control" id="defeito" name="defeito" rows="2" style="width: 230px;">'+data[0].defeito+'</textarea>');
+
+	            	//if (data[0].solucao =! null) {
+	            	//	$('#solucao').html('<textarea class="form-control"  name="solucao" style="width: 230px" row="2" value='+data[0].defeito+'></textarea>');	
+	            	//}else{
+	            	//	$('#solucao').html('<textarea class="form-control"  name="solucao" style="width: 230px" row="2">lklk</textarea>');
+	            	//}
+
+	            	if (data[0].solucao == null) {
+	            		$('#solucao').html('<textarea class="form-control" name="solucao" rows="2" style="width: 230px;"></textarea>');
 	            	}else{
-	            		$('#solucao').html('<textarea class="form-control"  name="solucao" style="width: 230px" row="2"></textarea>');
+	            		$('#solucao').html('<textarea class="form-control" name="solucao" rows="2" style="width: 230px;">'+data[0].solucao+'</textarea>');
 	            	}
 	            	
-	            	$('#num_serie').html('<input class="form-control" type="text" value='+data[0].num_serie+' name="num_serie" style="width: 250px">');
+	           		if (data[0].num_serie == null) {
+	           			$('#num_serie').html('<input class="form-control" type="text" name="num_serie" style="width: 250px">');
+	           		}else{
+	           			$('#num_serie').html('<input class="form-control" type="text" value='+data[0].num_serie+' name="num_serie" style="width: 250px">');
+	           		} 	
 	            	
-	            	$('#status').html('<select style="width: 265px"><option>'+data[0].status+'</option><option>Pendente</option><option>Aguardando peça</option><option>Aguardando orçamento</option><option>Finalizado</option></select>');
 	            	
-	            	if (data[0].data_atendimento != null) {
-	            		$('#data_atendimento').html('<input class="form-control" type="date" value='+data[0].data_atendimento+' name="data_atendimento" style="width: 250px">');
-	            	}else{
+	            	$('#status').html('<select style="width: 265px" name="status"><option>'+data[0].status+'</option><option>Pendente</option><option>Aguardando peça</option><option>Aguardando orçamento</option><option>Finalizado</option></select>');
+	            	
+	            	if (data[0].data_atendimento == null) {
 	            		$('#data_atendimento').html('<input class="form-control" type="date" name="data_atendimento" style="width: 250px">');
-	            	}
-
-	            	if (data[0].data_solucao != null) {
-	            		$('#data_solucao').html('<input class="form-control" type="date" value='+data[0].data_solucao+' name="data_solucao" style="width: 250px">');
 	            	}else{
-	            		$('#data_solucao').html('<input class="form-control" type="date" name="data_solucao" style="width: 250px">');
+	            		$('#data_atendimento').html('<input class="form-control" type="date" name="data_atendimento" style="width: 250px" value='+data[0].data_atendimento+'>');
 	            	}
 
+	            	if (data[0].data_solucao == null) {
+	            		$('#data_solucao').html('<input class="form-control" type="date" name="data_solucao" style="width: 250px">');
+	            	}else{
+	            		$('#data_solucao').html('<input class="form-control" value='+data[0].data_solucao+' type="date" name="data_solucao" style="width: 250px">');
+	            	}
+
+	            	
+	            	
 	            	if (data[0].local != null) {
-	            		$('#local').html('<input class="form-control" type="text" value='+local+' name="local" style="width: 250px">');
+	            		$('#local').html('<input class="form-control" type="text" value='+data[0].local+' name="local" style="width: 250px">');
 	            	}else{
 	            		$('#local').html('<input class="form-control" type="text" name="local" style="width: 250px">');
-	            	}	         		
+	            	}
+	            		         		
 
+	            	$('#id_equipamento').html('<input type="hidden" name="id_equipamento" value="9">');
+
+	            	$('#codigo').html('<input type="hidden" name="codigo" value='+data[0].codigo+' >');
 
 	            }
        		})
 
 	}
+
+	$('#formulario_editar').submit(function(e){
+		e.preventDefault();
+		var data_atendimento = $('input[name=data_atendimento]').val();
+		var data_solucao = $('input[name=data_solucao]').val();
+		var defeito = $('textarea[name=defeito]').val();
+		var solucao = $('textarea[name=solucao]').val();
+		var status = $('select[name=status]').val();
+		var num_serie = $('input[name=num_serie]').val();
+		var local = $('input[name=local]').val();
+		var id_equipamento = $('input[name=id_equipamento]').val();
+		var codigo = $('input[name=codigo]').val();
+
+		//alert($('input[name=local]').val());
+		$.ajax({
+            url:"<?php echo base_url() ?>coordenacao/servico/editar_chamado",
+            method:"POST",
+            dataType: 'json',
+            data:{codigo:codigo, data_atendimento:data_atendimento, data_solucao:data_solucao, defeito:defeito, solucao:solucao, status:status, num_serie:num_serie, local:local},
+            success:function(data){
+            	//alert('CERTO');
+            	$('#modal_body').html('<div class="text-align:center;"><h3 style="text-align:center">Alterado com sucesso!</h3><br><br><a type="button" href="<?php echo base_url() ?>coordenacao/servico/index" class="btn btn-primary">Sair</a></div>');
+            }
+       })
+	})
 
 
 </script>

@@ -60,8 +60,6 @@ class Servico extends MX_Controller {
 			'defeito' => $this->input->post('defeito'), 
 		);
 
-		//echo json_encode($dados);
-
 		$chamado = $this->servico_model->abrir_chamado($dados);
 
 		echo json_encode($chamado);
@@ -101,16 +99,8 @@ class Servico extends MX_Controller {
 	public function busca_detalhes(){
 
 		// Da pra buscar todos nesta funcao, passando o item escolhido pelo select e fazer a busca e retornar um json
-		//$da = array(
-		//	'equipamento_codigo' => $this->input->post('codigo'),
-		//);
-		//$teste = $this->input->post('codigo');
-
-		//echo $teste;
-		//exit;
 
 		$dados = $this->servico_model->busca_detalhes($this->input->post('codigo'));
-
 		echo json_encode($dados);
 
 	}
@@ -130,8 +120,29 @@ class Servico extends MX_Controller {
 		);
 
 		$this->servico_model->finalizar_chamado($dados);
-
 		$this->index();
+
+	}
+
+	public function editar_chamado(){
+
+		$dados = array(
+			'codigo' => $this->input->post('codigo'),
+			'id_equipamento' => 3,
+			'num_serie' => $this->input->post('num_serie'),
+			'status' => $this->input->post('status'),
+			'data_atendimento' => $this->input->post('data_atendimento'),
+			'data_solucao' => $this->input->post('data_solucao'),
+			'defeito' => $this->input->post('defeito'),
+			'solucao' => $this->input->post('solucao'),
+			'num_serie' => $this->input->post('num_serie'),
+			'local' => $this->input->post('local'),
+			//'defeito' => $this->input->post('defeito'),
+		);
+
+		$editar = $this->servico_model->editar_chamado($dados);
+
+		echo json_encode($editar);
 
 	}
 

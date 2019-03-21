@@ -7,64 +7,76 @@ class Servico_model extends CI_Model{
 		$this->db->select('count(codigo_equipamento) as codigo')
 		->from('serv_chamado c')
 		//->join('serv_equipamento e','e.codigo=c.codigo_equipamento')
-		->where('c.codigo_equipamento=', $dados['codigo_equipamento']);
-		//->where('aa.data_entrega=', null);
+		->where('c.codigo_equipamento=', $dados['codigo_equipamento'])
+		->where('c.status!=', 'Finalizado');
 		$query=$this->db->get();
 		$resultado=$query->result();
-		
-		if ($resultado[0]->codigo > 0) {
-			//echo "Já tem";
-			//exit;
-			
-			return $dados['codigo_equipamento'];
-		}else{
-			//echo "Não achou";
-			//$resultado->codigo
-			//exit;
-			return $dados['codigo_equipamento'];
+
+		if ($resultado[0]->codigo == 0) {
+
+			$dados_chamado = array(
+				'codigo_equipamento' => $dados['codigo_equipamento'],
+				'id_equipamento' => $dados['id_equipamento'],
+				'status' => 'pendente',
+				'data_abertura' => date('Y-m-d'),
+				'defeito' => $dados['defeito'],
+			);
+
+			$this->db->insert('serv_chamado', $dados_chamado);
+				
+			$dados_equipamento = array(
+				'codigo' => $dados['codigo_equipamento'],
+				'num_serie' => $dados['num_serie'],
+				'nome' => $dados['nome'],
+				'descricao' => $dados['descricao'],
+			);
+				
+			$this->db->insert('serv_equipamento', $dados_equipamento);
 		}
 
-		return $resultados[] = $resultado ;
-
-		$dados_chamado = array(
-			'codigo_equipamento' => $dados['codigo_equipamento'],
-			'id_equipamento' => $dados['id_equipamento'],
-			'status' => 'pendente',
-			'data_abertura' => date('Y-m-d'),
-			'defeito' => $dados['defeito'],
-		);
-
-		$this->db->insert('serv_chamado', $dados_chamado);
+			
 		
-		$dados_equipamento = array(
-			'codigo' => $dados['codigo_equipamento'],
-			'num_serie' => $dados['num_serie'],
-			'nome' => $dados['nome'],
-			'descricao' => $dados['descricao'],
-		);
 		
-		$this->db->insert('serv_equipamento', $dados_equipamento);
 
-		return true;
-
+		return $resultado[0]->codigo;
+		
+		
 		/*
-		$this->db->select('p.nome, al.id')
-		->from('pessoa p')
-		->join('aluno al','al.pessoa_id=p.id')
-		->join('aluno_turma at','al.id=at.aluno_id')
-		->join('turma t','at.turma_id=t.id')
-		->join('armario_aluno aa','al.id=aa.aluno_id')
-		//->join('usuario u','al.pessoa_id=u.id')
-		//->join('pessoa p','u.pessoa_id=p.id')	
-		//->join('curso c','c.id=u.usuario_id');	
-		//->where('al.id=p.id');
-		//->where('t.segmento_curso_curso_id=', $curso)
-		->where('aa.armario_id=', $armario_id)
-		->where('aa.data_entrega=', null);
-		$query=$this->db->get();
-		$resultado=$query->result();
-		return $resultados[] = $resultado ;
-	*/
+		if ($resultado[0]->codigo == 0) {
+			
+			$dados_chamado = array(
+				'codigo_equipamento' => $dados['codigo_equipamento'],
+				'id_equipamento' => $dados['id_equipamento'],
+				'status' => 'pendente',
+				'data_abertura' => date('Y-m-d'),
+				'defeito' => $dados['defeito'],
+			);
+
+			$this->db->insert('serv_chamado', $dados_chamado);
+				
+			$dados_equipamento = array(
+				'codigo' => $dados['codigo_equipamento'],
+				'num_serie' => $dados['num_serie'],
+				'nome' => $dados['nome'],
+				'descricao' => $dados['descricao'],
+			);
+				
+			$this->db->insert('serv_equipamento', $dados_equipamento);
+
+			$teste = "oi";
+			return $teste;
+
+		}else{
+	
+			return 1;
+		}
+		*/
+
+		//return $resultados[] = $resultado ;
+
+		
+
+		//return true;
 
 	}
 
@@ -152,6 +164,31 @@ class Servico_model extends CI_Model{
 		->update('serv_chamado');
 
 	}
+
+	public function editar_chamado($dados){
+
+		
+		$this->db->set('status', $dados['status']);
+		$this->db->set('data_solucao', $dados['data_solucao']);
+		$this->db->set('solucao', $dados['solucao']);		
+		$this->db->set('data_atendimento', $dados['data_atendimento']);
+		$this->db->set('defeito', $dados['defeito'])
+
+		->where('serv_chamado.codigo_equipamento=', $dados['codigo'])
+		->update('serv_chamado');
+		
+
+		// Alterar outra tabela
+		$this->db->set('num_serie', $dados['num_serie']);
+		$this->db->set('local_id', $dados['local'])
+
+		->where('serv_equipamento.codigo=', $dados['codigo'])
+		->update('serv_equipamento');
+
+		return true;
+
+	}
+
 
 
 }
