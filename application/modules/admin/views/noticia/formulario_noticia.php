@@ -7,6 +7,7 @@ if(isset($noticia)){
 		$titulo=$dados->titulo;
 		$conteudo=$dados->conteudo;
 		$resumo=$dados->resumo;
+		$data=$dados->data_postagem;
 		$nome_imagem = $dados->arquivo_imagem;
 		$url_imagem = $dados->url_imagem;
 		if(isset($dados->arquivo_imagem))
@@ -33,6 +34,14 @@ if(isset($noticia)){
             	<input type="text" name="noticia[titulo]" maxlength="90" class="input-large" value="<?php echo $titulo; ?>" required/>
             </div>
         </div>
+				<div class="control-group">
+						<label class="control-label">
+				Data:
+			</label>
+						<div class="controls">
+							<input type="text" name="noticia[data]" pattern="[0-9]{4}-[0-9]{1,2}-[0-9]{1,2}" placeholder="yyyy-mm-dd" value="<?php echo $data; ?>" class="input-large" required/>
+						</div>
+				</div>
         <div class="control-group">
             <label class="control-label">
 				Conteúdo:
@@ -82,8 +91,16 @@ if(isset($noticia)){
             <label class="control-label">
 				Título:
 			</label>
-            <div class="controls">
+        <div class="controls">
             	<input type="text" name="noticia[titulo]" maxlength="90" class="input-large" required/>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">
+				Data:
+			</label>
+            <div class="controls">
+            	<input type="text" name="noticia[data]" pattern="[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}" class="input-large" required/>
             </div>
         </div>
         <div class="control-group">
@@ -129,7 +146,6 @@ if(isset($noticia)){
 	 theme_advanced_statusbar_location : "bottom",
 	 theme_advanced_resizing : true,
 	 // Drop lists for link/image/media/template dialogs
-	 external_image_list_url : "<?php echo base_url(); ?>public/plugins/tiny_mce/lists/image_list.js",
-	 file_browser_callback : "tinyBrowser",
+	 //external_image_list_url : "<?php //echo base_url(); ?>public/plugins/tiny_mce/lists/image_list.js"
  });
  </script>

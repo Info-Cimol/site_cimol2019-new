@@ -1,29 +1,14 @@
-<!-- <div class="">
-	<section id="noticia">
-			<h4 class="titulo_pagina">Notícias</h4>
+<link rel="stylesheet" href="<?php echo base_url();  ?>public/site/css/noticia.css" />
+		<section id="noticia" style="">
+				<h4 class="titulo_pagina" style='font-size:40px;'><?php echo $noticia[0]->titulo?></h4>
 
-			<img src="<?php // echo base_url().$noticia[0]->url_imagem.$noticia[0]->arquivo_imagem?>" >
-			<h2><?php // echo $noticia[0]->titulo?></h2>
-			<p><?php // echo $noticia[0]->resumo?></p>
-			<p><?php // echo $noticia[0]->data_noticia?></p>
-			<hr/>
-			<?php // echo $noticia[0]->conteudo?>
+				<p style="font-size:12px;"><?php echo $noticia[0]->data_noticia?></p>
+				<div>
+				 	<img  style="width:60%;margin-right:2%;margin-bottom:1.5%;" src="<?php echo base_url().$noticia[0]->url_imagem.$noticia[0]->arquivo_imagem?>">
 
-	</section>
-</div> -->
-<?php
-	print_r($noticia);
-	// foreach ($noticia as $dados) {
-	// 	$id=$dados->id;
-	// 	$titulo=$dados->titulo;
-	// 	$conteudo=$dados->conteudo;
-	// 	$resumo=$dados->resumo;
-	// 	$nome_imagem = $dados->arquivo_imagem;
-	// 	$url_imagem = $dados->url_imagem;
-	// 	if(isset($dados->arquivo_imagem))
-	// 		$caminho_imagem= base_url().$dados->url_imagem.$dados->arquivo_imagem;
-	// 	else
-	// 		$caminho_imagem = "";
-	// }
+					<p style="font-size:10px;">
+						<?php echo $noticia[0]->conteudo?>
+				  </p>
 
- ?>
+			</div>
+			</section>

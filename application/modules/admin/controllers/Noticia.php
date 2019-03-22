@@ -83,7 +83,8 @@ class Noticia extends MX_Controller {
 		if($this->input->post("noticia[id]")){
 			$id = $this->input->post("noticia[id]");
 
-			if($_FILES['imagem']['error']==0){
+			if($_FILES['imagem']['error']==0)
+      {
 				$arquivo_imagem = $_FILES['imagem']['name'];
 				$url_imagem = 'public/images/noticias';
 
@@ -116,6 +117,7 @@ class Noticia extends MX_Controller {
 					'conteudo' => $this->input->post('noticia[conteudo]'),
 					'url_imagem' => $url_imagem,
 					'arquivo_imagem' => $arquivo_imagem,
+					'data_postagem' => $this->input->post('noticia[data]'),
 				);
 
 				if($noticia=$this->noticia_model->editar($dados, $id)){
@@ -158,6 +160,7 @@ class Noticia extends MX_Controller {
 					'conteudo' => $this->input->post('noticia[conteudo]'),
 					'url_imagem' => $url_imagem."/",
 					'arquivo_imagem' => $arquivo_imagem,
+					'data_postagem' => $this->input->post('noticia[data]'),
 				);
 
 			if($noticia=$this->noticia_model->postar_noticia($dados)){
