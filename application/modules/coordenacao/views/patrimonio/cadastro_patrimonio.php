@@ -12,7 +12,7 @@ $nome = isset($patrimonio->nome) ? $patrimonio->nome : "";
 ?>
 
 <div class="container">
-	<div>
+	
 	<h1>Cadastro de Patrimônios </h1>
 		<div>
 			<div>
@@ -25,13 +25,8 @@ $nome = isset($patrimonio->nome) ? $patrimonio->nome : "";
 						<label>Nome Patrimonio</label>						
 						<input type="text"  name ="nome" value="<?php  echo $nome?>"  placeholder="Digite o nome do patrimonio">	
 						
-                                                   
-						
                      </div>
-                            
-        			
-					
-					
+  	
               <input type="hidden" name="id_patrimonio" value="<?php  echo $id_patrimonio?>"/>
 				<div class="basse-botoes">									
 						<button class="btn btn-danger">cancelar</button>
@@ -42,5 +37,5 @@ $nome = isset($patrimonio->nome) ? $patrimonio->nome : "";
 			</form>
 		</div>
 		</div>
-	</div>
+	
 </div>
