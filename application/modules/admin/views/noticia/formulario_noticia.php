@@ -1,6 +1,5 @@
 
 <?php
-
 if(isset($noticia)){
 	foreach ($noticia as $dados) {
 		$id=$dados->id;
@@ -34,6 +33,14 @@ if(isset($noticia)){
             	<input type="text" name="noticia[titulo]" maxlength="90" class="input-large" value="<?php echo $titulo; ?>" required/>
             </div>
         </div>
+				<div class="control-group">
+						<label class="control-label">
+							Resumo:
+						</label>
+				<div class="controls">
+							<input type="text" name="noticia[resumo]" value="<?php echo $resumo; ?>" maxlength="90" class="input-large" required/>
+						</div>
+				</div>
 				<div class="control-group">
 						<label class="control-label">
 				Data:
@@ -89,20 +96,28 @@ if(isset($noticia)){
     <div class="padded">
         <div class="control-group">
             <label class="control-label">
-				Título:
-			</label>
+							Título:
+						</label>
         <div class="controls">
-            	<input type="text" name="noticia[titulo]" maxlength="90" class="input-large" required/>
+            	<input type="text" name="noticia[titulo]" maxlength="50" class="input-large" required/>
             </div>
         </div>
         <div class="control-group">
             <label class="control-label">
-				Data:
-			</label>
-            <div class="controls">
-            	<input type="text" name="noticia[data]" pattern="[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}" class="input-large" required/>
+							Resumo:
+						</label>
+        <div class="controls">
+            	<input type="text" name="noticia[resumo]" maxlength="110" class="input-large" required/>
             </div>
         </div>
+				<div class="control-group">
+						<label class="control-label">
+				Data:
+			</label>
+						<div class="controls">
+							<input type="text" name="noticia[data]" pattern="[0-9]{4}-[0-9]{1,2}-[0-9]{1,2}" placeholder="yyyy-mm-dd" class="input-large" required/>
+						</div>
+				</div>
         <div class="control-group">
             <label class="control-label">
 				Conteúdo:
@@ -129,22 +144,20 @@ if(isset($noticia)){
 	</form>
 </div>
 <?php } ?>
-
- <script src='<?php echo base_url() ?>public/plugins/tiny_mce/tiny_mce.js'></script>
- <script src='<?php echo base_url() ?>public/plugins/tiny_mce/plugins/tinybrowser/tb_tinymce.js.php'></script>
+<script src='https://cloud.tinymce.com/stable/tinymce.min.js'></script>
  <script>
- tinyMCE.init({
+ tinymce.init({
 	 // General options
- language : "pt",
-	 mode : "textareas",
-	 theme : "advanced",
+ // language : "pt",
+	 selector : "textarea",
+	 // theme : "advanced",
 	 plugins : "safari,pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template",
-	 // Theme options
-	 theme_advanced_buttons1: "code,bold,italic,underline,strikethrough,justifyleft,justifycenter,justifyright,justifyfull,cleanup,link,unlink,image,table,formatselect,fontselect,fontsizeselect,forecolor,backcolor,fullscreen",
-	 theme_advanced_toolbar_location : "top",
-	 theme_advanced_toolbar_align : "left",
-	 theme_advanced_statusbar_location : "bottom",
-	 theme_advanced_resizing : true,
+	 // // Theme options
+	 // theme_advanced_buttons1: "code,bold,italic,underline,strikethrough,justifyleft,justifycenter,justifyright,justifyfull,cleanup,link,unlink,image,table,formatselect,fontselect,fontsizeselect,forecolor,backcolor,fullscreen",
+	 // theme_advanced_toolbar_location : "top",
+	 // theme_advanced_toolbar_align : "left",
+	 // theme_advanced_statusbar_location : "bottom",
+	 // theme_advanced_resizing : true,
 	 // Drop lists for link/image/media/template dialogs
 	 //external_image_list_url : "<?php //echo base_url(); ?>public/plugins/tiny_mce/lists/image_list.js"
  });

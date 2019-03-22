@@ -115,6 +115,7 @@ class Noticia extends MX_Controller {
 				$dados = array(
 					'titulo' => $this->input->post('noticia[titulo]'),
 					'conteudo' => $this->input->post('noticia[conteudo]'),
+					'resumo' => $this->input->post('noticia[resumo]'),
 					'url_imagem' => $url_imagem,
 					'arquivo_imagem' => $arquivo_imagem,
 					'data_postagem' => $this->input->post('noticia[data]'),
@@ -158,6 +159,7 @@ class Noticia extends MX_Controller {
 				$dados = array(
 					'titulo' => $this->input->post('noticia[titulo]'),
 					'conteudo' => $this->input->post('noticia[conteudo]'),
+					'resumo' => $this->input->post('noticia[resumo]'),
 					'url_imagem' => $url_imagem."/",
 					'arquivo_imagem' => $arquivo_imagem,
 					'data_postagem' => $this->input->post('noticia[data]'),
