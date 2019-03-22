@@ -12,10 +12,10 @@ class Servico_model extends CI_Model{
 		$query=$this->db->get();
 		$resultado=$query->result();
 
-		if ($resultado[0]->codigo == 0) {
+		if (($dados['codigo_equipamento'] != '') || ($resultado[0]->codigo == 0)) {
 
 			$dados_chamado = array(
-				'codigo_equipamento' => $dados['codigo_equipamento'],
+				//'codigo_equipamento' => $dados['codigo_equipamento'],
 				'id_equipamento' => $dados['id_equipamento'],
 				'status' => 'pendente',
 				'data_abertura' => date('Y-m-d'),
@@ -28,17 +28,16 @@ class Servico_model extends CI_Model{
 				'codigo' => $dados['codigo_equipamento'],
 				'num_serie' => $dados['num_serie'],
 				'nome' => $dados['nome'],
-				'descricao' => $dados['descricao'],
+				//'descricao' => $dados['descricao'],
 			);
 				
 			$this->db->insert('serv_equipamento', $dados_equipamento);
 		}
 
-			
+		if ($resultado[0]->codigo != 0) {
+			return $resultado[0]->codigo;
+		}
 		
-		
-
-		return $resultado[0]->codigo;
 		
 		
 		/*

@@ -69,12 +69,7 @@
 				            <div class="input-group">
 				                <span class="input-icon input-icon-left">Status</span>
 				                <td style="width: 70%; text-align: left;" id="status">
-				                	<select style="width: 265px">
-						            	<option>Pendente</option>
-						            	<option>Finalizado</option>
-						            	<option>ferfer</option>
-						            	<option>fsdfsdfsdfsdf</option>
-						            </select>
+				                	
 						        </td>
 				            </div>
 				        </div>
@@ -395,7 +390,28 @@
             dataType: 'json',
             data:{codigo:codigo},
             success:function(data){
-            	alert(data[0].local);
+            	//alert(data[0].defeito);
+
+            	$('#detalhes_status').empty();
+            	$('#detalhes_solucao').empty();
+            	$('#detalhes_defeito').empty();
+            	$('#detalhes_codigo').empty();
+            	$('#detalhes_nome').empty();
+            	$('#detalhes_num_serie').empty();
+            	$('#detalhes_data_abertura').empty();
+            	$('#detalhes_data_atendimento').empty();
+            	$('#detalhes_data_solucao').empty();
+            	$('#detalhes_local').empty();
+
+            	$('#detalhes_status').html('<h5 class="font-strong mb-4" style="margin-left: 20px;">'+ data[0].status +'</h5>');
+
+            	if (data[0].solucao != null) {
+                	$('#detalhes_solucao').html('<h5 class="font-strong mb-4" style="margin-left: 20px;">'+ data[0].solucao +'</h5>');	
+                }
+
+            	if (data[0].defeito != null) {
+            		$('#detalhes_defeito').html('<h5 class="font-strong mb-4" style="margin-left: 20px;">'+data[0].defeito+'</h5>');
+            	}            	
 
             	if (data[0].codigo != null) {
             		$('#detalhes_codigo').html('<h5 class="font-strong mb-4" style="margin-left: 20px;">'+ data[0].codigo +'</h5>');	
@@ -417,21 +433,20 @@
                 	$('#detalhes_data_solucao').html('<h5 class="font-strong mb-4" style="margin-left: 20px;">'+ data[0].data_solucao +'</h5>');	
                 }
 
-				if (isset(data[0].local) && (data[0].local =! null)) {
+				if (data[0].local =! null) {
                 	$('#detalhes_local').html('<h5 class="font-strong mb-4" style="margin-left: 20px;">'+ data[0].local +'</h5>');	
                 }                
                 //$('#local').html('<h5 class="font-strong mb-4" style="margin-left: 20px;">'+ data[0].local +'</h5>');
 
-                if (data[0].defeito != null) {
-                	$('#detalhes_defeito').html('<h5 class="font-strong mb-4" style="margin-left: 20px;">'+ data[0].defeito +'</h5>');	
-                }
+                //if (data[0].defeito != null) {
+                		
+                //}
+
                 //$('#defeito').html('<h5 class="font-strong mb-4" style="margin-left: 20px;">'+ data[0].defeito +'</h5>');
 
-                if (data[0].solucao != null) {
-                	$('#detalhes_solucao').html('<h5 class="font-strong mb-4" style="margin-left: 20px;">'+ data[0].data_solucao +'</h5>');	
-                }
+                
                 //$('#solucao').html('<h5 class="font-strong mb-4" style="margin-left: 20px;">'+ data[0].solucao +'</h5>');
-                $('#detalhes_status').html('<h5 class="font-strong mb-4" style="margin-left: 20px;">'+ data[0].status +'</h5>');
+                
                 //$('#num_serie').html('UIUIUYGBNMK');
             }
        })
@@ -439,7 +454,7 @@
 
 	function editar($codigo){
 		var codigo = $codigo;
-		//alert(codigo);
+		alert(codigo);
 		//var defeito = $('#defeito').val();
 		//alert(defeito);
 		$.ajax({
@@ -448,7 +463,7 @@
 	            dataType: 'json',
 	            data:{codigo:codigo},
 	            success:function(data){
-	            	//alert(data[0].defeito);
+	            	alert(data[0].status);
 	            	console.log(data);
 	            	//$('#defeito').html('<textarea name="defeito" style="width: 230px" row="2" >'+data[0].defeito+'</textarea>');
 

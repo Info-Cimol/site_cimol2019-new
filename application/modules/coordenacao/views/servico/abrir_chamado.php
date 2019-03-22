@@ -293,7 +293,7 @@ contentor > div
 		        var num_serie = $('input[name=num_serie]').val();
 		        var local = $('input[name=local]').val();
 		        var defeito = $('textarea#defeito').val();
-
+		        //alert('hj');
 		        $.ajax({
 		            url:"<?php echo base_url() ?>coordenacao/servico/abrir_chamado_submit",
 		            method:"POST",
@@ -305,11 +305,12 @@ contentor > div
 		                alert(data);
 		                alert(data[0].codigo);
 
+		                
+		                $('#alert').html('<div class="alert alert-danger alert-dismissable"><h4 class="text-white">Cadastrado com sucesso!!</h4></div>');
+		                
+
 		                if (data == 1) {
 		                	$('#alert').html('<div class="alert alert-danger alert-dismissable"><h4 class="text-white">Já existe um chamado em aberto com este código!</h4></div>');
-		                	console.log(data);
-		                }else{
-		                	$('#alert').html('<div class="alert alert-primary alert-dismissable"><h4 class="text-white">Chamado aberto com sucesso!</h4></div>');
 		                	console.log(data);
 		                }
 		            }  
