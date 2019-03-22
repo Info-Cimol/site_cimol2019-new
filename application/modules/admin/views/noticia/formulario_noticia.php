@@ -144,20 +144,21 @@ if(isset($noticia)){
 	</form>
 </div>
 <?php } ?>
-<script src='https://cloud.tinymce.com/stable/tinymce.min.js'></script>
+
+ <script src='<?php echo base_url() ?>public/plugins/tiny_mce/tiny_mce.js'></script>
  <script>
- tinymce.init({
+ tinyMCE.init({
 	 // General options
- // language : "pt",
-	 selector : "textarea",
-	 // theme : "advanced",
+ language : "pt",
+	 mode : "textareas",
+	 theme : "advanced",
 	 plugins : "safari,pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template",
-	 // // Theme options
-	 // theme_advanced_buttons1: "code,bold,italic,underline,strikethrough,justifyleft,justifycenter,justifyright,justifyfull,cleanup,link,unlink,image,table,formatselect,fontselect,fontsizeselect,forecolor,backcolor,fullscreen",
-	 // theme_advanced_toolbar_location : "top",
-	 // theme_advanced_toolbar_align : "left",
-	 // theme_advanced_statusbar_location : "bottom",
-	 // theme_advanced_resizing : true,
+	 // Theme options
+	 theme_advanced_buttons1: "code,bold,italic,underline,strikethrough,justifyleft,justifycenter,justifyright,justifyfull,cleanup,link,unlink,image,table,formatselect,fontselect,fontsizeselect,forecolor,backcolor,fullscreen",
+	 theme_advanced_toolbar_location : "top",
+	 theme_advanced_toolbar_align : "left",
+	 theme_advanced_statusbar_location : "bottom",
+	 theme_advanced_resizing : true,
 	 // Drop lists for link/image/media/template dialogs
 	 //external_image_list_url : "<?php //echo base_url(); ?>public/plugins/tiny_mce/lists/image_list.js"
  });
