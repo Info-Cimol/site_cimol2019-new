@@ -50,7 +50,7 @@ class Servico extends MX_Controller {
 	public function abrir_chamado_submit(){
 		
 		$dados = array(
-			'codigo_equipamento' => $this->input->post('codigo'),
+			'codigo' => $this->input->post('codigo'),
 			'id_equipamento' => 3,
 			'num_serie' => $this->input->post('num_serie'),
 			'nome' => $this->input->post('equipamento'),
@@ -96,11 +96,16 @@ class Servico extends MX_Controller {
 		echo json_encode($dados);
 	}
 
+	public function busca_detalhes_abrir_chamado(){
+
+		$dados = $this->servico_model->busca_detalhes_abrir_chamado($this->input->post('codigo'));
+		echo json_encode($dados);
+
+	}
+
 	public function busca_detalhes(){
 
-		// Da pra buscar todos nesta funcao, passando o item escolhido pelo select e fazer a busca e retornar um json
-
-		$dados = $this->servico_model->busca_detalhes($this->input->post('codigo'));
+		$dados = $this->servico_model->busca_detalhes($this->input->post('id'));
 		echo json_encode($dados);
 
 	}
@@ -127,9 +132,9 @@ class Servico extends MX_Controller {
 	public function editar_chamado(){
 
 		$dados = array(
-			'codigo' => $this->input->post('codigo'),
-			'id_equipamento' => 3,
-			'num_serie' => $this->input->post('num_serie'),
+			//'codigo' => $this->input->post('codigo'),
+			'id' => $this->input->post('id'),
+			//'num_serie' => $this->input->post('num_serie'),
 			'status' => $this->input->post('status'),
 			'data_atendimento' => $this->input->post('data_atendimento'),
 			'data_solucao' => $this->input->post('data_solucao'),
