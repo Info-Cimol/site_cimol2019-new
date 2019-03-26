@@ -142,7 +142,7 @@ class Servico extends MX_Controller {
 			'solucao' => $this->input->post('solucao'),
 			'num_serie' => $this->input->post('num_serie'),
 			'local' => $this->input->post('local'),
-			//'defeito' => $this->input->post('defeito'),
+			//'nome' => $this->input->post('equipamento'),
 		);
 
 		$editar = $this->servico_model->editar_chamado($dados);

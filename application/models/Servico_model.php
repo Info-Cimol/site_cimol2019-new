@@ -37,80 +37,26 @@ class Servico_model extends CI_Model{
 			}
 		}
 		
-		
-		
 
-		
-		//if (($dados['codigo_equipamento'] != '') || ($resultado[0]->codigo == 0)) {
-
-			$dados_equipamento = array(
-				'codigo' => $dados['codigo'],
-				'num_serie' => $dados['num_serie'],
-				'nome' => $dados['nome'],
-			);
-				
-			$this->db->insert('serv_equipamento', $dados_equipamento);
-			$id_equipamento = $this->db->insert_id();
-
-			$dados_chamado = array(
-				//'codigo_equipamento' => $dados['codigo_equipamento'],
-				'id_equipamento' => $id_equipamento,
-				'status' => 'pendente',
-				'data_abertura' => date('Y-m-d'),
-				'defeito' => $dados['defeito'],
-			);
-
-			$this->db->insert('serv_chamado', $dados_chamado);
-				
-		
-		
-			return true;
-		//}
-
-		/*
-		if ($resultado[0]->codigo != 0) {
-			return $resultado[0]->codigo;
-		}
-		*/
-		
-		
-		/*
-		if ($resultado[0]->codigo == 0) {
+		$dados_equipamento = array(
+			'codigo' => $dados['codigo'],
+			'num_serie' => $dados['num_serie'],
+			'nome' => $dados['nome'],
+		);
 			
-			$dados_chamado = array(
-				'codigo_equipamento' => $dados['codigo_equipamento'],
-				'id_equipamento' => $dados['id_equipamento'],
-				'status' => 'pendente',
-				'data_abertura' => date('Y-m-d'),
-				'defeito' => $dados['defeito'],
-			);
+		$this->db->insert('serv_equipamento', $dados_equipamento);
+		$id_equipamento = $this->db->insert_id();
 
-			$this->db->insert('serv_chamado', $dados_chamado);
-				
-			$dados_equipamento = array(
-				'codigo' => $dados['codigo_equipamento'],
-				'num_serie' => $dados['num_serie'],
-				'nome' => $dados['nome'],
-				'descricao' => $dados['descricao'],
-			);
-				
-			$this->db->insert('serv_equipamento', $dados_equipamento);
+		$dados_chamado = array(
+			'id_equipamento' => $id_equipamento,
+			'status' => 'pendente',
+			'data_abertura' => date('Y-m-d'),
+			'defeito' => $dados['defeito'],
+		);
 
-			$teste = "oi";
-			return $teste;
-
-		}else{
-	
-			return 1;
-		}
-		*/
-
-		//return $resultados[] = $resultado ;
-
-		
-
-		//return true;
-
+		$this->db->insert('serv_chamado', $dados_chamado);
+			
+		return true;	
 	}
 
 	public function busca_chamado(){
@@ -150,7 +96,6 @@ class Servico_model extends CI_Model{
 		$query=$this->db->get();
 		$resultado=$query->result();
 		return $resultados[] = $resultado ;
-
 	}
 
 	public function busca_detalhes($id){
@@ -163,21 +108,10 @@ class Servico_model extends CI_Model{
 		$query=$this->db->get();
 		$resultado=$query->result();
 		return $resultados[] = $resultado ;
-
-	}
-
-	public function alterar($equipamento_codigo){
-
-		$this->db->set('status', $equipamento_codigo)
-		->where('serv_chamado.equipamento_codigo=', 250)
-		->update('serv_chamado');
-
 	}
 
 	public function busca_chamado_ajax($status){
 			
-
-
 			if ($status == "Todos") {
 				
 				$this->db->select('*')
@@ -198,9 +132,9 @@ class Servico_model extends CI_Model{
 			$query=$this->db->get();
 			$resultado=$query->result();
 			return $resultados[] = $resultado ;
-
 	}
 
+	/*
 	public function finalizar_chamado($dados){
 
 		$this->db->set('status', 'Finalizado');
@@ -210,11 +144,11 @@ class Servico_model extends CI_Model{
 		->update('serv_chamado');
 
 	}
+	*/
 
 	public function editar_chamado($dados){
 
-		
-		
+		// Se 
 		if ($dados['data_atendimento'] != '') {
 			$this->db->set('data_atendimento', $dados['data_atendimento']);
 		}
@@ -229,18 +163,15 @@ class Servico_model extends CI_Model{
 		->update('serv_chamado');
 		
 
-		
-		// Alterar outra tabela
+		// Altera a outra tabela, serv_equipamento
 		$this->db->set('num_serie', $dados['num_serie']);
 		$this->db->set('local_id', $dados['local'])
+		//$this->db->set('nome', $dados['nome'])
 
 		->where('serv_equipamento.id=', $dados['id'])
 		->update('serv_equipamento');
 
-		
-
 		return true;
-
 	}
 
 
