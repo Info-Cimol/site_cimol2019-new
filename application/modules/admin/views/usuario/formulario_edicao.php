@@ -15,7 +15,6 @@
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <div>
-    <?php print_r($usuario);?>
     <!--  Configurando variáveis PHP  -->
     <?php
         $aluno = $usuario['aluno'];
@@ -30,12 +29,14 @@
             $servidor_array = "0";
         }
 
-        $admin = $usuario['permissoes'];
-        if(count($admin)){
-            $admin_array = implode('|', $admin);
+        $admin = $usuario['admin'];
+
+        $permissoes = $usuario['permissoes'];
+        if(count($permissoes)){
+            $permissoes_array = implode('|', $permissoes);
         }
         else{
-            $admin_array = "0";
+            $permissoes_array = "0";
         }
 
     ?>
@@ -44,18 +45,19 @@
     <script>
         var aluno = <?php echo $aluno?>,
             professor = <?php echo $professor?>,
+            admin = <?php echo $admin?>,
             servidor_array = "<?php echo $servidor_array?>",
-            admin_array = "<?php echo $admin_array?>";
+            permissoes_array = "<?php echo $permissoes_array?>";
 
-        var servidor, admin;
+        var servidor, permissoes;
 
         if(servidor_array == "0"){ servidor = 0; }
         else{ servidor = servidor_array.split('|'); }
 
-        if(admin_array == "0"){ admin = 0; }
-        else{ admin = admin_array.split('|'); }
+        if(permissoes_array == "0"){ permissoes = 0; }
+        else{ permissoes = permissoes_array.split('|'); }
 
-        console.log(aluno, professor, servidor, admin);
+        console.log(aluno, professor, servidor, permissoes, admin);
 
     </script>
 
@@ -128,26 +130,26 @@
                 <hr/>
 
                 <!--  Admin  -->
-                <input type="checkbox" class="form-control input-lg inputFloat" name="admin" id="admin"/>
+                <input type="checkbox" class="form-control input-lg inputFloat" name="administrador" id="admin" value="1"/>
                 <div class="divTitulo">Administrador</div>
                 <div id="clicouAdmin" class="divToggle">
 
-                    <input type="checkbox" class="form-control input-lg inputFloat" id="admin_total" name="admin_total"/>
+                    <input type="checkbox" class="form-control input-lg inputFloat" id="admin_total" name="admin[total]" value="1"/>
                     <div class="divTitulo">Total</div>
 
-                    <input type="checkbox" class="form-control input-lg inputFloat" id="admin_noticia" name="admin_noticia" />
+                    <input type="checkbox" class="form-control input-lg inputFloat" id="admin_noticia" name="admin[noticia]" value="2" />
                     <div class="divTitulo">Noticia</div>
 
-                    <input type="checkbox" class="form-control input-lg inputFloat" id="admin_evento" name="admin_evento" />
+                    <input type="checkbox" class="form-control input-lg inputFloat" id="admin_evento" name="admin[evento]" value="3" />
                     <div class="divTitulo">Evento</div>
 
-                    <input type="checkbox" class="form-control input-lg inputFloat" id="admin_agenda" name="admin_agenda" />
+                    <input type="checkbox" class="form-control input-lg inputFloat" id="admin_agenda" name="admin[agenda]" value="4" />
                     <div class="divTitulo">Agenda</div>
 
-                    <input type="checkbox" class="form-control input-lg inputFloat" id="admin_aluno" name="admin_aluno" />
+                    <input type="checkbox" class="form-control input-lg inputFloat" id="admin_aluno" name="admin[aluno]"  value="5"/>
                     <div class="divTitulo">Aluno</div>
 
-                    <input type="checkbox" class="form-control input-lg inputFloat" id="admin_professor" name="admin_professor"/>
+                    <input type="checkbox" class="form-control input-lg inputFloat" id="admin_professor" name="admin[professor]" value="6" />
                     <div class="divTitulo">Professor</div>
                 </div>
                 <hr/>
@@ -250,25 +252,28 @@
 
 
 
-        /*/  checkbox 'admin'  /*/
-        if(Array.isArray(admin)){
+        /*/  checkbox 'admin' e permissoes  /*/
+        if(admin == 0){
             document.getElementById('admin').checked = true;
             $('#clicouAdmin').toggle();
-            for(var i=0; i<admin.length; i++){
+            if(Array.isArray(permissoes)){
+                for(var i=0; i<permissoes.length; i++){
 
-                if(admin[i] == "1"){ document.getElementById('admin_total').checked = true; disableCheckbox(); }
+                    if(permissoes[i] == "1"){ document.getElementById('admin_total').checked = true; disableCheckbox(); }
 
-                if(admin[i] == "2"){ document.getElementById('admin_noticia').checked = true; }
+                    if(permissoes[i] == "2"){ document.getElementById('admin_noticia').checked = true; }
 
-                if(admin[i] == "3"){ document.getElementById('admin_evento').checked = true; }
+                    if(permissoes[i] == "3"){ document.getElementById('admin_evento').checked = true; }
 
-                if(admin[i] == "4"){ document.getElementById('admin_agenda').checked = true; }
+                    if(permissoes[i] == "4"){ document.getElementById('admin_agenda').checked = true; }
 
-                if(admin[i] == "5"){ document.getElementById('admin_aluno').checked = true; }
+                    if(permissoes[i] == "5"){ document.getElementById('admin_aluno').checked = true; }
 
-                if(admin[i] == "6"){ document.getElementById('admin_professor').checked = true; }
+                    if(permissoes[i] == "6"){ document.getElementById('admin_professor').checked = true; }
+                }
             }
         }
+
 
 
 

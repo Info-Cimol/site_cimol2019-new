@@ -284,8 +284,12 @@ class Usuario_model extends CI_Model{
                 $emails = $this->usuarioEmail($usuario['pessoa_id']);
                 $usuario['email'] = $emails;
 
+                /*/  é admin  /*/
+                $admin = $this->existeAdmin($usuario['pessoa_id']);
+                $usuario['admin'] = $admin;
+
                 /*/  permissoes  /*/
-                $permissoes = $this->usuarioPermissoes($usuario['id']);
+                $permissoes = $this->usuarioPermissoes($usuario['pessoa_id']);
                 $permissoes = json_decode(json_encode($permissoes), True);
                 $usuario['permissoes'] = $permissoes;
 
@@ -323,8 +327,12 @@ class Usuario_model extends CI_Model{
         $emails = $this->usuarioEmail($retorno['pessoa_id']);
         $retorno['email'] = $emails;
 
+        /*/  é admin  /*/
+        $admin = $this->existeAdmin($retorno['pessoa_id']);
+        $retorno['admin'] = $admin;
+
         /*/  permissoes  /*/
-        $permissoes = $this->usuarioPermissoes($usuario_id);
+        $permissoes = $this->usuarioPermissoes($retorno['pessoa_id']);
         $permissoes = json_decode(json_encode($permissoes), True);
         $retorno['permissoes'] = $permissoes;
 
@@ -373,6 +381,7 @@ class Usuario_model extends CI_Model{
 
         /*/  ------ checkbox Perfil ------  /*/
 
+
         /*/  Aluno  /*/
         if (isset($_POST['aluno']))
         {
@@ -386,18 +395,17 @@ class Usuario_model extends CI_Model{
             if($this->usuarioAluno($pessoa_id) == 1){
                 $this->db->where('pessoa_id', $pessoa_id);
                 $this->db->update('aluno', $data);
-                echo "update aluno |";
             }
             else{
                 $this->db->insert('aluno', $data);
-                echo "insert aluno |";
             }
         }
         else{
             $this->db->where('pessoa_id', $pessoa_id);
             $this->db->delete('aluno');
-            echo "delete aluno |";
         }
+
+
 
         /*/  Professor  /*/
         if (isset($_POST['professor']))
@@ -412,23 +420,20 @@ class Usuario_model extends CI_Model{
             if($this->usuarioProfessor($pessoa_id) >= 1){
                 $this->db->where('pessoa_id', $pessoa_id);
                 $this->db->update('professor', $data);
-                echo "update professor |";
             }
             else{
                 $this->db->insert('professor', $data);
-                echo "insert professor |";
             }
         }
         else{
             $this->db->where('pessoa_id', $pessoa_id);
             $this->db->delete('professor');
-            echo "delete professor |";
         }
 
-        /*/  Servidor  /*/
 
+
+        /*/  Servidor  /*/
         $servidor = isset($_POST["serv"]) ? $_POST["serv"] : NULL;
-        print_r($servidor);
         $servidores = array();
         if(!empty($servidor)){
             foreach($servidor as $serv){
@@ -465,15 +470,75 @@ class Usuario_model extends CI_Model{
             $this->db->delete('servidor_pessoa');
         }
 
-    }
+
+
+        /*/  Admin  /*/
+        $adminPermissoes = isset($_POST["admin"]) ? $_POST["admin"] : NULL;
+        $administrador = isset($_POST["administrador"]) ? $_POST["administrador"] : NULL;
+        $permissoes = array();
+        if(!empty($administrador)){
+            if($this->existeAdmin($pessoa_id) == 1){
+                $this->db->insert('administrador', array('pessoa_id' => $pessoa_id, 'status' => "ativo"));
+            }
+            if(!empty($adminPermissoes)){
+                foreach($adminPermissoes as $admin){
+                    array_push($permissoes, $admin);
+                    if($this->existeAdminPermissao($admin, $pessoa_id) == 1){
+                        $this->db->insert('permissao_admin', array('admin_id' => $pessoa_id, 'permissao_id' => $admin));
+                    }
+                }
+                if(!empty($permissoes)){
+                    if(!in_array(1, $permissoes)){
+                        $this->db->where('admin_id', $pessoa_id);
+                        $this->db->where('permissao_id', 1);
+                        $this->db->delete('permissao_admin');
+                    }
+                    if(!in_array(2, $permissoes)){
+                        $this->db->where('admin_id', $pessoa_id);
+                        $this->db->where('permissao_id', 2);
+                        $this->db->delete('permissao_admin');
+                    }
+                    if(!in_array(3, $permissoes)){
+                        $this->db->where('admin_id', $pessoa_id);
+                        $this->db->where('permissao_id', 3);
+                        $this->db->delete('permissao_admin');
+                    }
+                    if(!in_array(4, $permissoes)){
+                        $this->db->where('admin_id', $pessoa_id);
+                        $this->db->where('permissao_id', 4);
+                        $this->db->delete('permissao_admin');
+                    }
+                    if(!in_array(5, $permissoes)){
+                        $this->db->where('admin_id', $pessoa_id);
+                        $this->db->where('permissao_id', 5);
+                        $this->db->delete('permissao_admin');
+                    }
+                    if(!in_array(6, $permissoes)){
+                        $this->db->where('admin_id', $pessoa_id);
+                        $this->db->where('permissao_id', 6);
+                        $this->db->delete('permissao_admin');
+                    }
+                }
+            }
+            else{
+                $this->db->where('admin_id', $pessoa_id);
+                $this->db->delete('permissao_admin');
+            }
+        }
+        else{
+            $this->db->where('pessoa_id', $pessoa_id);
+            $this->db->delete('administrador');
+        }
+
+    } // faz as alterações de edição
 
 
     /*/  ------ Funções de busca ------  /*/
-    function usuarioEmail($usuario_id){
+    function usuarioEmail($pessoa_id){
         $this->db->select("e.email")
             ->from("email e")
             ->join("pessoa p","p.id=e.pessoa_id")
-            ->where("p.id", $usuario_id);
+            ->where("p.id", $pessoa_id);
         $query=$this->db->get();
         $result = $query->result();
         $result = json_decode(json_encode($result), True);
@@ -488,13 +553,13 @@ class Usuario_model extends CI_Model{
 
         return $result;
 
-    }
+    } // busca email da pessoa
 
-    function usuarioPermissoes($usuario_id){
+    function usuarioPermissoes($pessoa_id){
         $this->db->select("perm.permissao_id")
             ->from("permissao_admin perm")
             ->join("administrador adm","perm.admin_id = adm.pessoa_id")
-            ->where("adm.pessoa_id", $usuario_id);
+            ->where("adm.pessoa_id", $pessoa_id);
         $query=$this->db->get();
         $result = $query->result();
         $result = json_decode(json_encode($result), True);
@@ -505,7 +570,7 @@ class Usuario_model extends CI_Model{
         }
 
         return $retorno;
-    }
+    } // busca se tem permissões
 
     function usuarioAluno($pessoa_id){
         $this->db->select("a.id")
@@ -522,7 +587,7 @@ class Usuario_model extends CI_Model{
             return 0;
         }
 
-    }
+    } // busca se é aluno
 
     function usuarioServidor($pessoa_id){
         $this->db->select("serv.id_servidor")
@@ -539,7 +604,7 @@ class Usuario_model extends CI_Model{
         }
 
         return $servidor;
-    }
+    } // busca se é servidor e retorna serviços
 
     function usuarioProfessor($pessoa_id){
         $this->db->select("pr.id")
@@ -567,7 +632,7 @@ class Usuario_model extends CI_Model{
             return 0;
         }
 
-    }
+    } // busca se é professor
 
     function existeServidor($servico, $pessoa_id){
         $this->db->select("serv.id_servidor")
@@ -583,9 +648,38 @@ class Usuario_model extends CI_Model{
         else{
             return 1; // insert
         }
-    }
+    } // busca se existe servidor e serviços
 
+    function existeAdmin($pessoa_id){
+        $this->db->select("admin.pessoa_id")
+            ->from("administrador admin")
+            ->where("admin.pessoa_id", $pessoa_id);
+        $query=$this->db->get();
+        $result = $query->result();
 
+        if(count($result)){
+            return 0; // existe
+        }
+        else{
+            return 1; // insert
+        }
+    } // busca se existe admin
+
+    function existeAdminPermissao($perm, $pessoa_id){
+        $this->db->select("pa.admin_id")
+            ->from("permissao_admin pa")
+            ->where("pa.admin_id", $pessoa_id)
+            ->where('pa.permissao_id', $perm);
+        $query=$this->db->get();
+        $result = $query->result();
+
+        if(count($result)){
+            return 0; // existe
+        }
+        else{
+            return 1; // insert
+        }
+    } // busca se admin tem permissoes
 
 
 	

@@ -22,7 +22,7 @@ class Usuario extends MX_Controller{
 
     public function autenticar_edicao($pessoa_id){
         $this->usuario_model->autenticar_edicao($pessoa_id);
-        //redirect('admin/usuario', 'refresh');
+        redirect('admin/usuario', 'refresh');
     }
 
 	public function editar_permissoes($usuario_id){

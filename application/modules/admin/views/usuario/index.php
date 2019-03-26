@@ -37,6 +37,7 @@
                             $professor = $usuario['professor'];
                             $permissoes = $usuario['permissoes'];
                             $servidor = $usuario['servidor'];
+                            $admin = $usuario['admin'];
                     	?>
                         <tr>
                             <!-- Id -->
@@ -93,31 +94,37 @@
                                                 }
                                             }
 
-                                            if($permissoes){
+                                            if($admin == 0){
                                                 echo "<div> Administrador </div>";
-                                                echo "<div class='menus'>"; /*/ abre dropdown admin /*/
-                                                foreach ($permissoes as $permissao){
-                                                    if($permissao == 1){
-                                                        echo "<div class='sub-menus'> Total </div>";
+                                                if($permissoes){
+                                                    echo "<div class='menus'>"; /*/ abre dropdown admin /*/
+                                                    foreach ($permissoes as $permissao){
+                                                        if($permissao == 1){
+                                                            echo "<div class='sub-menus'> Total </div>";
+                                                        }
+                                                        if($permissao == 2){
+                                                            echo "<div class='sub-menus'> Notícias </div>";
+                                                        }
+                                                        if($permissao == 3){
+                                                            echo "<div class='sub-menus'> Eventos </div>";
+                                                        }
+                                                        if($permissao == 4){
+                                                            echo "<div class='sub-menus'> Agenda </div>";
+                                                        }
+                                                        if($permissao == 5){
+                                                            echo "<div class='sub-menus'> Aluno </div>";
+                                                        }
+                                                        if($permissao == 6){
+                                                            echo "<div class='sub-menus'> Professor </div>";
+                                                        }
                                                     }
-                                                    if($permissao == 2){
-                                                        echo "<div class='sub-menus'> Notícias </div>";
-                                                    }
-                                                    if($permissao == 3){
-                                                        echo "<div class='sub-menus'> Eventos </div>";
-                                                    }
-                                                    if($permissao == 4){
-                                                        echo "<div class='sub-menus'> Agenda </div>";
-                                                    }
-                                                    if($permissao == 5){
-                                                        echo "<div class='sub-menus'> Aluno </div>";
-                                                    }
-                                                    if($permissao == 6){
-                                                        echo "<div class='sub-menus'> Professor </div>";
-                                                    }
+                                                    echo "</div>"; /*/ fecha dropdown admin /*/
                                                 }
-                                                echo "</div>"; /*/ fecha dropdown admin /*/
+                                                else{
+                                                    echo "<div class='menus'></div>";
+                                                }
                                             }
+
 
                                         if($servidor){
                                             echo "<div> Servidor </div>";
@@ -137,6 +144,10 @@
                                                 }
                                             }
                                             echo "</div>"; /*/ fecha dropdown admin /*/
+                                        }
+
+                                        if($aluno != 1 && $professor == 0 && $admin != 0 && !$servidor){
+                                            echo "<div class='menus'>...</div>";
                                         }
 
                                         ?>
