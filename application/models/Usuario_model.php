@@ -4,6 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * Classe responsavel por todas as interações de usuarios com a base de dados.
  */
 class Usuario_model extends CI_Model{
+
 	/**
 	 * Função responsavel pela autenticação dos usuarios pelo e-mail e senha.
 	 * @param $usuario
@@ -70,8 +71,6 @@ class Usuario_model extends CI_Model{
 		return $usuario;
 	}
 	
-	
-	
 	/**
 	 * Função que verifica se existe um usuario para o email cadastrado.
 	 * @param unknown $email
@@ -95,6 +94,7 @@ class Usuario_model extends CI_Model{
 			return false;
 		}
 	}
+
 	/**
 	 * Fun��o responsavel pelo registro da chave de acesso do usuario
 	 * @param unknown $chave_de_acesso
@@ -114,6 +114,7 @@ class Usuario_model extends CI_Model{
 		}
 		
 	}
+
 	/**
 	 * Função responsavel por buscar se existe a chave de acesso do usuario
 	 * @param unknown $chave_de_acesso
@@ -138,6 +139,7 @@ class Usuario_model extends CI_Model{
 			return false;
 		}
 	}
+
 	/**
 	 * Função responsavel pela alteração de senha.
 	 * @param unknown $chave_de_acesso
@@ -161,6 +163,7 @@ class Usuario_model extends CI_Model{
 			return false;
 		}
 	}
+
 	/**
 	 * Fun��o responsavel por ativar ou desativar usuarios
 	 * @param unknown $status
@@ -180,7 +183,6 @@ class Usuario_model extends CI_Model{
 		}
 	}
 
-	
 	function buscarPermissaoAdmin($admin_id){
 		$this->db->select("p.*")
 		->from("permissao_admin pa")
@@ -190,6 +192,81 @@ class Usuario_model extends CI_Model{
 		return $query->result();
 	}
 
+    /**
+     * Função responsavel por listar as permissões do usuario.
+
+     * @param unknown $usuario_id
+     * @return array - lista de permissões
+     */
+    function listarPermissoesUsuario($usuario_id){
+        $query="SELECT usuario.id, pessoa.nome,pessoa.rg, pessoa.cpf, 
+			count(administrador.pessoa_id) as admin,
+			count(aluno.pessoa_id) as aluno,
+			count(professor.pessoa_id) as professor,
+	        count(feintec.pessoa_id) as feintec,
+	        count(biblioteca.pessoa_id) as biblioteca,
+	        count(coordenador_curso.professor_id) as coordenador_curso,
+			count(pessoa.id) as pessoa from pessoa 
+	        	LEFT JOIN usuario ON usuario.pessoa_id = pessoa.id 
+	            LEFT JOIN email ON email.pessoa_id=pessoa.id 
+	            LEFT JOIN administrador ON administrador.pessoa_id=pessoa.id 
+	            LEFT JOIN aluno ON aluno.pessoa_id=pessoa.id 
+	            LEFT JOIN professor ON professor.pessoa_id=pessoa.id 
+	            LEFT JOIN feintec ON feintec.pessoa_id=pessoa.id 
+	            LEFT JOIN biblioteca ON biblioteca.pessoa_id=pessoa.id 
+	            LEFT JOIN coordenador_curso ON coordenador_curso.professor_id=professor.id
+	            WHERE usuario.id =".$usuario_id;
+        $query = $this->db->query($query);
+        $resultado=$query->result();
+        $permissoes=null;
+        if($resultado[0]->admin >0){
+            $permissoes[]='admin';
+        }
+        if($resultado[0]->professor>0){
+            $permissoes[]='professor';
+        }
+        if($resultado[0]->aluno>0){
+            $permissoes[]='aluno';
+        }
+        if($resultado[0]->biblioteca>0){
+            $permissoes[]='biblioteca';
+        }
+        if($resultado[0]->coordenador_curso>0){
+            $permissoes[]='coordenador';
+        }
+
+        return $permissoes;
+    }
+
+    function listarPermissoes(){
+        return array('admin','professor','aluno','biblioteca','coordenador');
+    }
+
+    function listarNiveisPermissaoAdmin(){
+        $this->db->select("p.*")
+            ->from("permissao p");
+        $query=$this->db->get();
+        return $query->result();
+        //return array('noticia','total','evento','secretaria');
+    }
+
+    function buscarNiveisPermissaoAdmin($usuario_id){
+        $this->db->select("p.*")
+            ->from("usuario u")
+            ->join("permissao_admin pa","pa.admin_id=u.pessoa_id")
+            ->join("permissao p","p.id=pa.permissao_id")
+            ->where("u.id",$usuario_id);
+        $query=$this->db->get();
+        return $query->result();
+
+
+    }
+
+
+
+
+
+	/*/  ------- FUNÇÕES DE USUÁRIO -------  /*/
 
     function listarUsuarios(){
         $this->db->select("u.id, u.pessoa_id, p.nome, u.status, p.foto")
@@ -204,9 +281,8 @@ class Usuario_model extends CI_Model{
             foreach ($usuarios as $usuario){
 
                 /*/  email  /*/
-                $emails = $this->usuarioEmail($usuario['id']);
-                $emails = json_decode(json_encode($emails), True);
-                $usuario['emails'] = $emails;
+                $emails = $this->usuarioEmail($usuario['pessoa_id']);
+                $usuario['email'] = $emails;
 
                 /*/  permissoes  /*/
                 $permissoes = $this->usuarioPermissoes($usuario['id']);
@@ -226,14 +302,173 @@ class Usuario_model extends CI_Model{
                 $professor = $this->usuarioProfessor($usuario['pessoa_id']);
                 $usuario['professor'] = $professor;
 
-                print_r($usuario);
                 array_push($result, $usuario);
             }
 
         }
         return $result;
+    } // Retorna TODOS os usuários
+
+    function buscarUsuario($usuario_id){
+        $this->db->select("u.id, p.id as pessoa_id, p.nome, p.rg, p.cpf, u.status ")
+            ->from("pessoa p")
+            ->join("usuario u","p.id=u.pessoa_id")
+            ->where("u.id",$usuario_id);
+        $query=$this->db->get();
+        $retorno = $query->result();
+        $retorno = json_decode(json_encode($retorno), True);
+        $retorno = $retorno[0];
+
+        /*/  email  /*/
+        $emails = $this->usuarioEmail($retorno['pessoa_id']);
+        $retorno['email'] = $emails;
+
+        /*/  permissoes  /*/
+        $permissoes = $this->usuarioPermissoes($usuario_id);
+        $permissoes = json_decode(json_encode($permissoes), True);
+        $retorno['permissoes'] = $permissoes;
+
+        /*/  servidor  /*/
+        $servidor = $this->usuarioServidor($retorno['pessoa_id']);
+        $servidor = json_decode(json_encode($servidor), True);
+        $retorno['servidor'] = $servidor;
+
+        /*/  é aluno  /*/
+        $aluno = $this->usuarioAluno($retorno['pessoa_id']);
+        $retorno['aluno'] = $aluno;
+
+        /*/  é professor  /*/
+        $professor = $this->usuarioProfessor($retorno['pessoa_id']);
+        $retorno['professor'] = $professor;
+
+
+        return $retorno;
+    } // Retorna UM usuário específico
+
+    function autenticar_edicao($pessoa_id){
+        /*/  ------ dados pessoais ------  /*/
+        $data = array(
+            'nome' => $_POST['nome'],
+            'cpf' => $_POST['cpf'],
+            'rg' => $_POST['rg']
+        );
+        $this->db->where('id', $pessoa_id);
+        $this->db->update('pessoa', $data);
+
+        /*/  email  /*/
+        $data = array(
+            'email' => $_POST['email']
+        );
+        $this->db->where('pessoa_id', $pessoa_id);
+        $this->db->update('email', $data);
+
+        /*/  status  /*/
+        $data = array(
+            'status' => filter_input(INPUT_POST, 'status')
+        );
+        $this->db->where('pessoa_id', $pessoa_id);
+        $this->db->update('usuario', $data);
+
+
+
+        /*/  ------ checkbox Perfil ------  /*/
+
+        /*/  Aluno  /*/
+        if (isset($_POST['aluno']))
+        {
+            $data = array(
+                'status' => 'ativo',
+                'pessoa_id' => $pessoa_id,
+                'situacao' => 'matriculado',
+                'periodo' => '1'
+            );
+
+            if($this->usuarioAluno($pessoa_id) == 1){
+                $this->db->where('pessoa_id', $pessoa_id);
+                $this->db->update('aluno', $data);
+                echo "update aluno |";
+            }
+            else{
+                $this->db->insert('aluno', $data);
+                echo "insert aluno |";
+            }
+        }
+        else{
+            $this->db->where('pessoa_id', $pessoa_id);
+            $this->db->delete('aluno');
+            echo "delete aluno |";
+        }
+
+        /*/  Professor  /*/
+        if (isset($_POST['professor']))
+        {
+            $data = array(
+                'carga_horaria' => '40',
+                'pessoa_id' => $pessoa_id,
+                'status' => 'ativo',
+                'ip' => 'xxx-xxx'
+            );
+
+            if($this->usuarioProfessor($pessoa_id) >= 1){
+                $this->db->where('pessoa_id', $pessoa_id);
+                $this->db->update('professor', $data);
+                echo "update professor |";
+            }
+            else{
+                $this->db->insert('professor', $data);
+                echo "insert professor |";
+            }
+        }
+        else{
+            $this->db->where('pessoa_id', $pessoa_id);
+            $this->db->delete('professor');
+            echo "delete professor |";
+        }
+
+        /*/  Servidor  /*/
+
+        $servidor = isset($_POST["serv"]) ? $_POST["serv"] : NULL;
+        print_r($servidor);
+        $servidores = array();
+        if(!empty($servidor)){
+            foreach($servidor as $serv){
+                array_push($servidores, $serv);
+                if($this->existeServidor($serv, $pessoa_id) == 1){
+                    $this->db->insert('servidor_pessoa', array('id_servidor' => $serv, 'id_pessoa' => $pessoa_id));
+                }
+            }
+            if(!empty($servidores)){
+                if(!in_array(1, $servidores)){
+                    $this->db->where('id_pessoa', $pessoa_id);
+                    $this->db->where('id_servidor', 1);
+                    $this->db->delete('servidor_pessoa');
+                }
+                if(!in_array(2, $servidores)){
+                    $this->db->where('id_pessoa', $pessoa_id);
+                    $this->db->where('id_servidor', 2);
+                    $this->db->delete('servidor_pessoa');
+                }
+                if(!in_array(3, $servidores)){
+                    $this->db->where('id_pessoa', $pessoa_id);
+                    $this->db->where('id_servidor', 3);
+                    $this->db->delete('servidor_pessoa');
+                }
+                if(!in_array(4, $servidores)){
+                    $this->db->where('id_pessoa', $pessoa_id);
+                    $this->db->where('id_servidor', 4);
+                    $this->db->delete('servidor_pessoa');
+                }
+            }
+        }
+        else{
+            $this->db->where('id_pessoa', $pessoa_id);
+            $this->db->delete('servidor_pessoa');
+        }
+
     }
 
+
+    /*/  ------ Funções de busca ------  /*/
     function usuarioEmail($usuario_id){
         $this->db->select("e.email")
             ->from("email e")
@@ -243,12 +478,15 @@ class Usuario_model extends CI_Model{
         $result = $query->result();
         $result = json_decode(json_encode($result), True);
 
-        $retorno = array();
-        foreach ($result as $array){
-            array_push($retorno, $array['email']);
+        foreach ($result as $email){
+            $result = $email['email'];
         }
 
-        return $retorno;
+        if(is_array($result)){
+            $result = "sem email";
+        }
+
+        return $result;
 
     }
 
@@ -331,135 +569,25 @@ class Usuario_model extends CI_Model{
 
     }
 
+    function existeServidor($servico, $pessoa_id){
+        $this->db->select("serv.id_servidor")
+            ->from("servidor_pessoa serv")
+            ->where("serv.id_pessoa", $pessoa_id)
+            ->where('serv.id_servidor', $servico);
+        $query=$this->db->get();
+        $result = $query->result();
+
+        if(count($result)){
+            return 0; // existe
+        }
+        else{
+            return 1; // insert
+        }
+    }
 
 
-	function listarUsuarios2(){
-		$query="select u.id, u.pessoa_id, p.nome, u.status, p.foto
-			from usuario u
-			left join pessoa p on p.id=u.pessoa_id";
-			
-		$result = $this->db->query($query);
-		$result=$result->result();
-		
-		if(count($result)>0){
-			//Busca permissões e emails
-			foreach($result  as $usuario){
-				$this->db->select("
-			    count(ad.pessoa_id) as admin,
-				count(a.pessoa_id) as aluno,
-				count(pr.pessoa_id) as professor,
-        		count(f.pessoa_id) as feintec,
-        		count(b.pessoa_id) as biblioteca,
-        		count(cc.professor_id) as coordenador_curso")
-				->from("pessoa p")
-				->join('usuario u', 'u.pessoa_id=p.id')
-				->join(	'administrador ad'," ad.pessoa_id=p.id",'left')
-            	->join("aluno a","a.pessoa_id=p.id",'left')
-            	->join("professor pr"," pr.pessoa_id=p.id",'left')
-            	->join("feintec f"," f.pessoa_id=p.id",'left')
-           		->join("biblioteca b"," b.pessoa_id=p.id",'left')
-            	->join("coordenador_curso cc"," cc.professor_id=pr.id",'left')
-				->where("p.id",$usuario->id);
-				$query=$this->db->get();
-				$usuario->permissoes=$query->result();
-				$usuarios[]=$usuario;
-				
-				$this->db->select("e.email")
-				->from("email e")
-				->join("pessoa p","p.id=e.pessoa_id")
-				->where("p.id",$usuario->pessoa_id);
-				$query=$this->db->get();
-				$usuario->emails=$query->result();
-				
-				
-			}
-			return $usuarios;
-		}
-		// Se não existir um usuario retorna falso
-		else{
-			return false;
-		}
-	}
-	
-	function buscarUsuario($usuario_id){
-		$this->db->select("p.*")
-		->from("usuario u")
-		->join("pessoa p","p.id=u.pessoa_id")
-		->where("u.id",$usuario_id);
-		$query=$this->db->get();
-		return $query->result();
-	}
-	
-	
-	/**
-	 * Função responsavel por listar as permissões do usuario.
-	
-	 * @param unknown $usuario_id
-	 * @return array - lista de permissões
-	 */
-	function listarPermissoesUsuario($usuario_id){
-		$query="SELECT usuario.id, pessoa.nome,pessoa.rg, pessoa.cpf, 
-			count(administrador.pessoa_id) as admin,
-			count(aluno.pessoa_id) as aluno,
-			count(professor.pessoa_id) as professor,
-	        count(feintec.pessoa_id) as feintec,
-	        count(biblioteca.pessoa_id) as biblioteca,
-	        count(coordenador_curso.professor_id) as coordenador_curso,
-			count(pessoa.id) as pessoa from pessoa 
-	        	LEFT JOIN usuario ON usuario.pessoa_id = pessoa.id 
-	            LEFT JOIN email ON email.pessoa_id=pessoa.id 
-	            LEFT JOIN administrador ON administrador.pessoa_id=pessoa.id 
-	            LEFT JOIN aluno ON aluno.pessoa_id=pessoa.id 
-	            LEFT JOIN professor ON professor.pessoa_id=pessoa.id 
-	            LEFT JOIN feintec ON feintec.pessoa_id=pessoa.id 
-	            LEFT JOIN biblioteca ON biblioteca.pessoa_id=pessoa.id 
-	            LEFT JOIN coordenador_curso ON coordenador_curso.professor_id=professor.id
-	            WHERE usuario.id =".$usuario_id;
-	       $query = $this->db->query($query); 
-	       $resultado=$query->result();
-	       $permissoes=null;
-	       if($resultado[0]->admin >0){
-	       	 $permissoes[]='admin';
-	       }
-	       if($resultado[0]->professor>0){
-	       	$permissoes[]='professor';
-	       }
-	       if($resultado[0]->aluno>0){
-	       	$permissoes[]='aluno';
-	       }
-	       if($resultado[0]->biblioteca>0){
-	       	$permissoes[]='biblioteca';
-	       }
-	       if($resultado[0]->coordenador_curso>0){
-	       	$permissoes[]='coordenador';
-	       }
-	      
-       		return $permissoes;
-	}
-	
-	function listarPermissoes(){
-		return array('admin','professor','aluno','biblioteca','coordenador');
-	}
-	
-	function listarNiveisPermissaoAdmin(){
-		$this->db->select("p.*")
-		->from("permissao p");
-		$query=$this->db->get();
-		return $query->result();
-		//return array('noticia','total','evento','secretaria');
-	}
-	
-	function buscarNiveisPermissaoAdmin($usuario_id){
-		$this->db->select("p.*")
-		->from("usuario u")
-		->join("permissao_admin pa","pa.admin_id=u.pessoa_id")
-		->join("permissao p","p.id=pa.permissao_id")
-		->where("u.id",$usuario_id);
-		$query=$this->db->get();
-		return $query->result();
-		
-		
-	}
+
+
 	
 	
 	

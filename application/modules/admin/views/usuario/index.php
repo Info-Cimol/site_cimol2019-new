@@ -37,9 +37,6 @@
                             $professor = $usuario['professor'];
                             $permissoes = $usuario['permissoes'];
                             $servidor = $usuario['servidor'];
-
-
-                    	    $emails = $usuario['emails'];
                     	?>
                         <tr>
                             <!-- Id -->
@@ -70,9 +67,7 @@
                             <!-- Email -->
 							<td>
                                 <?php
-                                    foreach( $emails as $email){
-                                        echo $email."<br/>";
-                                    }
+                                    echo $usuario['email'];
                                 ?>
                             </td>
 

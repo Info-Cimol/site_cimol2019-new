@@ -14,8 +14,15 @@ class Usuario extends MX_Controller{
 		$this->view->show_view($this->data);
 	}
 
-	public function editar_usuario(){
+	public function editar_usuario($usuario_id){
+        $this->data['usuario']=$this->usuario_model->buscarUsuario($usuario_id);
+        $this->data['content']="usuario/formulario_edicao";
+        $this->view->show_view($this->data);
+    }
 
+    public function autenticar_edicao($pessoa_id){
+        $this->usuario_model->autenticar_edicao($pessoa_id);
+        //redirect('admin/usuario', 'refresh');
     }
 
 	public function editar_permissoes($usuario_id){

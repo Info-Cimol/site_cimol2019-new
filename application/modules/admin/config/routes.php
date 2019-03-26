@@ -61,3 +61,4 @@ $route['translate_uri_dashes'] = FALSE;
 
 
 $route['admin/usuario'] = 'usuario';
+$route['admin/usuario/autenticar_edicao'] = 'usuario/autenticar_edicao';
