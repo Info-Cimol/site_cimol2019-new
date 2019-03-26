@@ -32,7 +32,7 @@ function confirmar_exclusao(Patrimonio) {
     return true;
 }
 </script>
- <button  style="margin-left: 700px; padding-bottom: 10px" onClick="window.location.href = '<?php echo base_url();?>coordenacao/patrimonio/cadastro_patrimonio';return false;">Cadastrar Novo Patrimonio </button>
+ <button  style="margin-left: 700px; padding-bottom: 10px" onClick="window.location.href = '<?php echo base_url();?>coordenacao/patrimonio/cadastro_patrimonio';return false;">Novo </button>
 
 <div>      
     <h1>Lista de Patrimonios</h1>

@@ -29,20 +29,38 @@ function confirmar_exclusao(Patrimonio) {
 }
 </script>
 
+
+<a class="btn btn-primary" onclic data-toggle="modal" data-target="#exampleModal" >link </a>
+
   <button  style="margin-left: 700px; padding-bottom: 10px" onClick="window.location.href = '<?php echo base_url();?>coordenacao/patrimonio/lista_patrimonio';return false;">Lista Patrimonios </button>
 
+
+  <select id="select">
+    <?php 
+        foreach($select as $key){
+            ?>
+                <option value"<?php echo $key->id_patrimonio ?>"    ><?php echo $key->id_patrimonio ?></option>
+
+            <?php
+        }
+  ?>
+
+  </select>
+
+ 
 
 <h1>Lista Item</h1>
 <div class="table-respnsive" > 
     <div style="background-color: write; margin-left: 400px; padding-bottom: 424px">
         <table class="table table-striped">
             <thead>
+
                 <tr>           
                     <th scope="col">id patrimonio</th>                     
                     <th scope="col">Nome Patrimonio</th>
                     <th scope="col">Numero de Série</th>                     
                     <th scope="col">Código</th>
-                    <th scope="col">Local</th> 
+                    <th scope="col">Local</th>
                     <th scope="col">Excluir</th> 
                     <th scope="col">Editar</th>                     
 
@@ -59,12 +77,12 @@ function confirmar_exclusao(Patrimonio) {
                         ?>
                         <tbody>
                             <tr>                
-                                <td><?php echo $serv_patrimonios->id_patrimonio?> </td>                           
-                                <td> <a onclick="adicionar_item_modal(<?php echo $serv_patrimonios->id_patrimonio ?>)"  data-toggle="modal" data-target="#exampleModal" ><?php echo $serv_patrimonios->nome?> </a></td>
-                                <td>  <?php echo $serv_patrimonios->numero_serie?> </a></td>
+                                <td><?php echo $serv_patrimonios->id_patrimonio?> </td>
+                                  <td>  <?php echo $serv_patrimonios->nome?> </a></td>                           
+                                <td> <?php echo $serv_patrimonios->numero_serie?></td>
                                 <td><?php echo $serv_patrimonios->codigo?></td>
-                                <td><?php echo $serv_patrimonios->descricao?></td>
-
+                                  <td> <?php echo $serv_patrimonios->descricao?> </td>
+                                
                                 <td><a href="<?php echo base_url() . "coordenacao/patrimonio/excluir/" . $serv_patrimonios->id_patrimonio ?>" onclick="return confirmar_exclusao('<?php echo $serv_patrimonios->id_patrimonio ?>')" class="btn btn-danger">Excluir</a></td>
 
                                 <td><a href="<?php echo base_url() . "coordenacao/patrimonio/editar/" . $serv_patrimonios->id_patrimonio ?>" onclick=" return ('<?php echo $serv_patrimonios->id_patrimonio?>')" class="btn btn-primary">Editar</a></td>               
@@ -106,7 +124,7 @@ function confirmar_exclusao(Patrimonio) {
                 <label for="numero_Serie">descrição</label>
                 <input type="text" class="form-control" id="" aria-describedby="emailHelp" name="descricao" placeholder="local">
 
-                <input type="hidden" class="form-control" id="id_patrimonio"  name="id_patrimonio"   value="" placeholder="Código">
+                <input type="text" class="form-control" id="id_patrimonio"  name="id_patrimonio"   value="" placeholder="Código">
 
 
 
@@ -123,16 +141,39 @@ function confirmar_exclusao(Patrimonio) {
 </div>
 </div>
 
+ 
 
 
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript">
+
+$(document).ready(function(){
+
+
+
+    $('#exampleModal').hide();
+
+    var teste = $('#select').val();
+    $('#select').change(function(){
+        alert(teste);
+        $('#id_patrimonio').val(teste);
+    })
+
+
+
+
+})
+
 function adicionar_item_modal($id){
     var id = $id;
 //alert();
 $('#id_patrimonio').val(id);
 
 }
+
+
+
+
 
 
 </script>

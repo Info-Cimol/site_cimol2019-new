@@ -33,7 +33,7 @@ class Patrimonio_model extends CI_Model{
         $this->db->select('nome, numero_serie, codigo, descricao, id_patrimonio')
         ->from('serv_patrimonio')
         ->join('serv_item_patrimonio', 'serv_patrimonio_id_patrimonio=id_patrimonio')
-        ->join('serv_local', 'serv_item_patrimonio_id_item=id_item');
+        ->join('serv_local', 'id=serv_local_id');
         //->where('serv_patrimonio_id_patrimonio=', $valores['serv_patrimonio_id_patrimonio']);
         $query=$this->db->get();
         $resultado=$query->result();
@@ -89,12 +89,24 @@ class Patrimonio_model extends CI_Model{
 
     public function adicionar(){
 
+        $item=array(
+
+           //"serv_item_patrimonio_id_item"=> $resultado[0]->id_item,
+           "descricao" =>$this->input->post("descricao"),
+
+           );
+
+        $this->db->insert("serv_local",$item);
+
+        $id_local = $this->db->insert_id();
+
         //$this->db->where("id_item",$id)-get("serv_item_patrimonio");
         $valores=array(
 
          "serv_patrimonio_id_patrimonio"=>$this->input->post("id_patrimonio"),
          "numero_serie" =>$this->input->post("numero_serie"),
          "codigo"=>$this->input->post("codigo"),
+         "serv_local_id"=>$id_local,
          );
         
         $this->db->insert("serv_item_patrimonio",$valores);
@@ -106,14 +118,7 @@ class Patrimonio_model extends CI_Model{
         $query=$this->db->get();
         $resultado=$query->result();
 
-        $item=array(
 
-           "serv_item_patrimonio_id_item"=> $resultado[0]->id_item,
-           "descricao" =>$this->input->post("descricao"),
-
-           );
-
-        $this->db->insert("serv_local",$item);
 
 
         $data=array(
@@ -127,6 +132,7 @@ class Patrimonio_model extends CI_Model{
 
         $this->db->insert("serv_movimento",$data);
     }
+
 
 
 }

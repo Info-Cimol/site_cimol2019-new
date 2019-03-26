@@ -15,6 +15,7 @@ class Patrimonio  extends MX_Controller {
   public function index(){
    $this->load->model("Patrimonio_model");
    $this->data['content']="patrimonio/lista_item";
+   $this->data['select'] = $this->Patrimonio_model->listaPatrimonio();
      $this->data["serv_patrimonio"]= $this->Patrimonio_model->listaItem();  
    $this->view->show_view($this->data);  
 
