@@ -21,11 +21,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $config['base_url'] = 'http://localhost/site-cimol/site_cimol2019-new/';
 $config['base_dir'] = 'C:/Users/Pc1/Dropbox/www/site-cimol/site_cimol2019-new/';
 $config['tema']['coordenacao'] = 'coordena';
+$config['tema']['servico'] = 'coordena'; // Tema do modulo Serviço, mesmo tema da Coordenação
 $config['tema']['admin'] = 'admin';
 $config['tema']['site'] = 'cimol';
 $config['tema']['professor'] = 'default';
 $config['tema_dir']=$config['base_dir']."public/temas/";
 $config['tema_url']=$config['base_url']."public/temas/";
+
+
 //$config['tema']=
 
 /*

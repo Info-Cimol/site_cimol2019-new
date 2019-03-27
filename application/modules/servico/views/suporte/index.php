@@ -20,7 +20,7 @@
                             </div>
                             <div class="input-group-icon input-group-icon-left mr-3">
                                 <span class="input-icon input-icon-right font-16"><i class="ti-search"></i></span>
-                                <a class="btn btn-primary btn-sm" href="<?php echo base_url() ?>coordenacao/servico/abrir_chamado"><span><i class="menu-icon icon-plus"></i> Abrir</span></a>
+                                <a class="btn btn-primary btn-sm" href="<?php echo base_url() ?>servico/suporte/abrir_chamado"><span><i class="menu-icon icon-plus"></i> Abrir</span></a>
                             </div>
                         </div>
                         <div class="table-responsive row">
@@ -336,7 +336,7 @@
 			var status = $('#type-filter').val();
 			//alert(status);
 			$.ajax({
-	            url:"<?php echo base_url() ?>coordenacao/servico/busca_chamado_ajax",
+	            url:"<?php echo base_url() ?>servico/suporte/busca_chamado_ajax",
 	            method:"POST",
 	            dataType: 'json',
 	            data:{status:status},
@@ -355,7 +355,7 @@
 		var id = $id;
 		//alert(id);
 		$.ajax({
-            url:"<?php echo base_url() ?>coordenacao/servico/busca_detalhes",
+            url:"<?php echo base_url() ?>servico/suporte/busca_detalhes",
             method:"POST",
             dataType: 'json',
             data:{id:id},
@@ -393,12 +393,14 @@
                 data_abertura = (d.toLocaleDateString());
                 $('#detalhes_data_abertura').html('<h5 class="font-strong mb-4" style="margin-left: 20px;">'+ data_abertura +'</h5>');
 
+                var data_atendimento = formatar_data(data[0].data_atendimento);
                 if (data[0].data_atendimento != null) {
-                	$('#detalhes_data_atendimento').html('<h5 class="font-strong mb-4" style="margin-left: 20px;">'+ data[0].data_atendimento +'</h5>');	
+                	$('#detalhes_data_atendimento').html('<h5 class="font-strong mb-4" style="margin-left: 20px;">'+data_atendimento +'</h5>');	
                 }
 
+                var data_solucao = formatar_data(data[0].data_solucao);
                 if (data[0].data_solucao != null) {
-                	$('#detalhes_data_solucao').html('<h5 class="font-strong mb-4" style="margin-left: 20px;">'+ data[0].data_solucao +'</h5>');	
+                	$('#detalhes_data_solucao').html('<h5 class="font-strong mb-4" style="margin-left: 20px;">'+data_solucao +'</h5>');	
                 }
 
 				if (data[0].local =! null) {
@@ -411,7 +413,7 @@
 	function editar($id){
 		var id = $id;
 		$.ajax({
-	            url:"<?php echo base_url() ?>coordenacao/servico/busca_detalhes",
+	            url:"<?php echo base_url() ?>servico/suporte/busca_detalhes",
 	            method:"POST",
 	            dataType: 'json',
 	            data:{id:id},
@@ -475,7 +477,7 @@
 		var id = $('input[name=id]').val();
 		
 		$.ajax({
-            url:"<?php echo base_url() ?>coordenacao/servico/editar_chamado",
+            url:"<?php echo base_url() ?>servico/suporte/editar_chamado",
             method:"POST",
             dataType: 'json',
             data:{data_atendimento:data_atendimento, data_solucao:data_solucao, defeito:defeito, solucao:solucao, status:status, num_serie:num_serie, local:local, id:id},
@@ -493,5 +495,12 @@
 <script type="text/javascript">	
 	$('#myModal').on('shown.bs.modal', function () {
 	  $('#myInput').trigger('focus')
-	})	
+	})
+
+    function formatar_data($d){
+        var data_original = new Date($d);
+        data_formatada = (data_original.toLocaleDateString());
+
+        return data_formatada;
+    }	
 </script>
