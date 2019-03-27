@@ -1,7 +1,7 @@
 
 <?php
-$id_patrimonio = isset($patrimonio->id_patrimonio) ? $patrimonio->id_patrimonio : "";
-$nome = isset($patrimonio->nome) ? $patrimonio->nome : "";
+//$id_patrimonio = isset($patrimonio->id_patrimonio) ? $patrimonio->id_patrimonio : "";
+//$nome = isset($patrimonio->nome) ? $patrimonio->nome : "";
 //$item_id = isset($item->item_id) ? $item->item_id : "";
 //$codigo = isset($item->codigo) ? $item->codigo : "";
 //$status = isset($item->status) ? $item->status : "";
@@ -30,29 +30,28 @@ function confirmar_exclusao(Patrimonio) {
 </script>
 
 
-<a class="btn btn-primary" onclic data-toggle="modal" data-target="#exampleModal" >link </a>
 
-  <button  style="margin-left: 700px; padding-bottom: 10px" onClick="window.location.href = '<?php echo base_url();?>coordenacao/patrimonio/lista_patrimonio';return false;">Lista Patrimonios </button>
+<button  style="margin-left: 700px; padding-bottom: 10px;" <a class="btn btn-success" onClick="window.location.href = '<?php echo base_url();?>coordenacao/patrimonio/lista_patrimonio';return false;">Lista Patrimonios </a></button>
 
 
-  <select id="select">
+<select  id="select">
     <?php 
-        foreach($select as $key){
-            ?>
-                <option value"<?php echo $key->id_patrimonio ?>"    ><?php echo $key->id_patrimonio ?></option>
+    foreach($select as $key){
+        ?>
+        <option value='<?php echo $key->id_patrimonio ?>'    ><?php echo $key->nome ?></option>
 
-            <?php
-        }
-  ?>
+        <?php
+    }
+    ?>
 
-  </select>
+</select>
+<button style=" padding-bottom: 5px; margin-top: -10px; margin-left: 20px " <a class="btn btn-success" onclic data-toggle="modal" data-target="#exampleModal" >Adicionar </a> </button>
 
- 
 
 <h1>Lista Item</h1>
 <div class="table-respnsive" > 
     <div style="background-color: write; margin-left: 400px; padding-bottom: 424px">
-        <table class="table table-striped">
+        <table class="table table-striped" style="border-style: solid">
             <thead>
 
                 <tr>           
@@ -78,10 +77,10 @@ function confirmar_exclusao(Patrimonio) {
                         <tbody>
                             <tr>                
                                 <td><?php echo $serv_patrimonios->id_patrimonio?> </td>
-                                  <td>  <?php echo $serv_patrimonios->nome?> </a></td>                           
+                                <td>  <?php echo $serv_patrimonios->nome?> </a></td>                           
                                 <td> <?php echo $serv_patrimonios->numero_serie?></td>
                                 <td><?php echo $serv_patrimonios->codigo?></td>
-                                  <td> <?php echo $serv_patrimonios->descricao?> </td>
+                                <td> <?php echo $serv_patrimonios->descricao?> </td>
                                 
                                 <td><a href="<?php echo base_url() . "coordenacao/patrimonio/excluir/" . $serv_patrimonios->id_patrimonio ?>" onclick="return confirmar_exclusao('<?php echo $serv_patrimonios->id_patrimonio ?>')" class="btn btn-danger">Excluir</a></td>
 
@@ -141,7 +140,7 @@ function confirmar_exclusao(Patrimonio) {
 </div>
 </div>
 
- 
+
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -153,16 +152,22 @@ $(document).ready(function(){
 
     $('#exampleModal').hide();
 
-    var teste = $('#select').val();
+/*
+    var teste = $('#select').val(id_patrimonio);
     $('#select').change(function(){
         alert(teste);
         $('#id_patrimonio').val(teste);
+    });
+*/
+
+    $('#select').change(function(){
+        var id = $('#select').val();
+        alert(id);
+        $('#id_patrimonio').val(id);
     })
 
 
-
-
-})
+});
 
 function adicionar_item_modal($id){
     var id = $id;
@@ -182,3 +187,5 @@ $('#myModal').on('shown.bs.modal', function () {
   $('#myInput').trigger('focus')
   </script>
 
+
+  </html>
