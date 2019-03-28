@@ -42,9 +42,9 @@
                                 		foreach ($chamados as $chamado) {
                                 		?>
                                 			<tr>
-		                                        <td style="text-align: center"><?php echo $chamado->codigo ?></td>
+		                                        <td><?php echo $chamado->codigo ?></td>
 		                                        <td>
-		                                            <a href=""><?php echo $chamado->nome ?></a>
+		                                            <a href=""><b><?php echo $chamado->nome ?></b></a>
 		                                        </td>
 
 		                                        <td><?php echo date('d/m/Y', strtotime($chamado->data_abertura)) ?></td>
@@ -330,11 +330,9 @@
 	$(document).ready(function(){
 
         $('#modal_detalhes').hide();
-        $('#exampleModal').hide();
-        
+        $('#exampleModal').hide();      
 		$('#type-filter').change(function(){
 			var status = $('#type-filter').val();
-			//alert(status);
 			$.ajax({
 	            url:"<?php echo base_url() ?>servico/suporte/busca_chamado_ajax",
 	            method:"POST",
@@ -342,9 +340,10 @@
 	            data:{status:status},
 	            success:function(data){
 	            	//alert('Deu Certooooo');
-	            	$('#tabela').empty(); 	
+	            	$('#tabela').empty();
 	               	for (var i = 0; i < data.length; i++) {
-	               		$('#tabela').append('<tr><td style="text-align: center">'+ data[i].codigo +'</td><td><a href="">'+data[i].nome+'</a></td><td>'+data[i].data_abertura+'</td><td>'+data[i].defeito+'</td><td>'+data[i].status+'</td><td><button onclick="busca_detalhes('+data[i].id+')" class="btn btn-success btn-sm" data-toggle="modal" data-target="#modal_detalhes" data-whatever="@mdo"><span><i class="menu-icon icon-inbox"></i> DETALHES</span></button></td><td style="text-align: center"><button onclick="editar('+data[i].id+')" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo"><span><i class="menu-icon icon-pencil"></i> EDITAR</span></button></td></tr>');
+                        var data_abertura = formatar_data(data[i].data_abertura);
+	               		$('#tabela').append('<tr><td style="text-align: center">'+ data[i].codigo +'</td><td><a href=""><b>'+data[i].nome+'</b></a></td><td>'+data_abertura+'</td><td>'+data[i].defeito+'</td><td>'+data[i].status+'</td><td><button onclick="busca_detalhes('+data[i].id+')" class="btn btn-success btn-sm" data-toggle="modal" data-target="#modal_detalhes" data-whatever="@mdo"><span><i class="menu-icon icon-inbox"></i> DETALHES</span></button></td><td style="text-align: center"><button onclick="editar('+data[i].id+')" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo"><span><i class="menu-icon icon-pencil"></i> EDITAR</span></button></td></tr>');
 	               	}
 	            }
        		})
@@ -389,8 +388,7 @@
 
                 $('#detalhes_num_serie').html('<h5 class="font-strong mb-4" style="margin-left: 20px;">'+ data[0].num_serie +'</h5>');
 
-                var d = new Date(data[0].data_abertura);
-                data_abertura = (d.toLocaleDateString());
+                var data_abertura = formatar_data(data[0].data_abertura);
                 $('#detalhes_data_abertura').html('<h5 class="font-strong mb-4" style="margin-left: 20px;">'+ data_abertura +'</h5>');
 
                 var data_atendimento = formatar_data(data[0].data_atendimento);
@@ -418,9 +416,6 @@
 	            dataType: 'json',
 	            data:{id:id},
 	            success:function(data){
-	            	//alert(data[0].status);
-	            	console.log(data);
-
 	            	$('#defeito').html('<textarea class="form-control" id="defeito" name="defeito" rows="2" style="width: 230px;">'+data[0].defeito+'</textarea>');
 
 	            	if (data[0].solucao == null) {
@@ -475,6 +470,19 @@
 		var num_serie = $('input[name=num_serie]').val();
 		var local = $('input[name=local]').val();
 		var id = $('input[name=id]').val();
+
+        if (status == 'Finalizado'){
+            if (data_atendimento == '') {
+                alert('Informe a data de atendimento');
+                return;
+            }else if(data_solucao == ''){
+                alert('Informe a data de solução');
+                return;
+            }else if(solucao == ''){
+                alert('Informe a solução para o chamado');
+                return;
+            }
+        }
 		
 		$.ajax({
             url:"<?php echo base_url() ?>servico/suporte/editar_chamado",
@@ -492,15 +500,18 @@
 </script>
 
 <!-- Trigger que abre os Modal -->
-<script type="text/javascript">	
+<script type="text/javascript">
+
+    // Gatilho para abrir modal
 	$('#myModal').on('shown.bs.modal', function () {
-	  $('#myInput').trigger('focus')
+	   $('#myInput').trigger('focus')
 	})
 
+    // Função básica para formatar a hora
     function formatar_data($d){
         var data_original = new Date($d);
         data_formatada = (data_original.toLocaleDateString());
-
         return data_formatada;
     }	
+
 </script>

@@ -6,9 +6,7 @@ class Suporte extends MX_Controller {
 	public function __construct(){
 		parent::__construct();
 		$this->load->model('servico_model');
-		//$this->load->model('serv_chamado');
-		//$this->load->model('serv_local');
-			//$this->view->setTema("coordena");
+		
 		if(isset($this->user_data)){
 			if(
 				!in_array('coordenador_curso', $this->user_data['permissoes']) 
@@ -94,8 +92,8 @@ class Suporte extends MX_Controller {
 
 		$status = $this->input->post('status');
 		$dados = $this->servico_model->busca_chamado_ajax($status);
-
 		echo json_encode($dados);
+
 	}
 
 	public function busca_detalhes_abrir_chamado(){
@@ -115,7 +113,7 @@ class Suporte extends MX_Controller {
 	public function alterar($teste){
 
 		$this->servico_model->alterar($teste);
-		
+
 	}
 
 	public function finalizar_chamado_submit(){
@@ -148,7 +146,6 @@ class Suporte extends MX_Controller {
 		);
 
 		$editar = $this->servico_model->editar_chamado($dados);
-
 		echo json_encode($editar);
 
 	}

@@ -1,6 +1,7 @@
 <?php
 class Servico_model extends CI_Model{
 	
+	// Abrir chamado
 	public function abrir_chamado($dados){
 
 		// Conta se já existe algum chamado em ABERTO com o código passado. Se abrir um chamado sem código não entra não IF.
@@ -59,6 +60,7 @@ class Servico_model extends CI_Model{
 		return true;	
 	}
 
+	// Busca chamado e retorna para a página inicial
 	public function busca_chamado(){
 
 		if (isset($dados)) {
@@ -86,6 +88,7 @@ class Servico_model extends CI_Model{
 					
 	}
 
+	// Busca detalhes pelo código, quando é digitado o código no inicio da página ao abrir chamado
 	public function busca_detalhes_abrir_chamado($codigo){
 
 		$this->db->select('e.*, c.*')
@@ -98,6 +101,7 @@ class Servico_model extends CI_Model{
 		return $resultados[] = $resultado ;
 	}
 
+	// Busca detalhes dos chamados que são mostrados no modal
 	public function busca_detalhes($id){
 
 		$this->db->select('e.*, c.*')
@@ -110,15 +114,16 @@ class Servico_model extends CI_Model{
 		return $resultados[] = $resultado ;
 	}
 
+	// Busca chamados por STATUS quando são filtrados pelo select
 	public function busca_chamado_ajax($status){
 			
 			if ($status == "Todos") {
 				
 				$this->db->select('*')
 				->from('serv_chamado c')
-				->join('serv_equipamento e','e.id=c.id_equipamento');
+				->join('serv_equipamento e','e.id=c.id_equipamento')
 				//->where('c.equipamento_codigo=', $dados['equipamento_codigo'])
-				//->where('c.status!=', '');
+				->where('c.status!=', 'Finalizado');
 				$query=$this->db->get();
 				$resultado=$query->result();
 				return $resultados[] = $resultado ;
@@ -146,6 +151,7 @@ class Servico_model extends CI_Model{
 	}
 	*/
 
+	// Edita o chamado
 	public function editar_chamado($dados){
 
 		// Se 
