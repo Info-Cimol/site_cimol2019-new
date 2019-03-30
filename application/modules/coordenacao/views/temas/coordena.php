@@ -8,7 +8,7 @@ require_once($this->config->item("base_dir").'public/temas/admin/header.php');
                             <ul class="widget widget-menu unstyled">
                                 <li class="active"><a href="<?php echo base_url() ?>coordenacao/armario"><i class="menu-icon icon-inbox"></i>Armários</a></li>
 
-                                <li><a href="#"><i class="menu-icon icon-book"></i>Livros</a></li>
+                                <li><a href="<?php echo base_url() ?>coordenacao/emprestimo_obra"><i class="menu-icon icon-book"></i>Emprestimo Obra</a></li>
 
                                 <li><a href="<?php echo base_url() ?>coordenacao/servico"><i class="menu-icon icon-cogs"></i>Serviços</a></li>
 

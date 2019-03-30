@@ -3,30 +3,7 @@ class Armario_model extends CI_Model{
 	
 	// testando, busca armarios disponiveis
 	public function busca_armario_disponivel($curso){
-		/*
-		$this->db->select('a.numero, a.id')
-		->from('armario a')		
-		->join('armario_aluno aa','a.id=aa.armario_id')
-		->where('a.curso_id=', $curso)
-		->where('armario_aluno.data_entrega!=', null);
-		$query=$this->db->get();
-		$resultado=$query->result();
-		return $resultados[] = $resultado ;
-		*/
 
-
-		/*
-		$this->db->select('a.numero, a.id')
-		->from('armario_aluno aa')		
-		->join('armario a','a.id=aa.armario_id')
-		->where('a.curso_id=', $curso)
-		->where('aa.data_entrega!=', null);
-		$query=$this->db->get();
-		$resultado1=$query->result();
-		return $resultados[] = $resultado1 ;
-		*/
-
-		//
 		$this->db->select('a.numero, aa.armario_id')
 		->from('armario_aluno aa')
 		->join('armario a','aa.armario_id=a.id')	
@@ -50,7 +27,6 @@ class Armario_model extends CI_Model{
 			//echo "<pre>";
 			//print_r($armario);
 			//echo "</pre>";
-
 			// Esta função "buscaArmário" se encontra no fim do código
 			if (!$this->buscaArmario($armario->id, $armarioLocado)) {
 				$resultado[] = $armario;
@@ -93,9 +69,6 @@ class Armario_model extends CI_Model{
 
 		// Verifica se já existe um registro com o mesmo ID do aluno e ID do armário, como são chaves primárias compostas devem ser únicas
 		if (($resultado[0]->aluno_id == 1) && ($resultado[0]->armario_id == 1)) {
-			//$resultado[0]->data_inicio = $inserir['data_inicio'];
-			//$resultado[0]->data_fim = $inserir['data_fim'];
-			//$resultado[0]->data_entrega = $inserir['data_entrega'];
 
 			$dados = array('armario_id' => $data['armario_id'],
 				'aluno_id' => $data['aluno_id'],
@@ -214,20 +187,9 @@ class Armario_model extends CI_Model{
 		$query=$this->db->get();
 		$resultado=$query->result();
 
-		//$resultado==5
-			//$this->alugar($inserir);
-			//return true;
-			//echo "resultado zerado";
-			//echo $inserir['aluno_id'];
-			//print_r($resultado);
 
 		if ($resultado[0]->aluno_id == 1) {
-			//echo "Sem registro";
-
-			//$resultado[0]->data_inicio = $inserir['data_inicio'];
-			//$resultado[0]->data_fim = $inserir['data_fim'];
-			//$resultado[0]->data_entrega = $inserir['data_entrega'];
-			
+			//echo "Sem registro";			
 			$this->db->where('aluno_id', $inserir['aluno_id']);
 			$this->db->where('armario_id=', $inserir['armario_id']);
 			$this->db->update('armario_aluno', $inserir);
@@ -236,7 +198,6 @@ class Armario_model extends CI_Model{
 		}else{
 			$this->alugar($inserir);
 			//echo $resultado[0]->aluno_id;
-			//echo "string";
 			return true;
 		}
 			//echo count($resultado);
@@ -259,8 +220,6 @@ class Armario_model extends CI_Model{
 		}else{
 			$this->db->insert('armario', $data);
 			//return true;
-			//echo "cadastrou ";
-			//exit;
 			return $resultado;
 		}
 
@@ -275,6 +234,5 @@ class Armario_model extends CI_Model{
 		}
 		return false;
 	}
-
 
 }

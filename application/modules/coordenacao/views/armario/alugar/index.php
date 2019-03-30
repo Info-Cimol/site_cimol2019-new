@@ -4,48 +4,47 @@
   }
 </style>
 
-<div style="float: left; width: 300px">&emsp;</div>
-<div style="float: left;">
-  
+<link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>public/temas/admin/css/servicos.css">
 
+<div style="text-align: center; width: 500px; float: left; margin-left: 200px;">
+    <div class="col-md-6" >
+        <div class="ibox">
+            <div class="ibox-footer">
+                
+                <form  method="post" id="form_alugar" action="<?php echo base_url() ?>coordenacao/armario/armario_alugado">
+                  <br><br>        
+                  <div class="form-group" style="text-align: left;">
+                      <label for="armario_id" style="text-align: center">Selecione o numero do armário</label>
+                      <select class="form-control" style="width: 270px; height: 40px; margin-left: 80px;" id="armario_id" name="armario_id"></select>
+                      <button type="button" class="btn btn-primary" data-toggle="modal" style="width: 5px; height: 38px; margin-bottom: 10px;" data-target="#exampleModal">+</button> 
+                  </div>
+               
+                  <div class="formgroup" style="text-align: left; margin-top: 15px;">
+                      <label for="aluno_id" style="text-align: center">Selecione o aluno</label>
+                      <select class="form-control" style="width: 270px; height: 40px; margin-left: 80px;" id="aluno_id" name="aluno_id">
+                      </select> 
+                  </div>
+               
+                  <div class="form-group" style="text-align: left; margin-top: 15px;">
+                      <label for="data_inicio" style="text-align: center">Data de Início</label>
+                      <input type="date" style="width: 255px; height: 30px; margin-left: 80px;" class="form-control" id="data_inicio" name="data_inicio" placeholder="Password">
+                  </div>
 
-    <form  method="post" id="form_alugar" action="<?php echo base_url() ?>coordenacao/armario/armario_alugado">
-        <br><br>        
-        <div class="form-group">
-            <label for="armario_id">Selecione o numero do armário</label>
-            <select class="form-control" style="width: 250px; height: 40px;" id="armario_id" name="armario_id"></select>
-            <button type="button" class="btn btn-primary" data-toggle="modal" style="height: 30px; margin-bottom: 10px;" data-target="#exampleModal">+</button> 
-        </div>
-     
-        <div class="formgroup">
-            <label for="aluno_id">Selecione o aluno</label>
-            <select class="form-control" style="width: 250px; height: 40px; margin-right: 30px;" id="aluno_id" name="aluno_id">
-            </select> 
-        </div>
-     
-        <div class="form-group">
-            <label for="data_inicio">Data de Início</label>
-            <input type="date" style="width: 240px; height: 30px; margin-right: 30px" class="form-control" id="data_inicio" name="data_inicio" placeholder="Password">
-        </div>
-
-        <div class="form-group">
-            <label for="data_fim">Data de Entrega</label>
-            <input type="date" style="width: 240px; height: 30px; margin-right: 30px" class="form-control" id="data_fim" name="data_fim" placeholder="Password">
-        </div>
-        
-        <div class="form-group" style="text-align: center;">
-          <br>
-          <button type="submit" class="btn btn-success btn btn-lg" name="alugar">Alugar</button>         
-        </div>
-
-    </form>
-
+                  <div class="form-group" style="text-align: left; margin-top: 15px;">
+                      <label for="data_fim" style="text-align: center">Data de Entrega</label>
+                      <input type="date" style="width: 255px; height: 30px; margin-left: 80px;" class="form-control" id="data_fim" name="data_fim" placeholder="Password">
+                  </div>
+                  
+                  <div class="form-group" style="text-align: center;">
+                    <br>
+                    <button type="submit" class="btn btn-primary" name="alugar">Alugar</button>
+                    <a class="btn btn-outline-secondary" href="<?php echo base_url() ?>coordenacao/armario " type="reset">Voltar</a>         
+                  </div>
+              </form>
+            </div>
+    </div>
 </div>
-<div style="float: left;"></div>
-
-
-
-
+</div>
 
 
 <!-- Modal -->
@@ -54,9 +53,6 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Incluir armário</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
       </div>
       <div class="modal-body" style="text-align: center" >
         
@@ -80,10 +76,7 @@
 </div>
 
 
-
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-
 <script type="text/javascript">
 
     $(document).ready(function(){
@@ -148,7 +141,7 @@
         success:function(data){
 
               if (data > 0) {
-                $('#modal').html('<div class="alert alert-danger" role="alert"><h4>Armario   '+numero+' ja esta cadastrado</h4></div>');
+                $('#modal').html('<div class="alert alert-danger" role="alert"><h4 style="color:white;">Armario   '+numero+' já esta cadastrado</h4></div>');
                 $('#sair').click(function(){
                   $('#modal').empty();
                   $('#numero').val("");
@@ -205,6 +198,7 @@
 
       if ($('#data_fim').val() < $('#data_inicio').val()) {
         alert('A data de entrega não pode terminar antes do início');
+        return false;
       }
       
     })

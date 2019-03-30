@@ -1,50 +1,39 @@
 
-<!-- Carrega o CSS do módulo armário -->
+<!-- Carrega o CSS do armário -->
 <link type="text/css" href="<?php echo base_url();  ?>public/temas/admin/css/armario.css" rel="stylesheet">
+<!-- Carrega o CSS do Serviço -->
+<link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>public/temas/admin/css/servicos.css">
 
-<div id="center">
-  <div id="container">
-    <div id="circle_locados"></div> <h5 style="margin-top: 30px">Alugados</h5>
-    <div id="circle_disponiveis" ></div> <h5 style="margin-top: 30px">Disponíveis</h5> 
-    <div id="circle_vencidos" ></div> <h5 style="margin-top: 30px">Vencidos</h5>
-  </div>
-  <br>
+<div class="d-flex flex-wrap mb-5">
+    <div class="static-widget" style="margin-right: 10px; margin-left: 200px; height: 40px; background-color: #3CB371;">
+        <h4 class="m-0" >Alugados</h4>
+    </div>
+    <div class="static-widget text-white" style="margin-right: 10px; height: 40px; background-color: #6A5ACD;">
+        <h4 class="m-0">Disponíveis</h4>
+    </div>
+    <div class="static-widget" style="margin-right: 10px; height: 40px; background-color: #FF0000;">
+        <h4 class="m-0">Vencidos</h4>
+    </div>
 </div>
 
-<div style="margin-left: 400px;">
+<div style="margin-left: 500px; margin-top: 20px;">
   <table >
     <tr >
       <td ><span class="input-icon input-icon-left" style="font-size: 18px;">Filtrar</span></td>
       <td>
-        <select class="form-control-lg" id="select_armario">
+        <select class="form-control-lg" id="select_armario" style="height: 45px;">
           <option value="todos">Todos</option>
           <option value="locados">Locados</option>
           <option value="disponiveis">Disponíveis</option>
           <option value="vencidos">Vencidos</option>
         </select>
       </td>
-      <td><a style="margin-left: 30px;" href="<?php echo base_url() ?>coordenacao/armario/alugar" class="btn btn-primary active center" role="button" aria-pressed="true">&ensp;Alugar&ensp;</a></td>
+      <td><a style="margin-left: 10px;" href="<?php echo base_url() ?>coordenacao/armario/alugar" class="btn btn-primary active center" role="button" aria-pressed="true">&ensp;Alugar&ensp;</a></td>
       <td><a style="margin-left: 10px;" href="<?php echo base_url() ?>coordenacao/armario/devolver" class="btn btn-primary active center" role="button" aria-pressed="true">Devolver</a></td>
     </tr>
   </table>
 </div>
 
-<!--
-  <div class="form-control">
-    <span class="input-icon input-icon-left" style="font-size: 18px;">Filtrar</span>
-    <select class="form-control-lg" id="select_armario">
-      <option value="todos">Todos</option>
-      <option value="locados">Locados</option>
-      <option value="disponiveis">Disponíveis</option>
-      <option value="vencidos">Vencidos</option>
-    </select>
-  </div>
-  <a href="<?php echo base_url() ?>coordenacao/armario/alugar" class="btn btn-primary active center" role="button" aria-pressed="true">&ensp;Alugar&ensp;</a>
-  <a href="<?php echo base_url() ?>coordenacao/armario/devolver" class="btn btn-primary active center" role="button" aria-pressed="true">Devolver</a>  
-  <br>
--->
-
-<!-- <pre>  <?php print_r($_SESSION['user_data']['curso']); ?> </pre> -->
 
 <div class="wrapper">
   <!-- DIV ONDE SÃO CARREGADOS OS CARDS POR JQUERY E AJAX -->

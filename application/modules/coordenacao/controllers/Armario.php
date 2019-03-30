@@ -24,6 +24,7 @@ class Armario extends MX_Controller {
 		$this->data['title']="Cimol - Área de coordenação";
 		$this->data['content'] = "armario/index";
 		$this->view->show_view($this->data);
+
 		
 	}
 
@@ -121,17 +122,17 @@ class Armario extends MX_Controller {
 	// Método que processa a devolução de armário. Após a devolução é carregada a pagina "alugar/alugado" e informa que a devolução foi feita com sucesso.
 	public function devolvido(){
 
-		//if (isset($_POST['devolver'])) {
+		if (isset($_POST['devolver'])) {
 			$this->armario_model->entrega_armario($this->input->post('armario_id'), $this->input->post('data_entrega'));
 
 			$this->data['title']="Cimol - Área de coordenação";
 			$this->data['content'] = "armario/devolver/devolvido";		
 			$this->view->show_view($this->data);
-		//} else {
+		} else {
 			$this->data['title']="Cimol - Área de coordenação";
 			$this->data['content'] = "armario/index";		
 			$this->view->show_view($this->data);
-		//}
+		}
 		
 
 	}
