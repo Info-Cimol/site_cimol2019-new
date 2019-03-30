@@ -24,8 +24,6 @@ class Armario extends MX_Controller {
 		$this->data['title']="Cimol - Área de coordenação";
 		$this->data['content'] = "armario/index";
 		$this->view->show_view($this->data);
-
-		
 	}
 
 	// testando, busca da pagina inicial
@@ -101,22 +99,7 @@ class Armario extends MX_Controller {
 				//$mensagem = "CADASTROUUU";
 				echo json_encode($armario[0]->numero);
 			}
-			//if ($armario) {	
-				
-				//return;
-				//echo "string";
-				//exit;
-			//}else{
-				//echo "JA TEM";
-				//exit;
-			//	return $mensagem = "jácadastradooooooo";
-				//echo json_encode($mensagem);
-				//echo "Jácadastrado";
-				//$this->data['title']="Cimol - Área de coordenação";
-				//$this->data['content'] = "armario/alugar";		
-				//$this->view->show_view($this->data);
-			//}
-			//return;
+			
 	}
 	
 	// Método que processa a devolução de armário. Após a devolução é carregada a pagina "alugar/alugado" e informa que a devolução foi feita com sucesso.
