@@ -13,6 +13,11 @@ if(isset($noticia)){
 			$caminho_imagem= base_url().$dados->url_imagem.$dados->arquivo_imagem;
 		else
 			$caminho_imagem = "";
+
+		for ($i=0; $i < count($tags_noticia); $i++) {
+					$tags[]=$tags_noticia[$i]['marcador'];
+		}
+
 	}
 
  ?>
@@ -30,7 +35,7 @@ if(isset($noticia)){
 				Título:
 			</label>
             <div class="controls">
-            	<input type="text" name="noticia[titulo]" maxlength="90" class="input-large" value="<?php echo $titulo; ?>" required/>
+            	<input type="text" name="noticia[titulo]" pattern="[A-Za-z0-9]+" maxlength="90" class="input-large" value="<?php echo $titulo; ?>" required/>
             </div>
         </div>
 				<div class="control-group">
@@ -38,7 +43,19 @@ if(isset($noticia)){
 							Resumo:
 						</label>
 				<div class="controls">
-							<input type="text" name="noticia[resumo]" value="<?php echo $resumo; ?>" maxlength="90" class="input-large" required/>
+							<input type="text" name="noticia[resumo]" pattern="[A-Za-z0-9]+" value="<?php echo $resumo; ?>" maxlength="90" class="input-large" required/>
+						</div>
+				</div>
+				<div class="control-group">
+						<label class="control-label">
+							Tags:
+						</label>
+				<div class="controls">
+							<input type="text" name="noticia[tags]" pattern="[[A-Z0-9]+[;]{1,}]+" value="<?php
+							for ($i=0; $i < count($tags_noticia); $i++) {
+								echo $tags[$i].";";
+						  }
+									?>" maxlength="90" class="input-large" required/>
 						</div>
 				</div>
 				<div class="control-group">
@@ -99,7 +116,7 @@ if(isset($noticia)){
 							Título:
 						</label>
         <div class="controls">
-            	<input type="text" name="noticia[titulo]" maxlength="50" class="input-large" required/>
+            	<input type="text" name="noticia[titulo]" pattern="[A-Za-z0-9 _-]+" maxlength="50" class="input-large" required/>
             </div>
         </div>
         <div class="control-group">
@@ -107,7 +124,15 @@ if(isset($noticia)){
 							Resumo:
 						</label>
         <div class="controls">
-            	<input type="text" name="noticia[resumo]" maxlength="110" class="input-large" required/>
+            	<input type="text" name="noticia[resumo]" pattern="[A-Za-z0-9 -_]+" maxlength="110" class="input-large" required/>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">
+							Tags:
+						</label>
+        		<div class="controls">
+            	<input type="text" name="noticia[tags]" maxlength="110" class="input-large"/>
             </div>
         </div>
 				<div class="control-group">
@@ -115,7 +140,7 @@ if(isset($noticia)){
 				Data:
 			</label>
 						<div class="controls">
-							<input type="text" name="noticia[data]" pattern="[0-9]{4}-[0-9]{1,2}-[0-9]{1,2}" placeholder="yyyy-mm-dd" class="input-large" required/>
+							<input type="text" name="noticia[data]" pattern="([12]\d{3})-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])" placeholder="yyyy-mm-dd" class="input-large" required/>
 						</div>
 				</div>
         <div class="control-group">
@@ -147,9 +172,11 @@ if(isset($noticia)){
 
  <script src='<?php echo base_url() ?>public/plugins/tiny_mce/tiny_mce.js'></script>
  <script>
+
+
  tinyMCE.init({
 	 // General options
- language : "pt",
+ 	 language : "pt",
 	 mode : "textareas",
 	 theme : "advanced",
 	 plugins : "safari,pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template",

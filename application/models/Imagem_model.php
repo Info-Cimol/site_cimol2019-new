@@ -100,7 +100,7 @@ class Imagem_model extends CI_Model{
     	$query = $this->db->get();
     	return $query->result();
     }
-	
+
     function listar_url_imagens(){
     	$this->db->select('i.nome as title, i.url_imagem as value')
     	->from('imagem i')

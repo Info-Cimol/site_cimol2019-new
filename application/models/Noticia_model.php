@@ -23,7 +23,6 @@ class Noticia_model extends CI_Model{
     function listar_noticias($limit=null){
         $this->db->select("n.*,date_format(n.data_postagem,'%d/%m/%Y') as data_noticia")
                 ->from('noticia n')
-
                 ->where('n.status =','ativo')
         		->order_by('n.id','desc');
         if($limit){
@@ -31,6 +30,16 @@ class Noticia_model extends CI_Model{
         }
         $query=$this->db->get();
         return $query->result();
+    }
+
+    function id_ultima_noticia(){
+        $this->db->select("n.id as quant")
+                ->from('noticia n')
+                ->order_by('n.id','desc')
+                ->limit(1);
+        $query=$this->db->get();
+        $result = $query->result();
+        return $result[0]->quant;
     }
 
     function listar_inicial(){

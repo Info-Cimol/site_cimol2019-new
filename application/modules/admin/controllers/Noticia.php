@@ -14,6 +14,7 @@ class Noticia extends MX_Controller {
 		}
 
         $this->load->model('noticia_model');
+        $this->load->model('marcador_model');
         $this->load->model('imagem_model');
         date_default_timezone_set("Brazil/East");
     }
@@ -41,48 +42,53 @@ class Noticia extends MX_Controller {
     public function nova_noticia(){
 
         $this->data['title']="Cimol - Área do Administrador";
-		$this->data['content']="noticia/formulario_noticia";
-		$this->view->show_view($this->data);
+    	   $this->data['content']="noticia/formulario_noticia";
+	      $this->view->show_view($this->data);
     }
+
 
     public function editar_noticia($id){
         $noticia=$this->noticia_model->buscar_noticia($id);
+        $tags=$this->marcador_model->pegar_tag_noticia($id);
 
         $this->data['title']="Cimol - Área do Administrador";
-		$this->data['content']="noticia/formulario_noticia";
-		$this->data['noticia'] = $noticia;
-		$this->view->show_view($this->data);
+    		$this->data['content']="noticia/formulario_noticia";
+    		$this->data['noticia'] = $noticia;
+    		$this->data['tags_noticia'] = $tags;
+    		$this->view->show_view($this->data);
     }
 
     public function visualizar_noticia($id){
         $noticia=$this->noticia_model->buscar_noticia($id);
 
         $this->data['title']="Cimol - Área do Administrador";
-		$this->data['content']="noticia/visualizar_noticia";
-		$this->data['noticia'] = $noticia;
-		$this->view->show_view($this->data);
+    		$this->data['content']="noticia/visualizar_noticia";
+    		$this->data['noticia'] = $noticia;
+    		$this->view->show_view($this->data);
     }
 
-	public function JSON_imagens()
-	{
-		$this->data['title']="Cimol - Área do Administrador";
-		$this->data['content']="noticia/JSON-images";
-		$this->view->show_view($this->data);
-	}
 
-	public function listar_imagens(){
-		$this->load->model('imagem_model');
-		$imagens=$this->imagem_model->listar_url_imagens();
+	// public function listar_imagens(){
+	// 	$this->load->model('imagem_model');
+	// 	$imagens=$this->imagem_model->listar_url_imagens();
+  //
+	// 	echo json_encode($imagens);
+	// }
 
-		echo json_encode($imagens);
-	}
 
     public function salvar_noticia()
 	{
+    //$this->load->library('util');
 
-		if($this->input->post("noticia[id]")){
+		if($this->input->post("noticia[id]"))
+    {
+      //editar noticia
 			$id = $this->input->post("noticia[id]");
 
+      //Tags
+
+
+      //imagem
 			if($_FILES['imagem']['error']==0)
       {
 				$arquivo_imagem = $_FILES['imagem']['name'];
@@ -91,7 +97,7 @@ class Noticia extends MX_Controller {
 				$up_config['upload_path'] = $url_imagem;
 				$up_config['allowed_types'] = 'gif|jpg|png';
 				$up_config['overwrite'] = TRUE;
-				$url_imagem = 'public/images/noticias/';
+				$url_imagem = $url_imagem.'/';
 
 				$this->load->library('upload', $up_config);
 
@@ -102,13 +108,17 @@ class Noticia extends MX_Controller {
 				}
 
 			}else {
-				if($this->input->post('noticia[nome_imagem]')){
+
+        if($this->input->post('noticia[nome_imagem]')){
 					$arquivo_imagem = $this->input->post('noticia[nome_imagem]');
 					$url_imagem = $this->input->post('noticia[url_imagem]');
-				}else{
+				}
+        else
+        {
 					$arquivo_imagem = 'noticia-def.jpg';
 					$url_imagem = 'public/images/temp/';
 				}
+
 			}
 
 			if(!isset($data_image['erro'])){
@@ -121,26 +131,31 @@ class Noticia extends MX_Controller {
 					'data_postagem' => $this->input->post('noticia[data]'),
 				);
 
-				if($noticia=$this->noticia_model->editar($dados, $id)){
+      }
+				if($this->noticia_model->editar($dados, $id)){
 					$this->view->set_message("Noticia editada com sucesso", "alert alert-success");
 					redirect('admin/noticia', 'refresh');
 				}else{
 					$this->view->set_message("Ocorreu um erro ao editar noticia", "alert alert-error");
 					redirect('admin/noticia', 'refresh');
 				}
-			}else{
-				echo "Ocorreu um erro";
-			}
 
 
-		}else{
+
+		}
+    else{
+      //nova noticia
 			if($_FILES['imagem']['error']==0){
+
 				$arquivo_imagem = $_FILES['imagem']['name'];
+        $dados_form_noticia = $this->input->post("noticia");
+
 				$url_imagem = 'public/images/noticias';
 
 				$up_config['upload_path'] = $url_imagem;
 				$up_config['allowed_types'] = 'gif|jpg|png';
 				$up_config['overwrite'] = TRUE;
+        $url_imagem = $url_imagem.'/';
 
 				$this->load->library('upload', $up_config);
 
@@ -152,7 +167,7 @@ class Noticia extends MX_Controller {
 
 			}else {
 				$arquivo_imagem = 'noticia-def.jpg';
-				$url_imagem = 'public/images/temp';
+				$url_imagem = 'public/images/temp/';
 			}
 
 			if(!isset($data_image['erro'])){
@@ -160,18 +175,52 @@ class Noticia extends MX_Controller {
 					'titulo' => $this->input->post('noticia[titulo]'),
 					'conteudo' => $this->input->post('noticia[conteudo]'),
 					'resumo' => $this->input->post('noticia[resumo]'),
-					'url_imagem' => $url_imagem."/",
+					'url_imagem' => $url_imagem,
 					'arquivo_imagem' => $arquivo_imagem,
 					'data_postagem' => $this->input->post('noticia[data]'),
 				);
 
-			if($noticia=$this->noticia_model->postar_noticia($dados)){
-				$this->view->set_message("Noticia postada com sucesso", "alert alert-success");
-				redirect('admin/noticia', 'refresh');
-			}else{
-				$this->view->set_message("Ocorreu um erro ao portar noticia", "alert alert-error");
-				redirect('admin/noticia', 'refresh');
-			}
+        if($noticia=$this->noticia_model->postar_noticia($dados)){
+          //tags
+          $marcador=$this->marcador_model->pegar_marcadores();
+          $i=0;
+          foreach ($marcador as $tags) {
+            $tags_banco[$i] = $tags->tag_nome;
+            $i++;
+          }
+
+          $tags_noticia = explode(";", $this->input->post('noticia[tags]'));
+          for ($i=0; $i < count($tags_noticia); $i++) {
+            $tags_noticia[$i] = strtoupper(trim($tags_noticia[$i]));
+            $tags_noticia[$i] = str_replace(" ", "_", $tags_noticia[$i]);
+          }
+
+          $temp = array_diff($tags_noticia, $tags_banco);
+          $tags_q_n_tem_no_banco;
+          for ($i=0; $i < count($tags_noticia); $i++) {
+            if(isset($temp[$i])){
+              $tags_q_n_tem_no_banco[] = $temp[$i];
+            }
+          }
+          if(isset($tags_q_n_tem_no_banco)){
+            $this->marcador_model->salvar_marcadores($tags_q_n_tem_no_banco);
+          }
+          $marcadores_id=$this->marcador_model->pegar_id_marcadores($tags_noticia);
+          $noticia_id = $this->noticia_model->id_ultima_noticia();
+          $marcador=$this->marcador_model->associar_marcadores($marcadores_id, $noticia_id);
+
+
+  				$this->view->set_message("Noticia postada com sucesso", "alert alert-success");
+  				redirect('admin/noticia', 'refresh');
+  			}else{
+  				$this->view->set_message("Ocorreu um erro ao portar noticia", "alert alert-error");
+  				redirect('admin/noticia', 'refresh');
+  			}
+
+        //tags
+
+
+
 		}
 	}
 
