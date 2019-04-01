@@ -75,7 +75,7 @@ p{
   justify-content: center;
   flex-wrap: wrap;
 }
- .card{
+ .card-locado{
   width: 150px;
   height: 190px;
   float: left;

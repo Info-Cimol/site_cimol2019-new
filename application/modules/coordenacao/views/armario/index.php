@@ -68,7 +68,7 @@
            var d = new Date(data['locados'][i].data_fim);
            data_fim = (d.toLocaleDateString());
            // Adiciona os cards na div "CARDS"
-           $('#cards').prepend('<div class="card"><h2 class="card-title" >'+data['locados'][i].numero+'</h2><p>'+data['locados'][i].nome+'</p><h4>Entrega '+data_fim+'</h4>');          
+           $('#cards').prepend('<div class="card-locado"><h2 class="card-title" >'+data['locados'][i].numero+'</h2><p>'+data['locados'][i].nome+'</p><h4>Entrega '+data_fim+'</h4>');          
          }
 
          for (var i = 0; i < data['vencidos'].length; i++) {

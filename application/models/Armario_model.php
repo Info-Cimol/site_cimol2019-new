@@ -5,8 +5,8 @@ class Armario_model extends CI_Model{
 	public function busca_armario_disponivel($curso){
 
 		$this->db->select('a.numero, aa.armario_id')
-		->from('armario_aluno aa')
-		->join('armario a','aa.armario_id=a.id')	
+		->from('coord_armario_aluno aa')
+		->join('coord_armario a','aa.armario_id=a.id')	
 		->where('aa.data_entrega=', null)
 		->where('a.curso_id=', $curso);
 		$this->db->order_by('a.numero'); 
@@ -15,7 +15,7 @@ class Armario_model extends CI_Model{
 		
 
 		$this->db->select('a.numero, a.id')
-		->from('armario a')		
+		->from('coord_armario a')		
 		->where('a.curso_id=', $curso);
 		//->where('aa.data_entrega!=', null);
 		$this->db->order_by('a.numero');
@@ -43,7 +43,7 @@ class Armario_model extends CI_Model{
 		->join('aluno al','al.pessoa_id=p.id')
 		->join('aluno_turma at','al.id=at.aluno_id')
 		->join('turma t','at.turma_id=t.id')
-		->join('armario_aluno aa','al.id=aa.aluno_id')
+		->join('coord_armario_aluno aa','al.id=aa.aluno_id')
 		//->join('usuario u','al.pessoa_id=u.id')
 		//->join('pessoa p','u.pessoa_id=p.id')	
 		//->join('curso c','c.id=u.usuario_id');	
@@ -61,7 +61,7 @@ class Armario_model extends CI_Model{
 
 		//$this->db->insert('armario_aluno', $data);
 		$this->db->select('count(aa.aluno_id) as aluno_id, count(aa.armario_id) as armario_id, data_inicio, data_fim, data_entrega')
-		->from('armario_aluno aa')
+		->from('coord_armario_aluno aa')
 		->where('aa.aluno_id=', $data['aluno_id'])
 		->where('aa.armario_id=', $data['armario_id']);
 		$query=$this->db->get();
@@ -79,7 +79,7 @@ class Armario_model extends CI_Model{
 			// Se já houver registro com mesmo ID do aluno e armário, temos que atualizar a tabela
 			$this->db->where('aluno_id', $data['aluno_id']);
 			$this->db->where('armario_id=', $data['armario_id']);
-			$this->db->update('armario_aluno', $dados);
+			$this->db->update('coord_armario_aluno', $dados);
 
 			//echo "atualizou";
 			return true;
@@ -91,7 +91,7 @@ class Armario_model extends CI_Model{
 				'data_fim' => $data['data_fim'], 
 				'data_entrega' => $data['data_entrega']);
 
-			$this->db->insert('armario_aluno', $dados);
+			$this->db->insert('coord_armario_aluno', $dados);
 			//$this->alugar($inserir);
 			//echo $resultado[0]->aluno_id;
 			
@@ -117,8 +117,8 @@ class Armario_model extends CI_Model{
 	public function busca_todos_locados($curso){
 		
 		$this->db->select('a.numero, aa.armario_id')
-		->from('armario_aluno aa')
-		->join('armario a','aa.armario_id=a.id')	
+		->from('coord_armario_aluno aa')
+		->join('coord_armario a','aa.armario_id=a.id')	
 		->where('aa.data_entrega=', null)
 		->where('a.curso_id=', $curso);
 		$this->db->order_by('a.numero'); 
@@ -132,8 +132,8 @@ class Armario_model extends CI_Model{
 
 		$data_atual = date('Y-m-d');
 		$this->db->select('a.numero, aa.data_fim, p.nome, aa.armario_id, c.titulo')
-		->from('armario_aluno aa')
-		->join('armario a','aa.armario_id=a.id')
+		->from('coord_armario_aluno aa')
+		->join('coord_armario a','aa.armario_id=a.id')
 		->join('curso c','a.curso_id=c.id')	
 		->join('aluno al','al.id=aa.aluno_id')
 		->join('pessoa p','al.pessoa_id=p.id')
@@ -151,7 +151,7 @@ class Armario_model extends CI_Model{
 		
 		$data = array('data_entrega' => $data_entrega);
 		$this->db->where('armario_id=', $armario_id);
-		$this->db->update('armario_aluno', $data);
+		$this->db->update('coord_armario_aluno', $data);
 		$entregue = "entregue";
 		return $entregue;
 	}
@@ -161,8 +161,8 @@ class Armario_model extends CI_Model{
 		
 		$data_atual = date('Y-m-d');
 		$this->db->select('a.numero, aa.data_fim, p.nome, aa.armario_id')
-		->from('armario_aluno aa')
-		->join('armario a','aa.armario_id=a.id')	
+		->from('coord_armario_aluno aa')
+		->join('coord_armario a','aa.armario_id=a.id')	
 		->join('aluno al','al.id=aa.aluno_id')
 		->join('pessoa p','al.pessoa_id=p.id')
 		->where('aa.data_entrega=', null)
@@ -178,7 +178,7 @@ class Armario_model extends CI_Model{
 
 
 		$this->db->select('count(aa.aluno_id) as aluno_id, count(aa.armario_id) as armario_id, data_inicio, data_fim, data_entrega')
-		->from('armario_aluno aa')
+		->from('coord_armario_aluno aa')
 		//->join('armario a','aa.armario_id=a.id')	
 		->where('aa.aluno_id=', $inserir['aluno_id'])
 		->where('aa.armario_id=', $inserir['armario_id']);
@@ -207,7 +207,7 @@ class Armario_model extends CI_Model{
 	public function cadastrar_armario($data){
 
 		$this->db->select('count(a.numero) as numero')
-		->from('armario a')
+		->from('coord_armario a')
 		->where('a.curso_id=', $data['curso_id'])
 		->where('a.numero=', $data['numero']);
 		$query=$this->db->get();
@@ -218,7 +218,7 @@ class Armario_model extends CI_Model{
 			//return false;
 			return $resultado;
 		}else{
-			$this->db->insert('armario', $data);
+			$this->db->insert('coord_armario', $data);
 			//return true;
 			return $resultado;
 		}
