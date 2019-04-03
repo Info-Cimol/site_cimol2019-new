@@ -14,9 +14,15 @@ if(isset($noticia)){
 		else
 			$caminho_imagem = "";
 
-		for ($i=0; $i < count($tags_noticia); $i++) {
-					$tags[]=$tags_noticia[$i]['marcador'];
+		if(isset($tags_noticia)){
+			for ($i=0; $i < count($tags_noticia); $i++) {
+						$tags[]=$tags_noticia[$i]['marcador'];
+			}
+		}else{
+			$tags = 0;
 		}
+
+
 
 	}
 
@@ -35,7 +41,7 @@ if(isset($noticia)){
 				Título:
 			</label>
             <div class="controls">
-            	<input type="text" name="noticia[titulo]" pattern="[A-Za-z0-9]+" maxlength="90" class="input-large" value="<?php echo $titulo; ?>" required/>
+            	<input type="text" name="noticia[titulo]" pattern='[^\"]+' maxlength="90" class="input-large" value="<?php echo $titulo; ?>" required/>
             </div>
         </div>
 				<div class="control-group">
@@ -43,7 +49,7 @@ if(isset($noticia)){
 							Resumo:
 						</label>
 				<div class="controls">
-							<input type="text" name="noticia[resumo]" pattern="[A-Za-z0-9]+" value="<?php echo $resumo; ?>" maxlength="90" class="input-large" required/>
+							<input type="text" name="noticia[resumo]" pattern='[^\"]+' value="<?php echo $resumo; ?>" maxlength="90" class="input-large" required/>
 						</div>
 				</div>
 				<div class="control-group">
@@ -51,11 +57,14 @@ if(isset($noticia)){
 							Tags:
 						</label>
 				<div class="controls">
-							<input type="text" name="noticia[tags]" pattern="[[A-Z0-9]+[;]{1,}]+" value="<?php
-							for ($i=0; $i < count($tags_noticia); $i++) {
-								echo $tags[$i].";";
-						  }
-									?>" maxlength="90" class="input-large" required/>
+							<input type="text" name="noticia[tags]" value="<?php
+							if($tags!=0){
+								for ($i=0; $i < count($tags); $i++) {
+									echo $tags[$i].";";
+							  }
+							}
+
+									?>" class="input-large"/>
 						</div>
 				</div>
 				<div class="control-group">

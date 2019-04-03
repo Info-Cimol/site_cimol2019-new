@@ -2,7 +2,7 @@
 
 class Marcador_model extends CI_Model{
 
-  function pegar_marcadores(){
+  function pegar_todos_marcadores(){
 
     $this->db->select("marcador.marcador as tag_nome")
             ->from('marcador');
@@ -19,9 +19,14 @@ class Marcador_model extends CI_Model{
      while($row = $query->fetch_assoc()) {
         $tags[] = $row;
       }
-      return $tags;
 
+      if(isset($tags)){
 
+        return $tags;
+      }else{
+        $tags=0;
+        return $tags;
+      }
   }
 
   function pegar_id_marcadores($marcadores){
@@ -60,6 +65,16 @@ class Marcador_model extends CI_Model{
       $this->db->insert("marcador_noticia", array('marcador_id' => $marcadores_id[$i], 'noticia_id' => $noticia_id));
     }
     return true;
+
+  }
+
+  function reset_marcador_noticia($noticia_id)
+  {
+    if($this->db->delete('marcador_noticia', array('noticia_id'=>$noticia_id))){
+        return true;
+    }else{
+        return false;
+    }
 
   }
 
