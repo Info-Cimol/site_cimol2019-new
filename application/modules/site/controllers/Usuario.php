@@ -152,15 +152,7 @@ class Usuario extends MX_Controller{
 		//print_r($_SESSION);
 		$this->view->show_view($this->data);
 	}
-	
-	
-	function solicitar_usuario(){
-		$this->data['title']="Cimol";
-		$this->data['content']="usuario/form_solicitar_usuario";
-		
-		$this->view->show_view($this->data);
-	}
-	
+
 	
 	function alterar_senha($chave_de_acesso=null){
 		$this->data['title']="Cimol";
@@ -247,6 +239,51 @@ class Usuario extends MX_Controller{
 				//Envia mensagem confirmaÃ§Ã£o, com link criaÃ§Ã£o de senha
 		}
 	}
+
+
+
+	/*/  Usuário solicitando criação de um novo usuário  /*/
+
+    function solicitar_novo_usuario(){
+        $this->data['title']="Cimol";
+        $this->data['content']="usuario/formulario_solicitar_novo_usuario";
+        $this->view->show_view($this->data);
+    }
+
+    function mandar_email(){
+        $email = $_POST['email'];
+
+        /*/  Testa se o email existe  /*/
+        if($this->usuario_model->existe_email($email)){
+            /*/  Testa se o email pertence a um usuário  /*/
+            if($this->usuario_model->existe_usuario_email($email)){
+                /*/  O usuário já existe  /*/
+            }
+            else{
+                $hash = $this->usuario_model->criar_hash($email);
+                redirect('novo_usuario/'.$hash, 'refresh');
+            }
+        }
+        else{
+            /*/  Não existe o email  /*/
+        }
+    }
+
+    function novo_usuario($hash){
+        if($this->usuario_model->validar_hash($hash)){
+            $this->data['content']="usuario/formulario_senha";
+            $this->view->show_view($this->data);
+        }
+        else{
+            echo "link espirado";
+        }
+    }
+
+    function criar_usuario($hash){
+        $senha = $_POST['senha'];
+        $this->usuario_model->criar_usuario($hash, $senha);
+        redirect('login', 'refresh');
+    }
 	
 	
 }

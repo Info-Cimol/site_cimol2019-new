@@ -17,6 +17,7 @@ class Login extends MX_Controller{
             redirect('perfil', 'refresh');
 		}
 	}
+
 	function autenticar(){
 		$this->load->model('login_model');
 		$usuario = $this->input->post('usuario');
@@ -49,6 +50,7 @@ class Login extends MX_Controller{
 			redirect('login', 'refresh');
 		}
 	}
+
 	function logout(){
 		unset($_SESSION['user_data']);
 		redirect('', 'refresh');

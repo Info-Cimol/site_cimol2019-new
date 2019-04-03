@@ -682,6 +682,116 @@ class Usuario_model extends CI_Model{
     } // busca se admin tem permissoes
 
 
+
+
+    /*/  ------- FUNÇÕES DE NOVO USUÁRIO -------  /*/
+
+    function novo_usuario($email){
+        $this->db->select("e.pessoa_id")
+            ->from("email e")
+            ->where("e.email", $email);
+        $query=$this->db->get();
+        $pessoa_id = $query->result(); //array??
+
+        $data = array(
+            'senha' => 'yoda',
+            'pessoa_id' => $pessoa_id,
+            'session_id' => 'xxx-xxx-xx',
+            'status' => 'ativo',
+            'ip' => 'xxx-xxx'
+        );
+
+        $this->db->insert('usuario', $data);
+
+        echo 'usuario inserido ';
+    }
+
+    function criar_hash($email){
+        $this->db->select("e.id, e.pessoa_id")
+            ->from("email e")
+            ->where("e.email", $email);
+        $query=$this->db->get();
+        $result = $query->result_array();
+
+        $hash = $result[0]['id'].'|'.'3'.'|'.$result[0]['pessoa_id'];
+
+        $hash = hash('md5', $hash);
+
+        $this->db->where('id', $result[0]['id']);
+        $this->db->update('email', array('hash_validar' => $hash));
+
+        return $hash;
+    }
+
+    function validar_hash($hash){
+        $this->db->select("e.id")
+            ->from("email e")
+            ->where("e.hash_validar", $hash);
+        $query=$this->db->get();
+        $result = $query->result_array();
+
+        if($result){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    function criar_usuario($hash, $senha){
+        $this->db->select("e.pessoa_id")
+            ->from("email e")
+            ->where("e.hash_validar", $hash);
+        $query=$this->db->get();
+        $pessoa_id = $query->result_array();
+
+        $data = array(
+            'senha' => md5($senha),
+            'pessoa_id' => $pessoa_id[0]['pessoa_id'],
+            'session_id' => 'xxx-xxx-xx',
+            'status' => 'ativo',
+            'ip' => 'xxx-xxx'
+        );
+        $this->db->insert('usuario', $data);
+
+        $this->db->where('hash_validar', $hash);
+        $this->db->update('email', array( 'hash_validar' => NULL ));
+    }
+
+    /*/  ------ Funções de busca ------  /*/
+
+    function existe_email($email){
+        $this->db->select("e.email")
+            ->from("email e")
+            ->where("e.email", $email);
+        $query=$this->db->get();
+        $result = $query->result();
+
+        if($result){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    function existe_usuario_email($email){
+        $this->db->select("u.id")
+            ->from("usuario u")
+            ->join("pessoa p","u.pessoa_id = p.id")
+            ->join("email e","e.pessoa_id = p.id")
+            ->where("e.email", $email);
+        $query=$this->db->get();
+        $result = $query->result();
+
+        if($result){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
 	
 	
 	

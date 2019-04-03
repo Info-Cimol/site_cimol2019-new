@@ -69,6 +69,17 @@ $route['usuario/solicitar_usuario'] = 'site/usuario/solicitar_usuario';
 $route['perfil'] = 'site/usuario/perfil';
 $route['logout'] = 'site/usuario/logout';
 
+$route['solicitar_novo_usuario'] = 'site/usuario/solicitar_novo_usuario';
+$route['enviar_chave'] = 'site/usuario/enviar_chave';
+
+$route['mandar_email'] = 'site/usuario/mandar_email';
+$route['novo_usuario/(:any)'] = 'site/usuario/novo_usuario/$1';
+$route['criar_usuario/(:any)'] = 'site/usuario/criar_usuario/$1';
+
+
+
+
+
 $route['institucional'] = 'site/institucional';
 
 $route['noticia']= 'site/noticia';

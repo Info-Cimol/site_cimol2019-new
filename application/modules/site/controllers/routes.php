@@ -65,6 +65,15 @@ $route['usuario/solicitar_usuario'] = 'site/usuario/solicitar_usuario';
 $route['perfil'] = 'site/usuario/perfil';
 $route['logout'] = 'site/usuario/logout';
 
+$route['solicitar_novo_usuario'] = 'site/usuario/solicitar_novo_usuario';
+
+
+
+
+
+
+
+
 $route['institucional'] = 'site/institucional';
 
 $route['noticia']= 'site/noticia';

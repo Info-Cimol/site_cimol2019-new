@@ -11,3 +11,4 @@ foreach($usuario->telefones as $telefone){
 	echo "<p>". $telefone->ddd." ".$telefone->numero."</p>";
 	
 }
+echo "<a href='".base_url()."logout' ><strong>Sair</strong></a>";
