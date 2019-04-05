@@ -63,10 +63,15 @@ class Noticia extends MX_Controller {
 
     public function visualizar_noticia($id){
         $noticia=$this->noticia_model->buscar_noticia($id);
+        $tags=$this->marcador_model->pegar_tag_noticia($id);
 
         $this->data['title']="Cimol - Área do Administrador";
     		$this->data['content']="noticia/visualizar_noticia";
     		$this->data['noticia'] = $noticia;
+
+        if($tags[0]['marcador']!='')
+          $this->data['tags_noticia'] = $tags;
+
     		$this->view->show_view($this->data);
     }
 

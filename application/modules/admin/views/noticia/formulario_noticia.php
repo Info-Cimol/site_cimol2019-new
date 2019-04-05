@@ -27,156 +27,111 @@ if(isset($noticia)){
 	}
 
  ?>
-<div class="box-content">
-    <?php echo form_open_multipart('admin/noticia/salvar_noticia' , array('class' => 'form-horizontal validatable','target'=>'_top'));?>
-    <div class="padded">
-        <div class="control-group" hidden>
-            <label class="control-label"></label>
-            <div class="controls">
-            	<input type="text" name="noticia[id]" maxlength="90" class="input-large" value="<?php echo $id; ?>" required/>
-            </div>
-        </div>
-        <div class="control-group">
-            <label class="control-label">
-				Título:
-			</label>
-            <div class="controls">
-            	<input type="text" name="noticia[titulo]" pattern='[^\"]+' maxlength="90" class="input-large" value="<?php echo $titulo; ?>" required/>
-            </div>
-        </div>
-				<div class="control-group">
-						<label class="control-label">
-							Resumo:
-						</label>
-				<div class="controls">
-							<input type="text" name="noticia[resumo]" pattern='[^\"]+' value="<?php echo $resumo; ?>" maxlength="90" class="input-large" required/>
-						</div>
-				</div>
-				<div class="control-group">
-						<label class="control-label">
-							Tags:
-						</label>
-				<div class="controls">
-							<input type="text" name="noticia[tags]" value="<?php
-							if($tags!=0){
-								for ($i=0; $i < count($tags); $i++) {
-									echo $tags[$i].";";
-							  }
-							}
+    <?php echo form_open_multipart('admin/noticia/salvar_noticia' , array('class' => 'form-horizontal','target'=>'_top'));?>
 
-									?>" class="input-large"/>
-						</div>
+			<div hidden>
+				<input type="text" name="noticia[id]" class="input-large" value="<?php echo $id; ?>" required/>
+			</div>
+
+        <div class="form-group" style="margin-bottom: 2%;">
+            <label for="titulo" class="" style="width:8%;float:left;">Título:</label>
+            <input id="titulo" type="text" style="margin-left:2%;height:30px;width:90%;" name="noticia[titulo]" pattern='[^\"]+' class="form-control" value="<?php echo $titulo; ?>" required/>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 2%;">
+            <label for="resumo" class="" style="width:8%;float:left;">Resumo:</label>
+            <input id="resumo" type="text" style="margin-left:2%;height:30px;width:90%;" name="noticia[resumo]" pattern='[^\"]+' class="form-control" value="<?php echo $resumo; ?>" required/>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 2%;">
+            <label for="tags" class="" style="width:8%;float:left;">Tags:</label>
+            <input id="tags" type="text" style="margin-left:2%;height:30px;width:90%;" name="noticia[tags]" class="form-control"
+						value="<?php
+						if($tags!=0){
+							for ($i=0; $i < count($tags); $i++) {
+									echo $tags[$i].";";
+						  }
+						}
+						?>" required/>
+        </div>
+				<div class="form-group" style="margin-bottom: 2%;">
+						<label for="data" class="" style="width:8%;float:left;">Data:</label>
+						<input id="data" type="text" style="margin-left:2%;height:30px; width:90%;" name="noticia[data]"  class="form-control" pattern="[0-9]{4}-[0-9]{1,2}-[0-9]{1,2}" placeholder="yyyy-mm-dd" value="<?php echo $data; ?>" required/>
 				</div>
-				<div class="control-group">
-						<label class="control-label">
-				Data:
-			</label>
-						<div class="controls">
-							<input type="text" name="noticia[data]" pattern="[0-9]{4}-[0-9]{1,2}-[0-9]{1,2}" placeholder="yyyy-mm-dd" value="<?php echo $data; ?>" class="input-large" required/>
-						</div>
+				<div class="form-group" style="margin-bottom: 2%;">
+					<label for="mce_textarea" class="" style="width:8%;float:left;">Conteudo:</label>
+					<textarea type="text" style="margin-left:2%;" name="noticia[conteudo]" id="mce_textarea" required>
+						<?php echo $conteudo; ?>
+					</textarea>
 				</div>
-        <div class="control-group">
-            <label class="control-label">
-				Conteúdo:
-			</label>
-            <div class="controls">
-               	<textarea name="noticia[conteudo]" id="mce_textarea" required>
-					<?php echo $conteudo; ?>
-				</textarea>
-            </div>
+        <div class="form-group" hidden>
+            <input name="noticia[nome_imagem]" value="<?php echo $nome_imagem; ?>" required>
         </div>
-        <div class="control-group" hidden>
-            <label class="control-label"></label>
-            <div class="controls">
-               	<input name="noticia[nome_imagem]" value="<?php echo $nome_imagem; ?>" required>
-            </div>
+        <div class="form-group" hidden>
+            <input name="noticia[url_imagem]" value="<?php echo $url_imagem; ?>" required>
         </div>
-        <div class="control-group" hidden>
-            <label class="control-label"></label>
-            <div class="controls">
-               	<input name="noticia[url_imagem]" value="<?php echo $url_imagem; ?>" required>
-            </div>
-        </div>
-		<div class="control-group">
-			<label class="control-label">
+		<div class="form-group">
+			<label class="control-label" style="width:8%;float:left;">
 				Imagem:
 			</label>
+				<input type="file" name="imagem" style="margin-left:2%;height:30px; width:90%;">
 			<br>
-			<img class='img-thumbnail' src='<?php echo $caminho_imagem; ?>' alt='<?php echo $caminho_imagem; ?>'>
+			<img class='img-thumbnail' src='<?php echo $caminho_imagem; ?>' alt='Erro no caminho: <?php echo $caminho_imagem; ?>'>
 			<br>
-			<div class="controls">
-				<input type="file" name="imagem">
-			</div>
 		</div>
-    </div>
+
     <div class="form-actions">
         <button type="submit" onclick="tinymce.triggerSave();" class="btn btn-blue">Salvar Alterações</button>
     </div>
 	</form>
-</div>
+
 <?php
 }else{
 ?>
 <div class="box-content">
     <?php echo form_open_multipart('admin/noticia/salvar_noticia' , array('class' => 'form-horizontal validatable','target'=>'_top'));?>
-    <div class="padded">
-        <div class="control-group">
-            <label class="control-label">
-							Título:
-						</label>
-        <div class="controls">
-            	<input type="text" name="noticia[titulo]" pattern="[A-Za-z0-9 _-]+" maxlength="50" class="input-large" required/>
-            </div>
-        </div>
-        <div class="control-group">
-            <label class="control-label">
-							Resumo:
-						</label>
-        <div class="controls">
-            	<input type="text" name="noticia[resumo]" pattern="[A-Za-z0-9 -_]+" maxlength="110" class="input-large" required/>
-            </div>
-        </div>
-        <div class="control-group">
-            <label class="control-label">
-							Tags:
-						</label>
-        		<div class="controls">
-            	<input type="text" name="noticia[tags]" maxlength="110" class="input-large"/>
-            </div>
-        </div>
-				<div class="control-group">
-						<label class="control-label">
-				Data:
-			</label>
-						<div class="controls">
-							<input type="text" name="noticia[data]" pattern="([12]\d{3})-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])" placeholder="yyyy-mm-dd" class="input-large" required/>
-						</div>
-				</div>
-        <div class="control-group">
-            <label class="control-label">
-				Conteúdo:
-			</label>
-            <div class="controls">
-               	<textarea name="noticia[conteudo]" id="mce_textarea" rows="5" required>
-				</textarea>
-            </div>
-        </div>
-        <div class="control-group">
-            <label class="control-label">
-				Imagem:
-			</label>
-            <div class="controls">
-       			<input type="file" name="imagem">
-            </div>
-        </div>
-    </div>
-    <div class="form-actions">
-        <button type="submit" onclick="tinymce.triggerSave();" class="btn btn-blue">
-			Nova Notícia
-		</button>
-    </div>
-	</form>
-</div>
+		<div hidden>
+			<input type="text" name="noticia[id]" class="input-large" required/>
+		</div>
+
+			<div class="form-group" style="margin-bottom: 2%;">
+					<label for="titulo" class="" style="width:8%;float:left;">Título:</label>
+					<input id="titulo" type="text" style="margin-left:2%;height:30px;width:90%;" name="noticia[titulo]" pattern='[^\"]+' class="form-control" required/>
+			</div>
+
+			<div class="form-group" style="margin-bottom: 2%;">
+					<label for="resumo" class="" style="width:8%;float:left;">Resumo:</label>
+					<input id="resumo" type="text" style="margin-left:2%;height:30px;width:90%;" name="noticia[resumo]" pattern='[^\"]+' class="form-control" required/>
+			</div>
+
+			<div class="form-group" style="margin-bottom: 2%;">
+					<label for="tags" class="" style="width:8%;float:left;">Tags:</label>
+					<input id="tags" type="text" style="margin-left:2%;height:30px;width:90%;" name="noticia[tags]" class="form-control" required/>
+			</div>
+			<div class="form-group" style="margin-bottom: 2%;">
+					<label for="data" class="" style="width:8%;float:left;">Data:</label>
+					<input id="data" type="text" style="margin-left:2%;height:30px; width:90%;" name="noticia[data]"  class="form-control" pattern="[0-9]{4}-[0-9]{1,2}-[0-9]{1,2}" placeholder="yyyy-mm-dd" required/>
+			</div>
+			<div class="form-group" style="margin-bottom: 2%;">
+				<label class="" style="width:8%;float:left;">Imagem:</label>
+					<input type="file" name="imagem" style="margin-left:2%;height:30px; width:90%;">
+			</div>
+			<div class="form-group" style="margin-bottom: 2%;">
+				<label for="mce_textarea" class="" style="width:8%;float:left;margin-right:2%;">Conteudo:</label>
+				<textarea type="text" style="" name="noticia[conteudo]" id="mce_textarea" required></textarea>
+			</div>
+			<div class="form-group" hidden>
+					<input name="noticia[nome_imagem]" required>
+			</div>
+			<div class="form-group" hidden>
+					<input name="noticia[url_imagem]" required>
+			</div>
+
+
+	<div class="form-actions">
+			<button type="submit" onclick="tinymce.triggerSave();" class="btn btn-blue">Nova Noticia</button>
+	</div>
+</form>
 <?php } ?>
 
  <script src='<?php echo base_url() ?>public/plugins/tiny_mce/tiny_mce.js'></script>

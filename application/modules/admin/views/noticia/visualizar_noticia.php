@@ -4,6 +4,13 @@
 
 				<p id="data"><?php echo $noticia[0]->data_noticia;?></p>
 				<p id="resumo"><?php echo $noticia[0]->resumo;?></p>
+				<p id="tags"><?php
+
+					for ($i=0; $i < count($tags_noticia); $i++) {
+								echo "#".$tags_noticia[$i]['marcador'];
+					}
+
+				?></p>
 
 				<div>
 				 	<img src="<?php echo base_url().$noticia[0]->url_imagem.$noticia[0]->arquivo_imagem?>">
