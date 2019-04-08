@@ -250,7 +250,7 @@ class Usuario extends MX_Controller{
         $this->view->show_view($this->data);
     }
 
-    function mandar_email(){
+    function mandar_email(){  /*/   MANDAR O EMAIL    /*/
         $email = $_POST['email'];
 
         /*/  Testa se o email existe  /*/
@@ -261,7 +261,33 @@ class Usuario extends MX_Controller{
             }
             else{
                 $hash = $this->usuario_model->criar_hash($email);
-                redirect('novo_usuario/'.$hash, 'refresh');
+
+                //enviar
+
+                $arquivo = "
+                    <html>
+                        <div>
+                            <h1>Solicitação de novo usuário</h1>
+                            <h3> Clique <a href='".base_url()."novo_usuario/'".$hash."> aqui </a> para criar seu usuário </h3>
+                            
+                        </div>
+                    </html>
+                  ";
+
+                // emails para quem será enviado o formulário
+                $destino = $email;
+                $assunto = "Criação de Usuário - Cimol";
+
+                // É necessário indicar que o formato do e-mail é html
+                $headers  = 'MIME-Version: 1.0' . "\r\n";
+                $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+                $headers .= 'From: info.cimol@gmail.com';
+                //$headers .= "Bcc: $EmailPadrao\r\n";
+
+                mail($destino, $assunto, $arquivo, $headers);
+
+
+                echo "email enviado";
             }
         }
         else{
