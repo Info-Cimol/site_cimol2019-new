@@ -52,7 +52,7 @@ if(isset($noticia)){
 									echo $tags[$i].";";
 						  }
 						}
-						?>" required/>
+						?>"/>
         </div>
 				<div class="form-group" style="margin-bottom: 2%;">
 						<label for="data" class="" style="width:8%;float:left;">Data:</label>

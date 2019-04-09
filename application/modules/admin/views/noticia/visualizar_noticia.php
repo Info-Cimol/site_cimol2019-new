@@ -6,8 +6,12 @@
 				<p id="resumo"><?php echo $noticia[0]->resumo;?></p>
 				<p id="tags"><?php
 
-					for ($i=0; $i < count($tags_noticia); $i++) {
-								echo "#".$tags_noticia[$i]['marcador'];
+					if(isset($tags_noticia)){
+						for ($i=0; $i < count($tags_noticia); $i++) {
+									echo "#".$tags_noticia[$i]['marcador'];
+						}
+					}else{
+						$tags = 0;
 					}
 
 				?></p>
