@@ -2,7 +2,8 @@
 <div class="span3">
     <div class="sidebar">
         <ul class="widget widget-menu unstyled">
-            <li><a href="<?php echo base_url()?>admin/usuario"><i class="menu-icon icon-user"></i> Usuários </a></li>
+            <li><a href="<?php echo base_url()?>admin"><i class="menu-icon icon-user"></i> Perfil </a></li>
+            <li><a href="<?php echo base_url()?>admin/usuario"><i class="menu-icon icon-group"></i> Usuários </a></li>
             <li><a href="<?php echo base_url()?>admin/noticia"><i class="menu-icon icon-bullhorn"></i> Notícias </a></li>
             <li><a href="message.html"><i class="menu-icon icon-inbox"></i>Inbox <b class="label green pull-right">
                 11</b> </a></li>

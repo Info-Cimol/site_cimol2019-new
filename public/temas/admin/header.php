@@ -31,6 +31,8 @@
                         </button>
                         </form>
                         <ul class="nav pull-right">
+
+                            <!--  DROPDOWN  -->
                             <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown
                                 <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
@@ -41,16 +43,20 @@
                                     <li><a href="#">A Separated link</a></li>
                                 </ul>
                             </li>
+
+                            <!--  LINK SUPPORT  -->
                             <li><a href="#">Support </a></li>
+
+                            <!--  DROPDOWN USUARIO  -->
                             <li class="nav-user dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <img src="<?php echo base_url();  ?>public/temas/admin/images/user.png" class="nav-avatar" />
+                                <img src="<?php echo base_url();?>/<?php echo $usuario['foto']?>" class="nav-avatar" />
                                 <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="#">Your Profile</a></li>
-                                    <li><a href="#">Edit Profile</a></li>
-                                    <li><a href="#">Account Settings</a></li>
+                                    <li><a href="<?php echo base_url()?>/admin">Perfil</a></li>
+                                    <li><a href="#">Editar Perfil</a></li>
+                                    <li><a href="#">Configurações</a></li>
                                     <li class="divider"></li>
-                                    <li><a href="#">Logout</a></li>
+                                    <li><a href="<?php echo base_url();?>/logout">Logout</a></li>
                                 </ul>
                             </li>
                         </ul>

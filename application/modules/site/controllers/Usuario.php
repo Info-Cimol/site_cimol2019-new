@@ -23,49 +23,46 @@ class Usuario extends MX_Controller{
 	 * 
 	 * 
 	 */
-	
+
+    public function login(){
+        if(empty($this->user_data)){
+            $this->data['title']="Cimol";
+            $this->data['content']="usuario/formulario_login";
+            $this->view->show_view($this->data);
+        }else{
+            redirect('perfil', 'refresh');
+        }
+    }
+
 	function autenticar(){
 		
 		$this->load->model('usuario_model');
 		$usuario = $this->input->post('email');
 		$senha = md5($this->input->post('senha'));
-		//echo $usuario."<br/>".$senha."<br/>";
-		$query=$this->usuario_model->autenticar($usuario,$senha);
-		$resultado=$query->row();
 
-		
-		if($resultado->pessoa > 0){
-			$_SESSION['user_data']['id']=$resultado->id;
-			$_SESSION['user_data']['nome']=$resultado->nome;
-			//$_SESSION['user_data']['rg']=$resultado->rg;
-			//$_SESSION['user_data']['cpf']=$resultado->cpf;
-			if($resultado->admin>0){
+        $resultado = $this->usuario_model->autenticar($usuario,$senha);
+
+		if($resultado){
+			$_SESSION['user_data']['id']=$resultado['id'];
+			$_SESSION['user_data']['nome']=$resultado['nome'];
+
+			if($resultado['admin'] == 1){
 				$_SESSION['user_data']['permissoes'][]="admin";
-				$_SESSION['user_data']['permissoes']['permissoes_admin']=$this->usuario_model->buscarPermissaoAdmin($resultado->id);
+				$_SESSION['user_data']['permissoes']['permissoes_admin']=$this->usuario_model->buscarPermissaoAdmin($resultado['id']);
 			}
-			if($resultado->aluno>0){
+			if($resultado['aluno']){
 				$_SESSION['user_data']['permissoes'][]="aluno";
 			}
-			if($resultado->professor>0){
+			if($resultado['professor']){
 				$_SESSION['user_data']['permissoes'][]="professor";
 			}
-			if($resultado->biblioteca>0){
-				$_SESSION['user_data']['permissoes'][]="biblioteca";
-			}
-			if($resultado->feintec>0){
-				$_SESSION['user_data']['permissoes'][]="feintec";
-			}
-			if($resultado->coordenador_curso>0){
-				$_SESSION['user_data']['permissoes'][]="coordenador_curso";
-				$this->load->model('curso_model');
-				$_SESSION['user_data']['curso']=$this->curso_model->buscar_curso_por_coordenador($resultado->id);
-			}
-			
-			if(isset($_SESSION['route'])){
-				redirect($_SESSION['route'], 'refresh');
-			}else{
-				redirect('', 'refresh');
-			}
+
+            redirect('admin/perfil', 'refresh');
+
+			/*/   -- após login o usuário retorna para onde estava
+			if(isset($_SESSION['route'])){ redirect($_SESSION['route'], 'refresh'); }
+			else{  redirect('perfil', 'refresh');  }
+			/*/
 			
 		}else{
 			$this->view->set_message("Login ou senha estão incorretos!","alert alert-danger");
@@ -77,7 +74,7 @@ class Usuario extends MX_Controller{
 	
 	function logout(){
 		unset($_SESSION['user_data']);
-		redirect('', 'refresh');
+		redirect('login', 'refresh');
 	}
 	
 	
@@ -199,20 +196,7 @@ class Usuario extends MX_Controller{
 		}
 		redirect('login', 'refresh');
 	}
-	
-	
-	function perfil(){
-		$this->data['title']="Cimol";
-		if(!empty($this->user_data)){
-			//print_r($this->user_data);
-			$this->data['usuario']=$this->usuario_model->buscar_perfil($this->user_data["id"]);
-			$this->data['content']="usuario/perfil";
-		}else{
-			$this->data['content']="usuario/form_login";
-		}
-		$this->view->show_view($this->data);
-	}
-	
+
 	
 	function obter_chave_de_acesso($usuario){
 		return md5($usuario->nome.date('s'));

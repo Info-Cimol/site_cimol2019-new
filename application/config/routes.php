@@ -54,8 +54,11 @@ $route['erro'] = 'site/erro/';
 $route['erro/erro_404'] = 'site/erro/erro_404/';
 
 $route[''] = 'site/index.php';
-$route['logout'] = 'site/login/logout';
-$route['login'] = 'site/login';
+
+$route['logout'] = 'site/usuario/logout';
+$route['login'] = 'site/usuario/login';
+$route['perfil'] = 'site/usuario/perfil';
+
 $route['usuario'] = 'site/usuario';
 $route['usuario/autenticar'] = 'site/usuario/autenticar';
 $route['usuario/esqueceu_senha'] = 'site/usuario/esqueceu_senha';
@@ -66,8 +69,7 @@ $route['usuario/mensagem_recuperar_senha'] = 'site/usuario/mensagem_recuperar_se
 $route['usuario/resposta_mensagem_recuperar_senha'] = 'site/usuario/resposta_mensagem_recuperar_senha';
 $route['usuario/registrar_usuario'] = 'site/usuario/registrar_usuario';
 $route['usuario/solicitar_usuario'] = 'site/usuario/solicitar_usuario';
-$route['perfil'] = 'site/usuario/perfil';
-$route['logout'] = 'site/usuario/logout';
+
 
 $route['solicitar_novo_usuario'] = 'site/usuario/solicitar_novo_usuario';
 $route['enviar_chave'] = 'site/usuario/enviar_chave';
@@ -109,7 +111,6 @@ $route['relacionamento']='site/relacionamento';
 $route['videos']='site/videos';
 $route['estagio']='site/estagio';
 $route['estagio/integrado']='site/estagio/integrado';
-$route['login/autenticar'] = 'site/login/autenticar'; 
 $route['default_controller'] = 'site/inicio';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

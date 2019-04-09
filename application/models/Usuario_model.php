@@ -11,37 +11,70 @@ class Usuario_model extends CI_Model{
 	 * @param $senha
 	 * @return $result
 	 */
-	function autenticar($usuario, $senha){
-        $query="SELECT usuario.id, pessoa.nome,pessoa.rg, pessoa.cpf, 
-		count(administrador.pessoa_id) as admin,
-		count(aluno.pessoa_id) as aluno,
-		count(professor.pessoa_id) as professor,
-        count(feintec.pessoa_id) as feintec,
-        count(biblioteca.pessoa_id) as biblioteca,
-        count(coordenador_curso.professor_id) as coordenador_curso,
-		count(pessoa.id) as pessoa from pessoa 
-        	LEFT JOIN usuario ON usuario.pessoa_id = pessoa.id 
-            LEFT JOIN email ON email.pessoa_id=pessoa.id 
-            LEFT JOIN administrador ON administrador.pessoa_id=pessoa.id 
-            LEFT JOIN aluno ON aluno.pessoa_id=pessoa.id 
-            LEFT JOIN professor ON professor.pessoa_id=pessoa.id 
-            LEFT JOIN feintec ON feintec.pessoa_id=pessoa.id 
-            LEFT JOIN biblioteca ON biblioteca.pessoa_id=pessoa.id 
-            LEFT JOIN coordenador_curso ON coordenador_curso.professor_id=professor.id
-            WHERE usuario.senha = '".$senha."' AND email.email = '".$usuario."'
-            GROUP BY  usuario.id, pessoa.nome,pessoa.rg, pessoa.cpf";
 
-            echo $query;
-       $result = $this->db->query($query); 
-       return $result;
-	}
-	
-	/**
-	 * Função responsavel por buscar as informações de perfil do usuarios.
-	 * @param $id
-	* @return $usuario
-	 */
-	function buscar_perfil($pessoa_id){
+	function autenticar($email, $senha){
+        $this->db->select("u.id, p.nome, p.rg, p.cpf, p.foto, e.email,
+                           count(adm.pessoa_id) as admin,
+                           count(prof.pessoa_id) as professor,
+                           count(aluno.id) as aluno")
+                 ->from("pessoa p")
+                 ->join('usuario u','u.pessoa_id = p.id ', 'left')
+                 ->join('email e','e.pessoa_id = p.id', 'left')
+                 ->join('administrador adm','adm.pessoa_id = p.id', 'left')
+                 ->join('professor prof','prof.pessoa_id = p.id', 'left')
+                 ->join('aluno','aluno.pessoa_id  = p.id', 'left')
+                 ->where("u.senha",$senha)
+                 ->where("e.email",$email);
+
+        $query = $this->db->get();
+        $usuario = $query->result_array();
+        return $usuario[0];
+    }
+
+    function buscar_perfil($pessoa_id){
+        $this->db->select("u.id, p.nome, p.rg, p.cpf, p.foto, e.email, p.id as pessoa_id,
+                           count(adm.pessoa_id) as admin,
+                           count(prof.pessoa_id) as professor,
+                           prof.carga_horaria,
+                           count(cc.professor_id) as coordenador,
+                           count(aluno.id) as aluno")
+            ->from("pessoa p")
+            ->join('usuario u','u.pessoa_id = p.id ', 'left')
+            ->join('email e','e.pessoa_id = p.id', 'left')
+            ->join('administrador adm','adm.pessoa_id = p.id', 'left')
+            ->join('professor prof','prof.pessoa_id = p.id', 'left')
+            ->join('coordenador_curso cc','cc.professor_id = prof.id', 'left')
+            ->join('aluno','aluno.pessoa_id  = p.id', 'left')
+            ->where('p.id', $pessoa_id);
+
+        $query = $this->db->get();
+        $usuario = $query->result_array();
+        $usuario = $usuario[0];
+
+        $this->db->select("*")
+            ->from('telefone t')
+            ->where('t.pessoa_id',$usuario['pessoa_id']);
+        $telefones=$this->db->get();
+        $telefones=$telefones->result();
+        $telefones = json_decode(json_encode($telefones), True);
+        $usuario['telefones']=$telefones;
+
+        if($usuario['coordenador'] == 1){
+            $this->db->select("c.titulo")
+                ->from('curso c')
+                ->join('coordenador_curso cc', "cc.curso_id = c.id")
+                ->join('professor p', 'p.id = cc.professor_id')
+                ->where('p.pessoa_id',$usuario['pessoa_id']);
+            $curso=$this->db->get();
+            $curso=$curso->result();
+            $curso = json_decode(json_encode($curso[0]), True);
+            $usuario['curso']=$curso['titulo'];
+        }
+
+        return $usuario;
+    }
+
+	function buscar_perfil2($pessoa_id){
 		$query="SELECT u.id, p.nome,p.rg, p.cpf,e.email,p.foto, p.id as pessoa_id,
 		count(ad.pessoa_id) as admin,
 		count(a.pessoa_id) as aluno,
@@ -69,7 +102,7 @@ class Usuario_model extends CI_Model{
 		$usuario->telefones=$telefones;
 		//print_r($usuario);
 		return $usuario;
-	}
+	} /*/  ARRUMAR  /*/
 	
 	/**
 	 * Função que verifica se existe um usuario para o email cadastrado.

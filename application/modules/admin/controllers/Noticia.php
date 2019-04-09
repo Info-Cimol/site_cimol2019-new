@@ -4,17 +4,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Noticia extends MX_Controller {
     public function __construct(){
         parent::__construct();
-        
-       /* if(isset($this->user_data) ){
-			if(!in_array('admin', $this->user_data['permissoes'])){
-				redirect('', 'refresh');
-			}
-		}else{
-			redirect('login', 'refresh');
-		}*/
 		
         $this->load->model('noticia_model');
         $this->load->model('imagem_model');
+        $this->load->model('usuario_model');
+        $this->data['usuario']=$this->usuario_model->buscar_perfil($this->user_data["id"]);
         date_default_timezone_set("Brazil/East");
     }
 

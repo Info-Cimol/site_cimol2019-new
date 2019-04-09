@@ -5,6 +5,7 @@ class Usuario extends MX_Controller{
 	public function __construct(){
 		parent::__construct();
 		$this->load->model('usuario_model');
+		$this->data['usuario']=$this->usuario_model->buscar_perfil($this->user_data["id"]);
 		$this->data['title']="Cimol - Área do Administrador";
 	}
 	public function index()

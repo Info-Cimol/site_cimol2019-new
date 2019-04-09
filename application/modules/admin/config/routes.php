@@ -55,7 +55,9 @@ $route['admin/disciplina_turma/(:num)'] = 'disciplina_turma/index/$1';
 $route['admin/disciplina_turma/(:num)/(:any)'] = 'disciplina_turma/index/$1/$2';
 $route['admin/horario_turma/(:num)'] = 'horario_turma/index/$1';
 $route['admin/horario_turma/(:num)/(:any)'] = 'horario_turma/index/$1/$2';
-$route['default_controller'] = 'site/inicio';
+
+$route['perfil'] = 'admin/perfil';
+
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
