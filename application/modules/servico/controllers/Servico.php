@@ -2,6 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Servico extends MX_Controller {
+	
 	public function __construct(){
 
 		parent::__construct();
@@ -36,6 +37,5 @@ class Servico extends MX_Controller {
 		$this->data['template']="restrito";
 		$this->view->show_view($this->data);
 	}
-	
 	
 }

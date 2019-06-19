@@ -104,7 +104,7 @@
                     for (var i = 0; i < data.length; i++) {
                          var d = new Date(data[i].data_fim);
                          data_fim = (d.toLocaleDateString());                         
-                         $('#cards').prepend('<div class="card"><h2 class="card-title" >'+data[i].numero+'</h2><p>'+data[i].nome+'</p><h4>Entrega '+data_fim+'</h4>');          
+                         $('#cards').prepend('<div class="card-locado"><h2 class="card-title" >'+data[i].numero+'</h2><p>'+data[i].nome+'</p><h4>Entrega '+data_fim+'</h4>');          
 
                          }
                          //console.log(data);
@@ -158,7 +158,7 @@
                       for (var i = 0; i < data['locados'].length; i++) {
                          var d = new Date(data['locados'][i].data_fim);
                          data_fim = (d.toLocaleDateString());
-                         $('#cards').prepend('<div class="card"><h2 class="card-title" >'+data['locados'][i].numero+'</h2><p>'+data['locados'][i].nome+'</p><h4>Entrega '+data_fim+'</h4>');          
+                         $('#cards').prepend('<div class="card-locado"><h2 class="card-title" >'+data['locados'][i].numero+'</h2><p>'+data['locados'][i].nome+'</p><h4>Entrega '+data_fim+'</h4>');          
                       }
 
                       for (var i = 0; i < data['vencidos'].length; i++) {

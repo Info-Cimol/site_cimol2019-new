@@ -1,3 +1,3 @@
 <?php
 
-echo "Início Area coordenação";
+echo "Início da Area Serviço";

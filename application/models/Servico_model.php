@@ -43,6 +43,7 @@ class Servico_model extends CI_Model{
 			'codigo' => $dados['codigo'],
 			'num_serie' => $dados['num_serie'],
 			'nome' => $dados['nome'],
+			'local_id' => $dados['local_id'],
 		);
 			
 		$this->db->insert('serv_equipamento', $dados_equipamento);
@@ -91,9 +92,10 @@ class Servico_model extends CI_Model{
 	// Busca detalhes pelo código, quando é digitado o código no inicio da página ao abrir chamado
 	public function busca_detalhes_abrir_chamado($codigo){
 
-		$this->db->select('e.*, c.*')
+		$this->db->select('e.*, c.*, l.*')
 		->from('serv_chamado c')
 		->join('serv_equipamento e','e.id=c.id_equipamento')
+		->join('serv_local l','l.id=e.local_id')
 		->where('e.codigo=', $codigo);
 		//->where('aa.data_entrega=', null);
 		$query=$this->db->get();
@@ -104,10 +106,11 @@ class Servico_model extends CI_Model{
 	// Busca detalhes dos chamados que são mostrados no modal
 	public function busca_detalhes($id){
 
-		$this->db->select('e.*, c.*')
+		$this->db->select('e.*, c.*, l.descricao')
 		->from('serv_chamado c')
 		->join('serv_equipamento e','e.id=c.id_equipamento')
-		->where('e.id=', $id);
+		->join('serv_local l','l.id=e.local_id')
+		->where('c.id_equipamento=', $id);
 		//->where('aa.data_entrega=', null);
 		$query=$this->db->get();
 		$resultado=$query->result();
@@ -122,6 +125,7 @@ class Servico_model extends CI_Model{
 				$this->db->select('*')
 				->from('serv_chamado c')
 				->join('serv_equipamento e','e.id=c.id_equipamento')
+				//->join('serv_local l','l.id=e.local_id')
 				//->where('c.equipamento_codigo=', $dados['equipamento_codigo'])
 				->where('c.status!=', 'Finalizado');
 				$query=$this->db->get();
@@ -132,6 +136,7 @@ class Servico_model extends CI_Model{
 			$this->db->select('*')
 			->from('serv_chamado c')
 			->join('serv_equipamento e','e.id=c.id_equipamento')
+			//->join('serv_local l','l.id=e.local_id')
 			//->where('c.equipamento_codigo=', $dados['equipamento_codigo'])
 			->where('c.status=', $status);
 			$query=$this->db->get();
@@ -170,8 +175,8 @@ class Servico_model extends CI_Model{
 		
 
 		// Altera a outra tabela, serv_equipamento
-		$this->db->set('num_serie', $dados['num_serie']);
-		$this->db->set('local_id', $dados['local'])
+		$this->db->set('num_serie', $dados['num_serie'])
+		//$this->db->set('local_id', $dados['local'])
 		//$this->db->set('nome', $dados['nome'])
 
 		->where('serv_equipamento.id=', $dados['id'])
@@ -180,6 +185,27 @@ class Servico_model extends CI_Model{
 		return true;
 	}
 
+	public function busca_local(){
+		$this->db->select('*')
+		->from('serv_local');
+		//->join('serv_equipamento e','e.id=c.id_equipamento')
+		//->where('c.equipamento_codigo=', $dados['equipamento_codigo'])
+		//->where('c.status=', $status);
+		$query=$this->db->get();
+		$resultado=$query->result();
+		return $resultados[] = $resultado ;	
+	}
+
+	public function adicionar_local($local){
+		
+		$data = array(
+			'descricao' => $local,
+		);
+
+		$this->db->insert('serv_local', $data);
+			
+		return true;	
+	}
 
 
 }

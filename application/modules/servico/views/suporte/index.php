@@ -154,19 +154,6 @@
                         </div>
                     </td>
                 </tr>
-                <tr style="margin-bottom: 20px;">
-                    <td style="width: 30%; text-align: center;">
-                        <div class="form-group" style="margin-bottom: 10px;">
-                            <div class="input-group">
-                                <span class="input-icon input-icon-left">Local</span>
-                                <td style="width: 70%; text-align: left;" id="local">
-                                    
-                                </td>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-
                 <div id="id_equipamento"></div>
                 <div id="codigo"></div>             
             </table>       
@@ -350,6 +337,7 @@
 		})
 	})
 
+
 	function busca_detalhes($id){
 		var id = $id;
 		//alert(id);
@@ -369,6 +357,8 @@
             	$('#detalhes_data_atendimento').empty();
             	$('#detalhes_data_solucao').empty();
             	$('#detalhes_local').empty();
+
+                console.log(data);
 
             	$('#detalhes_status').html('<h5 class="font-strong mb-4" style="margin-left: 20px;">'+ data[0].status +'</h5>');
 
@@ -401,21 +391,23 @@
                 	$('#detalhes_data_solucao').html('<h5 class="font-strong mb-4" style="margin-left: 20px;">'+data_solucao +'</h5>');	
                 }
 
-				if (data[0].local =! null) {
-                	$('#detalhes_local').html('<h5 class="font-strong mb-4" style="margin-left: 20px;">'+ data[0].local +'</h5>');	
-                }                
+				//if (data[0].local =! null) {
+                	$('#detalhes_local').html('<h5 class="font-strong mb-4" style="margin-left: 20px;">'+ data[0].descricao +'</h5>');	
+                //}                
             }
        })
 	}
 
 	function editar($id){
 		var id = $id;
+        //console.log($);
 		$.ajax({
 	            url:"<?php echo base_url() ?>servico/suporte/busca_detalhes",
 	            method:"POST",
 	            dataType: 'json',
 	            data:{id:id},
 	            success:function(data){
+                    alert(data[0].num_serie);
 	            	$('#defeito').html('<textarea class="form-control" id="defeito" name="defeito" rows="2" style="width: 230px;">'+data[0].defeito+'</textarea>');
 
 	            	if (data[0].solucao == null) {
@@ -425,34 +417,36 @@
 	            	}
 	            	
 	           		if (data[0].num_serie == null) {
-	           			$('#num_serie').html('<input class="form-control" type="text" name="num_serie" style="width: 250px">');
+	           			$('#num_serie').html('<input class="form-control" type="text" name="num_serie" value="" style="width: 250px">');
 	           		}else{
-	           			$('#num_serie').html('<input class="form-control" type="text" value='+data[0].num_serie+' name="num_serie" style="width: 250px">');
+	           			$('#num_serie').html('<input class="form-control" type="text" value='+data[0].num_serie+' id="editar_num_serie" name="num_serie" style="width: 250px">');
 	           		} 	
 	            	
 	            	
 	            	$('#status').html('<select style="width: 265px" name="status"><option>'+data[0].status+'</option><option>Pendente</option><option>Aguardando peça</option><option>Aguardando orçamento</option><option>Finalizado</option></select>');
 	            	
 	            	if (data[0].data_atendimento == null) {
-	            		$('#data_atendimento').html('<input class="form-control" type="date" name="data_atendimento" style="width: 250px">');
+	            		$('#data_atendimento').html('<input id="data_atendimento2" class="form-control" type="date" name="data_atendimento" style="width: 250px">');
 	            	}else{
 	            		$('#data_atendimento').html('<input class="form-control" type="date" name="data_atendimento" style="width: 250px" value='+data[0].data_atendimento+'>');
 	            	}
 
 	            	if (data[0].data_solucao == null) {
-	            		$('#data_solucao').html('<input class="form-control" type="date" name="data_solucao" style="width: 250px">');
+	            		$('#data_solucao').html('<input class="form-control" type="date" id="editar_data_solucao" name="data_solucao" style="width: 250px">');
 	            	}else{
-	            		$('#data_solucao').html('<input class="form-control" value='+data[0].data_solucao+' type="date" name="data_solucao" style="width: 250px">');
+	            		$('#data_solucao').html('<input class="form-control" value='+data[0].data_solucao+' type="date" id="editar_data_solucao" name="data_solucao" style="width: 250px">');
 	            	}
      	
-	            	
-	            	if (data[0].local != null) {
-	            		$('#local').html('<input class="form-control" type="text" value='+data[0].local+' name="local" style="width: 250px">');
+	                /*       	
+	            	if (data[0].descricao != null) {
+	            		$('#local').html('<input class="form-control" type="text" value='+data[0].descricao+' name="local" style="width: 250px">');
 	            	}else{
 	            		$('#local').html('<input class="form-control" type="text" name="local" style="width: 250px">');
 	            	}
+                    */
+                   
 	            		         		
-	            	$('#id_equipamento').html('<input type="hidden" name="id" value='+data[0].id+'>');
+	            	$('#id_equipamento').html('<input type="hidden" id="editar_id" value='+data[0].id_equipamento+'>');
 	            	$('#codigo').html('<input type="hidden" name="id" value='+data[0].codigo+' >');
 
 	            }
@@ -462,14 +456,15 @@
 
 	$('#formulario_editar').submit(function(e){
 		e.preventDefault();
-		var data_atendimento = $('input[name=data_atendimento]').val();
-		var data_solucao = $('input[name=data_solucao]').val();
+		var data_atendimento = $('#data_atendimento2').val();
+		var data_solucao = $('#editar_data_solucao').val();
 		var defeito = $('textarea[name=defeito]').val();
 		var solucao = $('textarea[name=solucao]').val();
 		var status = $('select[name=status]').val();
-		var num_serie = $('input[name=num_serie]').val();
+		var num_serie = $('#editar_num_serie').val();
 		var local = $('input[name=local]').val();
-		var id = $('input[name=id]').val();
+		var id = $('#editar_id').val();
+        //alert(id);
 
         if (status == 'Finalizado'){
             if (data_atendimento == '') {
@@ -483,14 +478,17 @@
                 return;
             }
         }
-		
+
+        //alert(num_serie);
 		$.ajax({
             url:"<?php echo base_url() ?>servico/suporte/editar_chamado",
             method:"POST",
             dataType: 'json',
-            data:{data_atendimento:data_atendimento, data_solucao:data_solucao, defeito:defeito, solucao:solucao, status:status, num_serie:num_serie, local:local, id:id},
+            data:{data_atendimento:data_atendimento, data_solucao:data_solucao, defeito:defeito, solucao:solucao, status:status, num_serie:num_serie, id:id },
             success:function(data){
             	//alert('CERTO');
+                //console.log(data);
+                //alert(data);
                 location.reload();
             	//$('#modal_body').html('<div class="text-align:center;"><h3 style="text-align:center">Alterado com sucesso!</h3><br><br><a type="button" href="<?php echo base_url() ?>coordenacao/servico/index" class="btn btn-primary">Sair</a></div>');
             }

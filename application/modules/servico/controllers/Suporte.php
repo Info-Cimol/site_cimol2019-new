@@ -57,7 +57,8 @@ class Suporte extends MX_Controller {
 			//'descricao' => $this->input->post('descricao'),
 			'status' => 'pendente',
 			'data_abertura' => date('Y-m-d'),
-			'defeito' => $this->input->post('defeito'), 
+			'defeito' => $this->input->post('defeito'),
+			'local_id' => $this->input->post('local_id'), 
 		);
 
 		$chamado = $this->servico_model->abrir_chamado($dados);
@@ -84,6 +85,7 @@ class Suporte extends MX_Controller {
 			echo "string";
 		}
 		*/
+
 
 	}
 
@@ -141,13 +143,25 @@ class Suporte extends MX_Controller {
 			'defeito' => $this->input->post('defeito'),
 			'solucao' => $this->input->post('solucao'),
 			'num_serie' => $this->input->post('num_serie'),
-			'local' => $this->input->post('local'),
+			//'local' => $this->input->post('local'),
 			//'nome' => $this->input->post('equipamento'),
 		);
 
 		$editar = $this->servico_model->editar_chamado($dados);
 		echo json_encode($editar);
 
+	}
+
+	public function busca_local(){
+
+		$local = $this->servico_model->busca_local();
+		echo json_encode($local);
+	}
+
+	public function adicionar_local(){
+
+		$adicionar = $this->servico_model->adicionar_local($this->input->post('local'));
+		echo json_encode($adicionar);
 	}
 
 
